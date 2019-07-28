@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>Hello MUI</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="css/mui.min.css">
+		<!--App自定义的css-->
+		<link rel="stylesheet" type="text/css" href="css/app.css"/>
+		<link rel="stylesheet" type="text/css" href="css/student/mainStu.css"/>
+		<style>
+			
+			.title{
+				margin: 20px 15px 10px;
+				color: #6d6d72;
+				font-size: 15px;
+			}
+			
+			.oa-contact-cell.mui-table .mui-table-cell {
+				padding: 11px 0;
+				vertical-align: middle;
+			}
+			
+			.oa-contact-cell {
+				position: relative;
+				margin: -11px 0;
+			}
+	
+			.oa-contact-avatar {
+				width: 75px;
+			}
+			.oa-contact-avatar img {
+				border-radius: 50%;
+			}
+			.oa-contact-content {
+				width: 100%;
+			}
+			.oa-contact-name {
+				margin-right: 20px;
+			}
+			.oa-contact-name, oa-contact-position {
+				float: left;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="background: deepskyblue; height:44px;">
+			<h1 class="mui-title" style="color: #FFFFFF;">智慧校园</h1>
+		</header>
+		<nav class="mui-bar mui-bar-tab">
+			<a class="mui-tab-item mui-active" href="#tabbar">
+				<div id="function-div-index">
+					<div class="button-nav-div">
+						<img id="function-icon-index" src="icon/index.png" >
+						<div class="button-nav-div-font">首页</div>
+					</div>
+				</div>
+			</a>
+			
+			<a class="mui-tab-item" href="#tabbar-with-contact">
+				<div id="function-div-camara">
+					<div class="button-nav-div">
+						<img id="function-icon-camara" src="icon/camara0.png" >
+						<div class="button-nav-div-font">随手拍</div>
+					</div>
+				</div>
+			</a>
+			<a class="mui-tab-item" href="#tabbar-with-map">
+				<div id="function-div-setting">
+					<div class="button-nav-div">
+						<img id="function-icon-setting" src="icon/setting0.png" >
+						<div class="button-nav-div-font">随手拍</div>
+					</div>
+				</div>
+			</a>
+		</nav>
+		<div class="mui-content">
+			
+			<div id="tabbar" class="mui-control-content mui-active">
+				<!-- 滑动图片 -->
+				<div id="slider" class="mui-slider">
+					<div class="mui-slider-group mui-slider-loop">
+						<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
+						<div class="mui-slider-item mui-slider-item-duplicate">
+							<a href="#">
+								<img src="images/student/yuantiao.jpg">
+								<p class="mui-slider-title">静静看这世界</p>
+							</a>
+						</div>
+						<div class="mui-slider-item">
+							<a href="#">
+								<img src="images/student/shuijiao.jpg">
+								<p class="mui-slider-title">幸福就是可以一起睡觉</p>
+							</a>
+						</div>
+						<div class="mui-slider-item">
+							<a href="#">
+								<img  src="images/student/muwu.jpg">
+								<p class="mui-slider-title">想要一间这样的木屋，静静的喝咖啡</p>
+							</a>
+						</div>
+						<div class="mui-slider-item">
+							<a href="#">
+								<img src="images/student/cbd.jpg">
+								<p class="mui-slider-title">Color of SIP CBD</p>
+							</a>
+						</div>
+						<div class="mui-slider-item">
+							<a href="#">
+								<img src="images/student/yuantiao.jpg">
+								<p class="mui-slider-title">静静看这世界</p>
+							</a>
+						</div>
+						<!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
+						<div class="mui-slider-item mui-slider-item-duplicate">
+							<a href="#">
+								<img  src="images/student/shuijiao.jpg">
+								<p class="mui-slider-title">幸福就是可以一起睡觉</p>
+							</a>
+						</div>
+					</div>
+				</div>
+				<!-- 滑动的功能 -->
+				<div id="Gallery" class="mui-slider" style="margin-top:-5px;">
+					<div class="mui-slider-group">
+						<div class="mui-slider-item">
+							<ul class="mui-table-view mui-grid-view mui-grid-9">
+								<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+									<a href="html/student/repair.html">
+										<div id="img-span">
+											<img style="width: 70%;" src="icon/student/weixiu.png" >
+										</div>
+										<div class="mui-media-body"><font size="2">我要报修</font></div>
+									</a>
+								</li>
+								<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+									<a href="#">
+										<div id="img-span">
+											<img style="width: 70%;" src="icon/student/dingdan.png" >
+										</div>
+										<div class="mui-media-body"><font size="2">我的报修</font></div>
+									</a>
+								</li>
+								<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+									<a href="#">
+										<div id="img-span">
+											<img style="width: 70%;" src="icon/student/fuwu.png" >
+										</div>
+										<div class="mui-media-body"><font size="2">服务</font></div>
+									</a>
+								</li>
+							</ul>
+						</div>
+						<div class="mui-slider-item">
+							<ul class="mui-table-view mui-grid-view mui-grid-9">
+								<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+									<a href="#">
+										<div id="img-span">
+											<img style="width: 70%;" src="icon/student/weixiu.png" >
+										</div>
+										<div class="mui-media-body"><font size="2">我要报修</font></div>
+									</a>
+								</li>
+								<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+									<a href="#">
+										<div id="img-span">
+											<img style="width: 70%;" src="icon/student/dingdan.png" >
+										</div>
+										<div class="mui-media-body"><font size="2">我的报修</font></div>
+									</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<!-- 校园咨询 -->
+				<div class="school-info">
+					<div class="school-info-header">
+						<div class="header-title">
+							校园咨询
+						</div>
+						<div class="header-queryall">
+							查看全部
+						</div>
+					</div>
+					<ul class="mui-table-view">
+						<li class="mui-table-view-cell mui-media">
+							<a href="javascript:;">
+								<img class="mui-media-object mui-pull-left" src="images/student/shuijiao.jpg">
+								<div class="mui-media-body">
+									幸福
+									<p class='mui-ellipsis'>能和心爱的人一起睡觉，是件幸福的事情；可是，打呼噜怎么办？</p>
+								</div>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media">
+							<a href="javascript:;">
+								<img class="mui-media-object mui-pull-left" src="images/student/muwu.jpg">
+								<div class="mui-media-body">
+									木屋
+									<p class='mui-ellipsis'>想要这样一间小木屋，夏天挫冰吃瓜，冬天围炉取暖.</p>
+								</div>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media">
+							<a href="javascript:;">
+								<img class="mui-media-object mui-pull-left" src="images/student/cbd.jpg">
+								<div class="mui-media-body">
+									CBD
+									<p class='mui-ellipsis'>烤炉模式的城，到黄昏，如同打翻的调色盘一般.</p>
+								</div>
+							</a>
+						</li>
+					
+					</ul>
+				</div>
+			</div>
+			<!-- 随手拍 -->
+			<div id="tabbar-with-contact" class="mui-control-content">
+
+			</div>
+			<div id="tabbar-with-map" class="mui-control-content">
+				<div class="title">这是div模式选项卡中的第4个子页面，该页面展示一个常见的设置示例.</div>
+				<ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right">
+						新消息通知
+					</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right">
+						隐私
+					</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right">
+						通用
+					</a>
+				</li>
+			</ul>
+			<ul class="mui-table-view" style="margin-top: 25px;">
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right">
+						关于mui
+					</a>
+				</li>
+			</ul>
+			<ul class="mui-table-view" style="margin-top: 25px;">
+				<li class="mui-table-view-cell">
+					<a style="text-align: center;color: #FF3B30;">
+						退出登录
+					</a>
+				</li>
+			</ul>
+			</div>
+		</div>
+	</body>
+	<script src="js/mui.min.js"></script>
+	<script>
+		mui.init({
+			swipeBack:true ,//启用右滑关闭功能
+		});
+		var functionIconIndex=document.getElementById("function-icon-index");
+		var functionDivIndex=document.getElementById("function-div-index");
+		var functionIconCamara=document.getElementById("function-icon-camara");
+		var functionDivCamara=document.getElementById("function-div-camara");
+		var functionIconSetting=document.getElementById("function-icon-setting");
+		var functionDivSetting=document.getElementById("function-div-setting");
+		functionDivIndex.onclick=function(){
+			functionIconIndex.src="icon/index.png";
+			functionIconCamara.src="icon/camara0.png";
+			functionIconSetting.src="icon/setting0.png";
+		}
+		functionDivCamara.onclick=function(){
+			functionIconIndex.src="icon/index0.png";
+			functionIconCamara.src="icon/camara.png";
+			functionIconSetting.src="icon/setting0.png";
+		}
+		functionDivSetting.onclick=function(){
+			functionIconIndex.src="icon/index0.png";
+			functionIconCamara.src="icon/camara0.png";
+			functionIconSetting.src="icon/setting.png";
+		}
+	</script>
+</html>
