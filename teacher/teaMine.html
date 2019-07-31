@@ -6,7 +6,28 @@
 		<title></title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../css/mui.css" rel="stylesheet" />
-		<link rel="stylesheet" type="text/css" href="../publicview/css/public.css"/>
+		<link rel="stylesheet" type="text/css" href="../publicview/css/public.css" />
+		<link rel="stylesheet" type="text/css" href="css/iconfont.css" />
+		<style type="text/css">
+			.mui-ellipsis span {
+				font-size: 12px;
+			}
+			.mybtn{
+				color: white;
+				width: 90%;
+				margin-left: 5%;
+				margin-top: 20px;
+				height: 40px;
+			}
+			li span{
+				margin-right: 3%;
+			}
+			.photo{
+				max-width: 60px !important;
+				height: 60px !important;
+				width: 80% !important;
+			}
+		</style>
 	</head>
 
 	<body>
@@ -14,7 +35,46 @@
 			<h1 class="mui-title">我的</h1>
 		</header>
 		<div class="mui-content">
-			我的
+			<div>
+				<ul class="mui-table-view" style="margin-top: 5px; height: 100px;">
+					<li class="mui-table-view-cell mui-media" style="height: 100px;">
+						<a href="javascript:;" class="mui-navigate-right" style="height: 100px; padding-top: 25px;">
+							<img class="mui-media-object mui-pull-left photo" src="../images/logo.png">
+							<div class="mui-media-body"  style="height: 100px;">
+								<span style="color: #42b3e5;">岳晨</span><span class="iconfont icon-nan"></span>
+								<!-- <span style="color: deeppink">岳晨</span><span class="icon-nvsheng"></span> -->
+								<p class="mui-ellipsis"><span>计算机科学与技术学院---</span><span>计算机科学与技术专业(16级)</span></p>
+							</div>
+						</a>
+					</li>
+				</ul>
+			</div>
+
+			<ul class="mui-table-view" style="margin-top: 15px; font-size: 14px;">
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right">
+						<span class="iconfont icon-chaxun"></span>缴费查询
+					</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right">
+						<span class="iconfont icon-chaxun-"></span>报修查询
+					</a>
+				</li>
+			</ul>
+			<ul class="mui-table-view" style="margin-top: 15px;font-size: 14px;">
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right">
+						<span class="iconfont icon-gengxin"></span>检查更新
+					</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right">
+						<span class="iconfont icon-guanyu"></span>关于
+					</a>
+				</li>
+			</ul>
+			<button type="button" class="mui-btn mui-btn-red mybtn">退出登录</button>
 		</div>
 	</body>
 
