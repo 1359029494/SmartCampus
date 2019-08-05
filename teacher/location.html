@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../publicview/css/public.css" />
+		 <style>
+            #allmap {
+                width: 100%;
+                height: 500px;
+                background: #0062CC;
+            }
+        </style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">定位</h1>
+		</header>
+		<div class="mui-content">
+			<div id="allmap">
+				1122
+			</div>
+			<div id="pos">
+				正在定位...
+			</div>
+		</div>
+	</body>
+
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=DjyhcsSwkvot1sj3fvO07LREIkH7vVAO"></script>
+	<script type="text/javascript" src="http://developer.baidu.com/map/jsdemo/demo/convertor.js"></script>
+	<script src="../js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		mui.init()
+
+		var poisiton = ""
+
+		mui.plusReady(function() {
+			plus.geolocation.getCurrentPosition(translatePoint, function(e) {
+				mui.toast("异常:" + e.message);
+			});
+
+			var longitude, latitude;
+			var map = new BMap.Map("allmap");
+
+			navigator.geolocation.getCurrentPosition(function(position) {
+				longitude = position.coords.longitude;
+				latitude = position.coords.latitude;
+
+				console.log("longitude:" + longitude + "==latitude:" + latitude);
+				var point = new BMap.Point(longitude, latitude);
+				map.centerAndZoom(point, 20); // 初始化地图，设置中心点坐标和地图级别  
+				var marker = new BMap.Marker(point); // 创建标注
+				map.addOverlay(marker); // 将标注添加到地图中
+				map.panTo(point);
+			});
+
+			plus.geolocation.getCurrentPosition(translatePoint, function(e) {
+				mui.toast("异常:" + e.message);
+			});
+
+			function translatePoint(position) {
+				var currentLon = position.coords.longitude;
+				var currentLat = position.coords.latitude;
+				var gpsPoint = new BMap.Point(currentLon, currentLat);
+				BMap.Convertor.translate(gpsPoint, 2, initMap); //坐标转换
+			}
+
+			function initMap(point) {
+				map = new BMap.Map("allmap"); //创建地图
+				map.addControl(new BMap.NavigationControl());
+				map.addControl(new BMap.ScaleControl());
+				map.addControl(new BMap.OverviewMapControl());
+				map.centerAndZoom(point, 15);
+				map.addOverlay(new BMap.Marker(point));
+
+			}
+
+			setTimeout(function() {
+				var gpsPoint = new BMap.Point(longitude, latitude);
+				BMap.Convertor.translate(gpsPoint, 0, function(point) {
+					var geoc = new BMap.Geocoder();
+					geoc.getLocation(point, function(rs) {
+						var addComp = rs.addressComponents;
+						// mui.alert(addComp.province + ", " + addComp.city + ", " + addComp.district + ", " + addComp.street + ", " + addComp.streetNumber);
+							poisiton = addComp.province + ", " + addComp.city + ", " + addComp.district + ", " + addComp.street + ", " + addComp.streetNumber;
+							document.getElementById('pos').innerHTML = poisiton
+					});
+				});
+			}, 1000);
+
+		});
+	</script>
+</html>

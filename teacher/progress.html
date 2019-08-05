@@ -1,0 +1,148 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../publicview/css/public.css"/>
+		<style type="text/css">
+			li{
+				height: 150px;
+			}
+			
+			li a{
+				height: 150px;
+			}
+			ul{
+				margin:0px !important;
+			}
+			.content-title{
+				color: #999999;
+				font-size: 14px;
+			}
+			.content-div{
+				margin-top: 5px;
+			}
+			.d4{
+				 position: absolute;
+				 left: 80%;
+				 top: -85px;
+				 width: 0; 
+				 height: 0;
+				 border-width: 85px;
+				 border-style: solid;
+				 border-color: transparent transparent transparent #2ECC71 ;
+				 transform: rotate(315deg); /*顺时针旋转90°*/
+				 color: white;
+			}
+			.d4-font{
+				position: absolute;
+				left: -80px;
+				top: -20px;
+				color: white;
+			}
+			.d3{
+				 position: absolute;
+				 left: 80%;
+				 top: -85px;
+				 width: 0; 
+				 height: 0;
+				 border-width: 85px;
+				 border-style: solid;
+				 border-color: transparent transparent transparent #F9BF3B;
+				 transform: rotate(315deg); /*顺时针旋转90°*/
+				 color: white;
+			}
+			.d2{
+				 position: absolute;
+				 left: 80%;
+				 top: -85px;
+				 width: 0; 
+				 height: 0;
+				 border-width: 85px;
+				 border-style: solid;
+				 border-color: transparent transparent transparent #F15A22;
+				 transform: rotate(315deg); /*顺时针旋转90°*/
+				 color: white;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">进度查询</h1>
+		</header>
+		
+		<div class="mui-content">
+			<ul class="mui-table-view">
+					<li class="mui-table-view-cell">
+						<a class="mui-navigate-right">
+							<div class="content-div">
+								<span class="content-title">保修类型：</span><span>宿舍灯坏了</span>
+							</div>
+							<div class="content-div">
+								<span class="content-title">维修师傅：</span><span>王师傅</span>
+							</div>
+							<div class="content-div">
+								<span class="content-title">报修时间：</span><span>2019-8-5 09:10:15</span>
+							</div>
+							<div class="content-div">
+								<span class="content-title">维修时间：</span><span>2019-8-5 09:10:15</span>
+							</div>
+							<div class="content-div">
+								<span class="content-title">罚款：</span><span>无罚款</span>
+							</div>
+						</a>
+						<div class="d4"><p class="d4-font">维修完毕</p></div>
+					</li>
+					<li class="mui-table-view-cell">
+						<a class="mui-navigate-right">
+							 <div class="content-div">
+							 	<span class="content-title">保修类型：</span><span>宿舍灯坏了</span>
+							 </div>
+							 <div class="content-div">
+							 	<span class="content-title">维修师傅：</span><span></span>
+							 </div>
+							 <div class="content-div">
+							 	<span class="content-title">报修时间：</span><span>2019-8-5 09:10:15</span>
+							 </div>
+							 <div class="content-div">
+							 	<span class="content-title">维修时间：</span><span></span>
+							 </div>
+							 <div class="content-div">
+							 	<span class="content-title">罚款：</span><span>无罚款</span>
+							 </div>
+						</a>
+						<div class="d3"><p class="d4-font">待维修</p></div>
+					</li>
+					<li class="mui-table-view-cell">
+						<a class="mui-navigate-right">
+							 <div class="content-div">
+							 	<span class="content-title">保修类型：</span><span>宿舍灯坏了</span>
+							 </div>
+							 <div class="content-div">
+							 	<span class="content-title">维修师傅：</span><span>王师傅</span>
+							 </div>
+							 <div class="content-div">
+							 	<span class="content-title">报修时间：</span><span>2019-8-5 09:10:15</span>
+							 </div>
+							 <div class="content-div">
+							 	<span class="content-title">维修时间：</span><span>2019-8-5 09:10:15</span>
+							 </div>
+							 <div class="content-div">
+							 	<span class="content-title">罚款：</span><span style="color: red;">缴纳罚款10元</span>
+							 </div>
+						</a>
+						<div class="d2"><p class="d4-font">未交罚款</p></div>
+					</li>
+				</ul>
+		</div>
+	</body>
+	<script src="../js/mui.js"></script>
+	<script type="text/javascript">
+		mui.init()
+	</script>
+</html>

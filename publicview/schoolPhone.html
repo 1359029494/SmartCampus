@@ -6,27 +6,31 @@
 		<title></title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../css/mui.css" rel="stylesheet" />
-		<link rel="stylesheet" type="text/css" href="css/public.css"/>
-		<link rel="stylesheet" type="text/css" href="css/mui.picker.css"/>
-		<link rel="stylesheet" type="text/css" href="css/mui.poppicker.css"/>
+		<link rel="stylesheet" type="text/css" href="css/public.css" />
+		<link rel="stylesheet" type="text/css" href="css/mui.picker.css" />
+		<link rel="stylesheet" type="text/css" href="css/mui.poppicker.css" />
 		<style type="text/css">
-			.mybtn{
+			.mybtn {
 				background-color: deepskyblue;
 				color: white;
 				width: 50%;
 				margin-left: 25%;
+				height: 40px;
 			}
-			.mui-btn-block{
+
+			.mui-btn-block {
 				padding-top: 5px;
 				padding-bottom: 5px;
 				font-size: 16px;
 				font-family: "微软雅黑";
 				margin-bottom: 0px;
 			}
-			.mui-content{
+
+			.mui-content {
 				background-color: white;
 			}
-			.phone1{
+
+			.phone1 {
 				float: left;
 				border: 1px solid #999999;
 				height: 200px;
@@ -34,17 +38,33 @@
 				margin-left: 2%;
 				margin-top: 10px;
 			}
-			.phone1 img{
+
+			.phone1 img {
 				margin-top: 60px;
 				margin-left: 23%;
 			}
-			.mybtn2{
+
+			.mybtn2 {
 				background-color: deepskyblue;
 				color: white;
 				width: 90%;
 				margin-left: 5%;
 				margin-top: 20px;
 				margin-bottom: 20px;
+				height: 40px;
+				font-size: 18px;
+			}
+			.mui-input-row{
+				height: 60px;
+			}
+			select, textarea, input[type='text'], input[type='search'], input[type='password'], input[type='datetime'], input[type='datetime-local'], input[type='date'], input[type='month'], input[type='time'], input[type='week'], input[type='number'], input[type='email'], input[type='url'], input[type='tel'], input[type='color'] {
+				height: 40px;
+			}
+			.mui-input-group .mui-input-row {
+				height: 40px;
+			}
+			#showUserPicker{
+				height: 40px;
 			}
 		</style>
 	</head>
@@ -53,21 +73,22 @@
 		<header class="mui-bar mui-bar-nav">
 			<h1 class="mui-title">校园随手拍</h1>
 		</header>
-		<div class="mui-content">
+		<div class="mui-content" style="margin-top: 10px;">
 			<form class="mui-input-group">
 				<div class="mui-input-row">
 					<label>报修人<span style="color: red;">*</span>：</label>
 					<input type="text" class="mui-input-clear" placeholder="做好事要留名哦">
 				</div>
 				<div>
-					<button id='showUserPicker' class="mui-btn mui-btn-block" type='button'>请选择保修类型<span style="color: red;"> *</span> ...</button>
+					<button id='showUserPicker' class="mui-btn mui-btn-block" type='button'>请选择保修类型<span style="color: red;"> *</span>
+						...</button>
 				</div>
 				<div class="mui-input-row">
 					<label>位置<span style="color: red;"> *</span>：</label>
 					<input type="text" class="mui-input-clear" placeholder="点击按钮获取位置">
 				</div>
 				<div>
-					<button type="button" class="mui-btn mybtn">获取位置</button>
+					<button id="location" type="button" class="mui-btn mybtn">获取位置</button>
 				</div>
 			</form>
 			<div style="overflow: hidden; margin-top: 10px;">
@@ -82,51 +103,67 @@
 					<img src="images/jiahao.png" width="50%">
 				</div>
 			</div>
-			
+
 			<button type="button" class="mui-btn mybtn2">提 交</button>
 		</div>
 	</body>
-	
+
 	<script src="../js/mui.js"></script>
 	<script src="js/mui.picker.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/mui.poppicker.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
 		// mui.init()
-		
-		  (function($, doc) {
-                $.init();
-                $.ready(function() {
-                    //普通示例
-                    var userPicker = new $.PopPicker();
-                    userPicker.setData([{
-                        value: '校园公共设置损坏',
-                        text: '校园公共设置损坏'
-                    }, {
-                        value: '学生宿舍电灯损坏',
-                        text: '学生宿舍电灯损坏'
-                    }, {
-                        value: '学生宿舍桌椅损坏',
-                        text: '学生宿舍桌椅损坏'
-                    }, {
-                        value: '学生宿舍厕所设施损坏',
-                        text: '学生宿舍厕所设施损坏'
-                    }, {
-                        value: '教室多媒体损坏',
-                        text: '教室多媒体损坏'
-                    }, {
-                        value: '教室桌椅损坏',
-                        text: '教室桌椅损坏'
-                    }]);
-                    var showUserPickerButton = doc.getElementById('showUserPicker');
-                    var userResult = doc.getElementById('userResult');
-                    showUserPickerButton.addEventListener('tap', function(event) {
-                        userPicker.show(function(items) {
-//                             userResult.innerText = JSON.stringify(items[0]);
-                            //返回 false 可以阻止选择框的关闭
-                            //return false;
-                        });
-                    }, false);
-})
-})(mui, document);
+
+		(function($, doc) {
+			$.init();
+			$.ready(function() {
+				//普通示例
+				var userPicker = new $.PopPicker();
+				userPicker.setData([{
+					value: '校园公共设置损坏',
+					text: '校园公共设置损坏'
+				}, {
+					value: '学生宿舍电灯损坏',
+					text: '学生宿舍电灯损坏'
+				}, {
+					value: '学生宿舍桌椅损坏',
+					text: '学生宿舍桌椅损坏'
+				}, {
+					value: '学生宿舍厕所设施损坏',
+					text: '学生宿舍厕所设施损坏'
+				}, {
+					value: '教室多媒体损坏',
+					text: '教室多媒体损坏'
+				}, {
+					value: '教室桌椅损坏',
+					text: '教室桌椅损坏'
+				}]);
+				var showUserPickerButton = doc.getElementById('showUserPicker');
+				var userResult = doc.getElementById('userResult');
+				showUserPickerButton.addEventListener('tap', function(event) {
+					userPicker.show(function(items) {
+						//                             userResult.innerText = JSON.stringify(items[0]);
+						//返回 false 可以阻止选择框的关闭
+						//return false;
+					});
+				}, false);
+			})
+		})(mui, document);
+
+		document.getElementById('location').addEventListener("tap", function() {
+			mui.openWindow({
+				url: "../teacher/location.html",
+				id: "location.html",
+				show: {
+					autoShow: true, //页面loaded事件发生后自动显示，默认为true
+					aniShow: "slide-in-right", //页面显示动画，默认为”slide-in-right“；
+					duration: 300 //页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+				},
+				waiting: {
+					autoShow: true, //自动显示等待框，默认为true
+					title: '正在加载...', //等待对话框上显示的提示内容
+				}
+			})
+		})
 	</script>
 </html>

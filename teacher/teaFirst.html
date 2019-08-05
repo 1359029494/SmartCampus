@@ -49,41 +49,41 @@
 							<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
 							<div class="mui-slider-item mui-slider-item-duplicate">
 								<a href="#">
-									<img src="../images/cbd.jpg">
+									<img src="../images/student/cbd.jpg">
 								</a>
 							</div>
 							<!-- 第一张 -->
 							<div class="mui-slider-item">
 								<a href="#">
-									<img src="../images/muwu.jpg">
+									<img src="../images/student/muwu.jpg">
 									<p class="mui-slider-title">静静看这世界</p>
 								</a>
 							</div>
 							<!-- 第二张 -->
 							<div class="mui-slider-item">
 								<a href="#">
-									<img src="../images/shuijiao.jpg">
+									<img src="../images/student/shuijiao.jpg">
 									<p class="mui-slider-title">静静看这世界</p>
 								</a>
 							</div>
 							<!-- 第三张 -->
 							<div class="mui-slider-item">
 								<a href="#">
-									<img src="../images/yuantiao.jpg">
+									<img src="../images/student/yuantiao.jpg">
 									<p class="mui-slider-title">静静看这世界</p>
 								</a>
 							</div>
 							<!-- 第四张 -->
 							<div class="mui-slider-item">
 								<a href="#">
-									<img src="../images/cbd.jpg">
+									<img src="../images/student/cbd.jpg">
 									<p class="mui-slider-title">静静看这世界</p>
 								</a>
 							</div>
 							<!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
 							<div class="mui-slider-item mui-slider-item-duplicate">
 								<a href="#">
-									<img src="../images/muwu.jpg">
+									<img src="../images/student/muwu.jpg">
 									<p class="mui-slider-title">静静看这世界</p>
 								</a>
 							</div>
@@ -98,16 +98,16 @@
 
 					<div class="main-leader">
 						<div>
-							<img src="../icon/weixiu.png">
+							<img src="../icon/student/weixiu.png">
 							<p>报修</p>
 						</div>
 						<div>
-							<img src="../icon/dingdan.png">
+							<img src="../icon/student/dingdan.png" id="progress">
 							<p>进度查询</p>
 						</div>
 						<div>
-							<img src="../icon/weixiu.png">
-							<p>报修</p>
+							<img src="../icon/student/fuwu.png">
+							<p>帮助</p>
 						</div>
 					</div>
 					<div class="main-title">校园安全小知识</div>
@@ -188,6 +188,24 @@
 		gallery.slider({
 			interval: 1000 //自动轮播周期，若为0则不自动播放，默认为0；
 		});
+		
+		
+		//打开进度查询页面
+		document.getElementById('progress').addEventListener("tap", function() {
+			mui.openWindow({
+				url: "../teacher/progress.html",
+				id: "location.html",
+				show: {
+					autoShow: true, //页面loaded事件发生后自动显示，默认为true
+					aniShow: "slide-in-right", //页面显示动画，默认为”slide-in-right“；
+					duration: 300 //页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+				},
+				waiting: {
+					autoShow: true, //自动显示等待框，默认为true
+					title: '正在加载...', //等待对话框上显示的提示内容
+				}
+			})
+		})
 	</script>
 
 </html>
