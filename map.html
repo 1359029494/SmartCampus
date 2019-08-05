@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<div class="title">账号</div>
+	<ul class="mui-table-view">
+		<li class="mui-table-view-cell">
+			<a class="mui-navigate-right">
+				新消息通知
+			</a>
+		</li>
+		<li class="mui-table-view-cell">
+			<a class="mui-navigate-right">
+				隐私
+			</a>
+		</li>
+		<li class="mui-table-view-cell">
+			<a class="mui-navigate-right">
+				通用
+			</a>
+		</li>
+	</ul>
+	<ul class="mui-table-view" style="margin-top: 25px;">
+		<li class="mui-table-view-cell">
+			<a onclick="cache()" class="mui-navigate-right">
+				清理缓存
+			</a>
+		</li>
+	</ul>
+	<ul class="mui-table-view" style="margin-top: 25px;">
+		<li class="mui-table-view-cell">
+			<a style="text-align: center;color: #FF3B30;">
+				退出登录
+			</a>
+		</li>
+	</ul>
+	</div>
+	<script src="js/mui.min.js"></script>
+	<script>
+		mui.init({})
+
+		function cache() {
+			alert(222);
+			mui.plusReady(function() {
+				plus.cache.calculate(function(size) {
+					console.log(size)
+					sizeCache = size;
+					var size_m = parseFloat(sizeCache / (1024 * 1024)).toFixed(2);
+					if (size_m > 1) {
+						mui.confirm("您目前的系统缓存为" + size_m + "M？", "清除缓存", ["确认", "取消"], function(e) {
+							if (e.index == 1) {} else {
+								plus.cache.clear(function() {
+									alert("缓存清除完毕")
+								});
+							}
+						});
+					}
+				});
+			});
+
+		}
+	</script>
+</html>

@@ -1,0 +1,46 @@
+.font-seal {
+	font-size: 12px;
+	z-index: 2;
+	position: absolute;
+	right: 14px;
+	top: 35px;
+	border: 1px solid #F73A3C;
+	transform: rotate(45deg);
+	width: 53px;
+	line-height: 20px;
+	text-align: center;
+	color: #F73A3C;
+	font-weight: bold;
+}
+
+/**
+ * 三角形气泡
+ */
+.triangle-topright {
+	width: 0;
+	height: 0;
+	border-top: 50px solid #FD9D2D;
+	border-left: 3rem solid transparent;
+}
+
+.font-topright {
+	font-size: 12px;
+	z-index: 2;
+	position: absolute;
+	right: -4px;
+	top: -2px;
+	transform: rotate(45deg);
+	-webkit-transform: rotate(45deg);
+	-moz-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	-o-transform: rotate(45deg);
+	width: 43px;
+	line-height: 43px;
+	text-align: center;
+	color: #FFFFFF;
+}
+
+.mui-badge.mui-badge-orange {
+	background-color: #FC9C2D;
+	color: #FFFFFF;
+}

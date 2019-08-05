@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.css" rel="stylesheet" />
+		<link href="css/star.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<div class="mui-content">
+			<ul class="mui-table-view">
+				<li id="id" class="star-li">
+					<a>报修单号</a>
+					<div class="icons">
+						10086
+					</div>
+				</li>
+				<li id="role" class="star-li">
+					<a>角色</a>
+					<div class="icons">
+						教师
+					</div>
+				</li>
+				<li id="phone" class="star-li">
+					<a>联系方式</a>
+					<div class="icons">
+						18954156856
+					</div>
+				</li>
+				<li id="repair" class="star-li">
+					<a>维修情况</a>
+					<div class="icons">
+						<i data-index="1" class="mui-icon mui-icon-star"></i>
+						<i data-index="2" class="mui-icon mui-icon-star"></i>
+						<i data-index="3" class="mui-icon mui-icon-star"></i>
+						<i data-index="4" class="mui-icon mui-icon-star"></i>
+						<i data-index="5" class="mui-icon mui-icon-star"></i>
+					</div>
+				</li>
+				<li id="service" class="star-li">
+					<a>服务态度</a>
+					<div class="icons">
+						<i data-index="1" class="mui-icon mui-icon-star"></i>
+						<i data-index="2" class="mui-icon mui-icon-star"></i>
+						<i data-index="3" class="mui-icon mui-icon-star"></i>
+						<i data-index="4" class="mui-icon mui-icon-star"></i>
+						<i data-index="5" class="mui-icon mui-icon-star"></i>
+					</div>
+				</li>
+					<li   class="star-li">
+					<a>评价</a>
+					<div class="icons">
+					 	<textarea id="evaluate" readonly placeholder="无评论"></textarea>
+					</div>
+				</li>
+			</ul>
+		
+			<div class="mui-input-row" style="margin: 10px 5px; ">
+				<script src="js/mui.js"></script>
+				<script type="text/javascript">
+					mui.init()
+					var rScore = 4;
+					var sScore = 2;
+					var text = "很好 很nice";
+					var repair = document.getElementById("repair");
+					var evaluate = document.getElementById("evaluate");
+					var service = document.getElementById("service");
+					for (var i = 0; i < rScore; i++) {
+						repair.children[1].children[i].classList.add('mui-icon-star-filled');
+					}
+					for (var i = 0; i < sScore; i++) {
+						service.children[1].children[i].classList.add('mui-icon-star-filled');
+					}
+					document.getElementById("evaluate").value = text;
+				</script>
+	</body>
+
+</html>
