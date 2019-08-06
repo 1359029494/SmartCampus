@@ -1,0 +1,28 @@
+label{
+	font-size: 14px;
+}
+input{
+	font-size: 12px;
+}
+#photo-button{
+	border: 1px solid #ccc;
+	width: 70px;
+	font-size: 12px;
+	padding-left: 10px;
+	border-radius: 8px;
+	margin-top: 4px;
+	left: -160px;
+}
+#textarea{
+	font-size: 13px;
+	margin-top: -8px;
+}
+#submit-button{
+	height: 50px;
+	background: #007AFF;
+	width: 100%;
+}
+#history{
+	list-style: none;
+	font-size:10px;
+}
