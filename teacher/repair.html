@@ -1,0 +1,180 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+		<meta name="HandheldFriendly" content="true"/>
+		<meta name="MobileOptimized" content="320"/>
+		<link href="../css/mui.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../publicview/css/public.css"/>
+		<link rel="stylesheet" type="text/css" href="css/repair.css"/>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="background: deepskyblue; height:44px;">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title" style="color: #FFFFFF;">我要报修</h1>
+		</header>
+		<div class="mui-content">
+			<div class="mui-content-padded" style="margin: 5px;">
+				<form class="mui-input-group">
+					<div class="mui-input-row">
+						<label>姓名<span style="color: red; float: right; margin-right: 10px;">*</span></label>
+						<input type="text" placeholder="请输入您的姓名">
+					</div>
+					<div class="mui-input-row">
+						<label>联系方式<span style="color: red; float: right; margin-right: 10px;">*</span></label>
+						<input type="text" placeholder="请输入您的联系方式">
+					</div>
+					<div class="mui-input-row">
+						<label>宿舍<span style="color: red; float: right; margin-right: 10px;">*</span></label>
+						<input type="text" placeholder="如:3#123">
+					</div>
+					<div class="mui-input-row">
+						<label>报修内容<span style="color: red; float: right; margin-right: 10px;">*</span></label>
+						<input type="text" placeholder="如:灯管损坏">
+					</div>
+					<div class="mui-input-row">
+						<label>拍照<span style="color: red; float: right; margin-right: 10px;">*</span></label>
+						<input type="button" value="点此拍照" id="photo-button">
+					</div>
+					<div class="mui-input-row">
+						<label>图片<span style="color: red; float: right; margin-right: 10px;">*</span></label>
+						<ul id="history" class="dlist" style="text-align:left;">
+							<li id="empty" class="ditem-empty">请拍照</li>
+						</ul>
+					</div>
+					<div class="mui-input-row" style="margin: 10px 5px; height: 130px;">
+						<label style="font-size: 14px; margin-left: -5px; margin-top: -6px;">备注</label>
+						<textarea id="textarea" rows="6"></textarea>
+					</div>
+					<button type="button" id="submit-button" class="mui-btn mui-btn-primary">提交</button>
+				</form>
+			</div>
+			<button id="btn">测试</button>
+		</div>
+
+		
+		<script src="../js/mui.js"></script>
+		<script src="../js/common.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			
+			document.getElementById("photo-button").addEventListener("tap",function() {
+				getImage();
+			});
+			document.getElementById("btn").addEventListener("tap",function() {
+				var li=document.getElementsByTagName("li");
+				alert(li.length); 
+			});
+			
+			var i=1,gentry=null,w=null;
+			var hl=null,le=null,de=null,ie=null;
+			var unv=true;
+			var bUpdated=false; //用于兼容可能提前注入导致DOM未解析完更新的问题
+			// H5 plus事件处理
+			function plusReady(){
+				// 获取摄像头目录对象
+				plus.io.resolveLocalFileSystemURL('_doc/', function(entry){
+					entry.getDirectory('camera', {create:true}, function(dir){
+						gentry = dir;
+					}, function(e){
+						outSet('Get directory "camera" failed: '+e.message);
+					} );
+				}, function(e){
+					outSet('Resolve "_doc/" failed: '+e.message);
+				});
+			}
+			if(window.plus){
+				plusReady();
+			}else{
+				document.addEventListener('plusready', plusReady, false);
+			}
+			// 监听DOMContentLoaded事件
+			document.addEventListener('DOMContentLoaded', function(){
+				// 获取DOM元素对象
+				hl=document.getElementById('history');
+				le=document.getElementById('empty');
+				de=document.getElementById('display');
+				if(ie=document.getElementById('index')){
+					ie.onchange=indexChanged;
+				}
+				// 判断是否支持video标签
+				unv=!document.createElement('video').canPlayType;
+			},false );
+			function changeIndex(){
+				outSet('选择摄像头：');
+				ie.focus();
+			}
+			function indexChanged(){
+				de.innerText = ie.options[ie.selectedIndex].innerText;
+				i = parseInt(ie.value);
+				outLine(de.innerText);
+			}
+			
+			function getImage(){
+				var cmr = plus.camera.getCamera();
+				cmr.captureImage(function(p){
+					outLine('成功：'+p);
+					plus.io.resolveLocalFileSystemURL(p, function(entry){
+						createItem(entry);
+					}, function(e){
+						outLine('读取拍照文件错误：'+e.message);
+					});
+				}, function(e){
+					outLine('失败：'+e.message);
+				}, {filename:'_doc/camera/',index:1});
+			}
+			
+			// 显示文件
+			function displayFile(li){
+				if(w){
+					outLine('重复点击！');
+					return;
+				}
+				if(!li || !li.entry){
+					ouSet('无效的媒体文件');
+					return;
+				}
+				var name = li.entry.name;
+				var suffix = name.substr(name.lastIndexOf('.'));
+				var url = '';
+				if(suffix=='.mov' || suffix=='.3gp' || suffix=='.mp4' || suffix=='.avi'){
+					//if(unv){plus.runtime.openFile('_doc/camera/'+name);return;}
+					url = '/plus/camera_video.html';
+				} else {
+					url = 'camera_image.html';
+				}
+				w=plus.webview.create(url,url,{hardwareAccelerated:true,scrollIndicator:'none',scalable:true,bounce:'all'});
+				w.addEventListener('loaded', function(){
+					w.evalJS('loadMedia("'+li.entry.toLocalURL()+'")');
+					//w.evalJS('loadMedia("'+'http://localhost:13131/_doc/camera/'+name+'")');
+				}, false );
+				w.addEventListener('close', function(){
+					w = null;
+				}, false);
+				w.show('pop-in');
+			}
+			
+			// 添加播放项
+			function createItem(entry){
+				var li = document.createElement('li');
+				li.className = 'ditem';
+				li.innerHTML = '<span class="iplay"><font class="aname"></font><br/><font class="ainf"></font></span>';
+				li.setAttribute('onclick', 'displayFile(this)' );
+				hl.insertBefore( li, le.nextSibling );
+				li.querySelector('.aname').innerText = entry.name;
+				li.querySelector('.ainf').innerText = '...';
+				li.entry = entry;
+				// 设置空项不可见
+				le.style.display = 'none';
+			}
+			
+			
+			
+		</script>
+	</body>
+
+</html>

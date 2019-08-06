@@ -8,12 +8,11 @@
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<!--标准mui.css-->
-		<link rel="stylesheet" href="css/mui.min.css">
-		<link rel="import" href="repairInfo.html" id="repairInfo" />
-		<link rel="stylesheet" type="text/css" href="css/main.css" />
+		<link rel="stylesheet" href="../css/mui.min.css">
+
+		<link rel="stylesheet" type="text/css" href="../css/main.css" />
 		<!--App自定义的css-->
-		<link rel="stylesheet" type="text/css" href="css/app.css" />
- 
+		<link rel="stylesheet" type="text/css" href="../css/app.css" />
 	</head>
 
 	<body>
@@ -43,38 +42,38 @@
 						<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
 						<div class="mui-slider-item mui-slider-item-duplicate">
 							<a href="#">
-								<img src="../images/yuantiao.jpg">
+								<img src="../images/student/yuantiao.jpg">
 								<p class="mui-slider-title">静静看这世界</p>
 							</a>
 						</div>
 						<div class="mui-slider-item">
 							<a href="#">
-								<img src="images/shuijiao.jpg">
+								<img src="../images/student/shuijiao.jpg">
 								<p class="mui-slider-title">幸福就是可以一起睡觉</p>
 							</a>
 						</div>
 						<div class="mui-slider-item">
 							<a href="#">
-								<img src="images/muwu.jpg">
+								<img src="../images/student/muwu.jpg">
 								<p class="mui-slider-title">想要一间这样的木屋，静静的喝咖啡</p>
 							</a>
 						</div>
 						<div class="mui-slider-item">
 							<a href="#">
-								<img src="images/cbd.jpg">
+								<img src="../images/student/cbd.jpg">
 								<p class="mui-slider-title">Color of SIP CBD</p>
 							</a>
 						</div>
 						<div class="mui-slider-item">
 							<a href="#">
-								<img src="images/yuantiao.jpg">
+								<img src="../images/student/yuantiao.jpg">
 								<p class="mui-slider-title">静静看这世界</p>
 							</a>
 						</div>
 						<!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
 						<div class="mui-slider-item mui-slider-item-duplicate">
 							<a href="#">
-								<img src="images/shuijiao.jpg">
+								<img src="../images/student/shuijiao.jpg">
 								<p class="mui-slider-title">幸福就是可以一起睡觉</p>
 							</a>
 						</div>
@@ -85,9 +84,9 @@
 						<div class="mui-slider-item">
 							<ul class="mui-table-view mui-grid-view mui-grid-9">
 								<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-									<a class="mui-tab-item" onclick="jumpToRepair()" >
+									<a class="mui-tab-item" onclick="jumpToRepair()">
 										<div id="img-span">
-											<img style="width: 70%;" src="icon/weixiu.png">
+											<img style="width: 70%;" src="../icon/repair/weixiu.png">
 										</div>
 										<div class="mui-media-body">维修</div>
 									</a>
@@ -95,7 +94,7 @@
 								<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
 									<a class="mui-tab-item" href="#">
 										<div id="img-span">
-											<img style="width: 70%;" src="icon/dingdan.png">
+											<img style="width: 70%;" src="../icon/repair/dingdan.png">
 										</div>
 										<div class="mui-media-body">我的评价</div>
 									</a>
@@ -103,9 +102,9 @@
 								<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
 									<a class="mui-tab-item" href="#">
 										<div id="img-span">
-											<img style="width: 70%;" src="icon/weixiu.png">
+											<img style="width: 70%;" src="../icon/repair/fuwu.png">
 										</div>
-										<div class="mui-media-body">维修</div>
+										<div class="mui-media-body">服务</div>
 									</a>
 								</li>
 							</ul>
@@ -123,25 +122,27 @@
 			</div>
 			<div id="tabbar-with-repairInfo" class="mui-control-content">
 			</div>
-			 
+
 		</div>
 	</body>
-	<script src="js/mui.min.js"></script>
-	<script src="js/jquery-3.3.1.js"></script>
+	<script src="../js/mui.min.js"></script>
+	<script src="../js/jquery-3.3.1.js"></script>
 	<script>
-		$("#tabbar-with-chat").load("chat.html");
+	/* 	$("#tabbar-with-chat").load("chat.html");
 		$("#tabbar-with-contact").load("contact.html");
 		$("#tabbar-with-map").load("map.html");
 		$("#tabbar-with-repairInfo").load("repairInfo.html");
-		mui.init({
-			swipeBack: true //启用右滑关闭功能
-		});
+ */
+
 		function jumpToRepair() {
 			var id = $("#tabbar-with-repairInfo");
 			mui.openWindow({
 				id: id,
 				url: 'repair.html'
+
 			});
 		}
 	</script>
 </html>
+
+</script>
