@@ -97,7 +97,7 @@
 					</div>
 
 					<div class="main-leader">
-						<div>
+						<div id="repair">
 							<img src="../icon/student/weixiu.png">
 							<p>报修</p>
 						</div>
@@ -205,7 +205,26 @@
 					title: '正在加载...', //等待对话框上显示的提示内容
 				}
 			})
+		});
+		
+		
+		//打开保修界面
+		document.getElementById('repair').addEventListener("tap", function() {
+			mui.openWindow({
+				url: "../teacher/repair.html",
+				id: "location.html",
+				show: {
+					autoShow: true, //页面loaded事件发生后自动显示，默认为true
+					aniShow: "slide-in-right", //页面显示动画，默认为”slide-in-right“；
+					duration: 300 //页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+				},
+				waiting: {
+					autoShow: true, //自动显示等待框，默认为true
+					title: '正在加载...', //等待对话框上显示的提示内容
+				}
+			})
 		})
+		
 	</script>
 
 </html>
