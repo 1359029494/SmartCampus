@@ -1,11 +1,12 @@
 .mui-bar-nav{
-	background: deepskyblue; height:50px;
+	background: deepskyblue; height:40px;
 	
 }
 .mui-title{
 	color: white;
 	line-height: 50px;
-	font-size: 18px;
+	font-size: 20px;
+	line-height: 30px;
 }
 .mui-icon-left-nav{
 	color: white;
