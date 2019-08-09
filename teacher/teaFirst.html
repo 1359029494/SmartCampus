@@ -170,6 +170,11 @@
 				}
 			}
 		});
+		
+		mui.plusReady(function(){
+			// 设置系统状态栏背景为蓝色
+			plus.navigator.setStatusBarBackground('#00bfff');
+		})
 
 		function down() {
 			mui.toast('更新了5篇文章');

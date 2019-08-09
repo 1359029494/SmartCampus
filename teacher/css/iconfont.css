@@ -17,6 +17,7 @@
 
 .icon-nvsheng:before {
   content: "\e616";
+  color: deeppink;
 }
 
 .icon-shouye:before {
@@ -29,6 +30,7 @@
 
 .icon-nan:before {
   content: "\e661";
+  color: deepskyblue;
 }
 
 .icon-chaxun:before {
