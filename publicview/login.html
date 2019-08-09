@@ -37,21 +37,25 @@
 				text-align: center;
 				overflow: hidden;
 			}
-			.top img{
+
+			.top img {
 				width: 50%;
 				display: block;
 				margin-left: 65%;
 			}
-			.top-img{
+
+			.top-img {
 				float: left;
 			}
-			.top-font{
+
+			.top-font {
 				float: left;
 				width: 50%;
 				margin-left: 0px;
 				margin-top: 25px;
 			}
-			#username{
+
+			#username {
 				width: 80%;
 				margin-left: 10%;
 				margin-top: 80px;
@@ -60,7 +64,8 @@
 				background-color: #eaeaea;
 				border: 0px solid red;
 			}
-			#password{
+
+			#password {
 				width: 80%;
 				margin-left: 10%;
 				border-radius: 30px;
@@ -69,7 +74,8 @@
 				background-color: #eaeaea;
 				border: 0px solid red;
 			}
-			.bottom{
+
+			.bottom {
 				font-weight: 700;
 				text-align: center;
 				margin-top: 180px;
@@ -79,7 +85,7 @@
 	</head>
 
 	<body>
-		
+
 
 		<div class="mui-content">
 			<div class="top">
@@ -93,7 +99,7 @@
 				<input type="password" id="password" value="" placeholder="请输入您的密码" />
 			</div>
 			<button id="btn" type="button" class="mui-btn">登 录</button>
-			
+
 			<div class="bottom">
 				<span>忘记密码</span>&nbsp;&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp;
 				<span>修改密码</span>
@@ -107,21 +113,41 @@
 			// 设置系统状态栏背景为蓝色
 			plus.navigator.setStatusBarBackground('white');
 		})
-		
+
+		localStorage.setItem('url', 'http://172.20.10.3:8080')
+		var url = localStorage.getItem('url')
+
 		document.getElementById('btn').addEventListener("tap", function() {
-			mui.openWindow({
-				url: "../teacher/main.html",
-				id: "main.html",
-				show: {
-					autoShow: true, //页面loaded事件发生后自动显示，默认为true
-					aniShow: "slide-in-right", //页面显示动画，默认为”slide-in-right“；
-					duration: 300 //页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
-				},
-				waiting: {
-					autoShow: true, //自动显示等待框，默认为true
-					title: '正在加载...', //等待对话框上显示的提示内容
-				}
+			var username = document.getElementById('username').value
+			var password = document.getElementById('password').value
+			var params = JSON.stringify({
+				username: username,
+				password: password
 			})
+			console.log(params)
+			mui.post(url + '/api/v1/pub/login', {
+				'username': username,
+				'password': password
+			}, function(data) {
+				//服务器返回响应，根据响应结果，分析是否登录成功；
+				if (data.code == 0) {
+					mui.openWindow({
+						url: "../teacher/main.html",
+						id: "main.html",
+						show: {
+							autoShow: true, //页面loaded事件发生后自动显示，默认为true
+							aniShow: "slide-in-right", //页面显示动画，默认为”slide-in-right“；
+							duration: 300 //页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+						},
+						waiting: {
+							autoShow: true, //自动显示等待框，默认为true
+							title: '正在加载...', //等待对话框上显示的提示内容
+						}
+					})
+				} else {
+					mui.alert('账号或密码错误', '提示')
+				}
+			}, 'json');
 		});
 	</script>
 </html>
