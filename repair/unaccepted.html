@@ -1,0 +1,44 @@
+<head>
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<link href="../css/mui.min.css" rel="stylesheet" />
+	<link href="../css/repair.css" rel="stylesheet" />
+</head>
+
+<header class="mui-bar mui-bar-nav" style="background: deepskyblue; height:40px;">
+	<h1 class="mui-title">待接单</h1>
+	<button type="button" onclick="function(){mui.back()}" style="color: #000000;" class="mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left"><span
+		 class="mui-icon mui-icon-left-nav"></span>返回</button>
+</header>
+<nav class="mui-bar mui-bar-tab">
+	<button type="button" class="mui-btn mui-btn-blue mui-btn-block" id="get_list">加载更多</button>
+</nav>
+<div id="item1" class="mui-control-content mui-active" style="margin-top: 50px;">
+	<div id="card" class="mui-card">
+		<div style="float: right;" class=" triangle-topright mui-badge-orange"></div>
+		<div class="mui-card-header"><label>维修单号：<label id="id">25</label></label></div>
+		<div class="font-topright"><label id="service _status">待修</label></div>
+		<div class="font-seal"><label id="fine">待缴费</label></div>
+		<div class="mui-card-content">
+			<div class="mui-card-content-inner">
+				<p>地点: <label id="local">25号学生公寓</label></p>
+				<p>故障类型: <label id="type">风扇</label></p>
+				<p>联系方式: <label id="phone">18954156856</label></p>
+				<p>保修时间: <label id="repair_date">2019-9-9</label></p>
+			</div>
+		</div>
+		<div class="mui-card-footer">
+			<button onclick="jumpToRepairInfo()" id="info" type="button" class="mui-btn mui-btn-royal mui-btn-outlined">
+				详细信息
+			</button>
+			<button id="start" type="button" style="right:30px;position: absolute;width: 100px; " class="mui-btn mui-btn-primary ">
+				<label>接单</label>
+			</button>
+		</div>
+	</div>
+
+</div>
+
+<script src="../js/mui.min.js"></script>
+<script src="../js/jquery-3.3.1.js"></script>
+<script src="../js/mui.lazyload.js"></script>
+<script src="../js/mui.lazyload.img.js"></script>

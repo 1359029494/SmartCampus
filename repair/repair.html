@@ -12,12 +12,12 @@
 <nav class="mui-bar mui-bar-tab">
 	<button type="button" class="mui-btn mui-btn-blue mui-btn-block" id="get_list">加载更多</button>
 </nav>
-<div style="padding: 10px 10px;margin-top:30px ;">
+<div style="padding: 10px 10px;margin-top:30px ;background-color: white;height: 50px;">
 	<div id="segmentedControl" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary">
 		<a class="mui-control-item mui-active" href="#item1">
 			全&nbsp;部&nbsp;<span class="mui-badge mui-badge-danger"><label id="allNumber">2</label></span>
 		</a>
-		
+
 		<a class="mui-control-item" href="#item2">
 			待维修&nbsp;<span class="mui-badge mui-badge-danger"><label id="unfinishedNumber">1</label></span>
 		</a>
@@ -67,8 +67,21 @@
 <script src="../js/mui.lazyload.js"></script>
 <script src="../js/mui.lazyload.img.js"></script>
 <script type="text/javascript">
-	mui.init();
-	var pageNo = 1;
+	mui.init({
+		pullRefresh: {
+			container: refreshContainer, //待刷新区域标识，querySelector能定位的css选择器均可，比如：id、.class等
+			up: {
+				height: 50, //可选.默认50.触发上拉加载拖动距离
+				auto: true, //可选,默认false.自动上拉加载一次
+				contentrefresh: "正在加载...", //可选，正在加载状态时，上拉加载控件上显示的标题内容
+				contentnomore: '没有更多数据了', //可选，请求完毕若没有更多数据时显示的提醒内容；
+				callback: getAll //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+			}
+		}
+	});
+	var pageNo1 = 1;
+	var pageNo2 = 1;
+	var pageNo3 = 1;
 	var item = '#item1';
 	$(function() {
 		mui(document.body).on('tap', '.mui-control-item', function() {
@@ -150,7 +163,6 @@
 	});
 
 	function jumpToRepairInfo(id) {
-
 		mui.openWindow({
 			id: id,
 			url: 'repairInfo.html'
@@ -160,7 +172,8 @@
 	function getAll() {
 		switch (atem) {
 			case 'atem1':
-				 
+				ajax();
+				localStorage.setItem("name", "caibin")
 				break;
 			case 'atem2':
 				代码块
@@ -168,9 +181,33 @@
 			case 'atem3':
 				代码块
 				break;
- 
+
 		}
-		case
+		pageNo++;
+	}
+	//获取 全部 待维修 完工的个数
+	function getAllNumber() {
+		$.ajax({
+			url: '',
+			type: "get",
+			dataType: "json",
+			success: function(data) {
+				$("#allNumber").html(data.allNumber);
+				$("#finishedNumber").html(data.finishedNumber);
+				$("#unfinishedNumber").html(data.unfinishedNumber);
+			}
+		})
+	}
+
+	function getNoRepair() {
+
+	}
+
+	function getNoPay() {
+
+	}
+
+	function ajax() {
 		$.ajax({
 			type: "post",
 			url: "../json/g.json",
@@ -186,6 +223,25 @@
 					var service_status2 = '';
 					var pay_status = '';
 					var repair_status = '';
+					repair_status = (obj.repair_status == 0 ?
+						'<button id="start" type="button" style="right:80px;position: absolute; " class="mui-btn mui-btn-primary ">' +
+						'进行工作' +
+						'</button>' :
+						'<button id="starting" type="button" style="right:80px;position: absolute; " class="mui-btn mui-btn-warning ">' +
+						'正在进行' +
+						'</button>');
+					service_status = (obj.service_status == 0 ? '' :
+						'<div class="font-topright"><label id="service_status">待修</label></div>');
+					service_status2 = (obj.service_status == 0 ?
+						'<button value=' + obj.id +
+						' id="finish" type="button" data-loading-text="" style="right:20px;position: absolute;" class="mui-btn mui-btn-success">' +
+						'完工' +
+						'</button>' :
+						'<button id="finished" type="button"   style="right:20px;position: absolute;" class="mui-btn mui-btn-success">已完工</button>'
+					);
+					pay_status =
+						(obj.pay_status == 0 && obj.fine == 1 ? '' :
+							'<div class="font-seal"><label id="fine">待缴费</label></div>');
 					html +=
 						' <div id = "card" class = "mui-card" > <div style="float: right;" class=" triangle-topright mui-badge-orange"></div>' +
 						'<div class="mui-card-header"><label>维修单号：<label id="id">' + obj.id + '</label></label></div>' +
@@ -206,51 +262,12 @@
 						repair_status +
 						service_status2 +
 						'</div>';
-					repair_status = (obj.repair_status == 0 ?
-						'<button id="start" type="button" style="right:80px;position: absolute; " class="mui-btn mui-btn-primary ">' +
-						'进行工作' +
-						'</button>' :
-						'<button id="starting" type="button" style="right:80px;position: absolute; " class="mui-btn mui-btn-warning ">' +
-						'正在进行' +
-						'</button>');
-					service_status = (obj.service_status == 0 ? '' :
-						'<div class="font-topright"><label id="service _status">待修</label></div>');
-					service_status2 = (obj.service_status == 0 ?
-						'<button value=' + obj.id +
-						' id="finish" type="button" data-loading-text="" style="right:20px;position: absolute;" class="mui-btn mui-btn-success">' +
-						'完工' +
-						'</button>' :
-						'<button id="finished" type="button"   style="right:20px;position: absolute;" class="mui-btn mui-btn-success">已完工</button>'
-					);
-					pay_status =
-						(obj.pay_status == 0 && obj.fine == 1 ? '' :
-							'<div class="font-seal"><label id="fine">待缴费</label></div>');
+
 
 				});
 				$(item).append(html);
 				lazyLoad.refresh(true);
 			}
 		});
-		pageNo++
-	}
-	//获取 全部 待结单 待维修 代缴费的个数
-	function getAllNumber() {
-		$.ajax({
-			url: '',
-			type: "get",
-			dataType: "json",
-			success: function(data)
-			$("#allNumber").html(data.allNumber);
-			$("#finishedNumber").html(data.finishedNumber);
-			$("#unfinishedNumber").html(data.unfinishedNumber);
-		})
-	}
-
-	function getNoRepair() {
-
-	}
-
-	function getNoPay() {
-
 	}
 </script>
