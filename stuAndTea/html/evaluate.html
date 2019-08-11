@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../publicview/css/public.css"/>
+		<style type="text/css">
+			.mui-icon-star {
+				color: gray;
+			}
+		
+			.right {
+				margin-left: 20%;
+			}
+		
+			.mui-content {
+				background-color: white;
+				padding-bottom: 20px;
+				padding-top: 15px;
+			}
+		
+			.mui-icon-star-filled {
+				color: #FFB400;
+			}
+		
+			.bottom {
+				width: 90%;
+				margin-top: 5px;
+				margin-left: 6%;
+				font-size: 13px;
+				color: #7b7b7b;
+				padding: 12px;
+			}
+			.sub{
+				background-color: deepskyblue;
+				color: white;
+				border: 0px;
+				width: 80%;
+				margin-left: 10%;
+				height: 35px;
+				font-weight: 700;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">评价</h1>
+		</header>
+		
+		<div class="mui-content">
+			<div style="padding-top: 15px; width: 90%; margin-left: 5%;">
+				<div>
+					<span>维修人员：</span><span class="right">王师傅</span>
+				</div>
+				<div style="margin-top: 7px;">
+					<span>报修类型：</span><span class="right">灯坏了</span>
+				</div>
+				<div style="margin-top: 7px;">
+					<span>维修评价：</span><span class="right" id="star">
+						<i data-index="1" class="mui-icon mui-icon-star"></i>
+						<i data-index="2" class="mui-icon mui-icon-star"></i>
+						<i data-index="3" class="mui-icon mui-icon-star"></i>
+						<i data-index="4" class="mui-icon mui-icon-star"></i>
+						<i data-index="5" class="mui-icon mui-icon-star"></i></span>
+				</div>
+				<div style="margin-top: 7px;">
+					<span>详细评价：</span>
+					<div class="bottom">
+						<textarea style="height: 100px;"></textarea>
+					</div>
+				</div>
+				<button class="sub">评 价</button>
+			</div>
+		</div>
+	</body>
+	<script src="../js/mui.js"></script>
+	<script type="text/javascript">
+		mui.init()
+		
+		var rScore = 0
+		
+		
+		var fullStar = document.getElementsByClassName('mui-icon-star')
+		for(var i = 0; i < fullStar.length; i++){
+			fullStar[i].addEventListener('tap', function(){
+				var star = document.getElementById('star')
+				for (var i = 0; i < 5; i++) {
+					star.children[i].classList.remove('mui-icon-star-filled');
+				}
+				rScore = this.getAttribute('data-index')
+				
+				for (var i = 0; i < rScore; i++) {
+					star.children[i].classList.add('mui-icon-star-filled');
+				}
+			})
+		}
+	</script>
+</html>

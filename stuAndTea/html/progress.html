@@ -234,8 +234,15 @@
 			}
 		})
 
+		var url = localStorage.getItem('url')
+
 		function down() {
 			mui.toast('已更新数据');
+			mui.get(url + '/api/v1/stuAndtea/findProgress', {}, function(data) {
+				for(i in data){
+					console.log(data[i])
+				}
+			}, 'json')
 			mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //完成刷新
 		}
 	</script>

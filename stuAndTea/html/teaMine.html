@@ -67,7 +67,7 @@
 								<img id="photo" class="mui-media-object mui-pull-left photo" src="../images/logo.png">
 							</div>
 							
-							<div class="mui-media-body"  style="height: 100px; margin-top: 20px;">
+							<div id="infoTitle" class="mui-media-body"  style="height: 100px; margin-top: 20px;">
 								<span style="color: #42b3e5;">岳晨</span><span class="iconfont icon-nan"></span>
 								<!-- <span style="color: deeppink">岳晨</span><span class="iconfont icon-nvsheng"></span> -->
 								<p class="mui-ellipsis"><span>计算机科学与技术学院</span></p>
@@ -108,6 +108,21 @@
 	<script src="../js/mui.js"></script>
 	<script type="text/javascript">
 		mui.init()
+		
+		var url = localStorage.getItem('url')
+		
+		mui.plusReady(function(){
+			mui.get(url + '/api/v1/stuAndtea/findMyInfo4StudentAndTeacher', {}, function(data){
+				var temp = ''
+				if(data.data.sex == 0){
+					temp = '<span style="color: #42b3e5;">'+data.data.name+'</span><span class="iconfont icon-nan"></span>'
+				}else{
+					temp = '<span style="color: deeppink">'+data.data.name+'</span><span class="iconfont icon-nvsheng"></span>'
+				}
+				temp += '<p class="mui-ellipsis"><span>'+data.data.college+'</span></p>'
+				document.getElementById('infoTitle').innerHTML = temp
+			}, 'json')
+		})
 		
 		document.getElementById('about').addEventListener("tap", function() {
 			mui.openWindow({
