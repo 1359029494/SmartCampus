@@ -1,0 +1,349 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../publicview/css/public.css" />
+		<link rel="stylesheet" type="text/css" href="css/iconfont.css"/>
+		<style type="text/css">
+			.mui-ellipsis span {
+				font-size: 12px;
+			}
+			.mui-ellipsis{
+				margin-top: 5px;
+			}
+			.mybtn{
+				color: white;
+				width: 90%;
+				margin-left: 5%;
+				margin-top: 20px;
+				height: 40px;
+			}
+			li span{
+				margin-right: 3%;
+			}
+			.photo{
+				max-width: 100% !important;
+				width: auto !important;
+				max-height: 100% !important;
+				height: auto !important;
+			}
+			.photoA{
+				padding-top: 5px !important;
+			}
+			#photoDiv{
+				float: left;
+				width: 32%;
+				height: 85px;
+			}
+			.mui-bar-nav{
+				background: deepskyblue; height:40px;
+				
+			}
+			.mui-title{
+				color: white;
+				font-size: 18px;
+				line-height: 42px;
+			}
+			.mui-icon-left-nav{
+				color: white;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<h1 class="mui-title">我的</h1>
+		</header>
+		<div class="mui-content">
+			<div>
+				<ul class="mui-table-view" style="margin-top: 5px; height: 100px;">
+					<li class="mui-table-view-cell mui-media" style="height: 100px;" id="info">
+						<a href="javascript:;" class="mui-navigate-right photoA" style="height: 100px; padding-top: 25px;">
+							<div id="photoDiv" style="overflow: hidden;">
+								<img id="photo" class="mui-media-object mui-pull-left photo" src="../images/logo.png">
+							</div>
+							
+							<div id="infoTitle" class="mui-media-body"  style="height: 100px; margin-top: 20px;">
+								<span style="color: #42b3e5;">岳晨</span><span class="iconfont icon-nan"></span>
+								<!-- <span style="color: deeppink">岳晨</span><span class="iconfont icon-nvsheng"></span> -->
+								<p class="mui-ellipsis"><span>计算机科学与技术学院</span></p>
+							</div>
+						</a>
+					</li>
+				</ul>
+			</div>
+
+			<ul class="mui-table-view" style="margin-top: 15px; font-size: 15px;">
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right">
+						<span class="iconfont icon-chaxun"></span>缴费查询
+					</a>
+				</li>
+				<li class="mui-table-view-cell" id="progress">
+					<a class="mui-navigate-right">
+						<span class="iconfont icon-chaxun-"></span>报修查询
+					</a>
+				</li>
+			</ul>
+			<ul class="mui-table-view" style="margin-top: 15px;font-size: 15px;">
+				<li class="mui-table-view-cell" id="update">
+					<a class="mui-navigate-right">
+						<span class="mui-icon iconfont icon-gengxin"></span>检查更新
+					</a>
+				</li>
+				<li class="mui-table-view-cell" id="about">
+					<a class="mui-navigate-right">
+						<span class="iconfont icon-guanyu"></span>关于
+					</a>
+				</li>
+			</ul>
+			<button type="button" class="mui-btn mui-btn-red mybtn">退出登录</button>
+		</div>
+	</body>
+
+	<script src="../js/mui.js"></script>
+	<script type="text/javascript">
+		mui.init()
+		
+		var url = localStorage.getItem('url')
+		
+		mui.plusReady(function(){
+			mui.get(url + '/api/v1/stuAndtea/findMyInfo4StudentAndTeacher', {}, function(data){
+				var temp = ''
+				if(data.data.sex == 0){
+					temp = '<span style="color: #42b3e5;">'+data.data.name+'</span><span class="iconfont icon-nan"></span>'
+				}else{
+					temp = '<span style="color: deeppink">'+data.data.name+'</span><span class="iconfont icon-nvsheng"></span>'
+				}
+				temp += '<p class="mui-ellipsis"><span>'+data.data.college+'</span></p>'
+				document.getElementById('infoTitle').innerHTML = temp
+			}, 'json')
+		})
+		
+		document.getElementById('about').addEventListener("tap", function() {
+			mui.openWindow({
+				url: "about.html",
+				id: "about.html",
+				show: {
+					autoShow: true, //页面loaded事件发生后自动显示，默认为true
+					aniShow: "slide-in-right", //页面显示动画，默认为”slide-in-right“；
+					duration: 300 //页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+				},
+				waiting: {
+					autoShow: true, //自动显示等待框，默认为true
+					title: '正在加载...', //等待对话框上显示的提示内容
+				}
+			})
+		})
+		
+		document.getElementById('update').addEventListener("tap", function() {
+			mui.openWindow({
+				url: "update.html",
+				id: "update.html",
+				show: {
+					autoShow: true, //页面loaded事件发生后自动显示，默认为true
+					aniShow: "slide-in-right", //页面显示动画，默认为”slide-in-right“；
+					duration: 300 //页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+				},
+				waiting: {
+					autoShow: true, //自动显示等待框，默认为true
+					title: '正在加载...', //等待对话框上显示的提示内容
+				}
+			})
+		})
+		
+		document.getElementById('info').addEventListener("tap", function() {
+			mui.openWindow({
+				url: "info.html",
+				id: "info.html",
+				show: {
+					autoShow: true, //页面loaded事件发生后自动显示，默认为true
+					aniShow: "slide-in-right", //页面显示动画，默认为”slide-in-right“；
+					duration: 300 //页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+				},
+				waiting: {
+					autoShow: true, //自动显示等待框，默认为true
+					title: '正在加载...', //等待对话框上显示的提示内容
+				}
+			})
+		})
+		
+		document.getElementById('progress').addEventListener("tap", function() {
+			mui.openWindow({
+				url: "progress.html",
+				id: "progress.html",
+				show: {
+					autoShow: true, //页面loaded事件发生后自动显示，默认为true
+					aniShow: "slide-in-right", //页面显示动画，默认为”slide-in-right“；
+					duration: 300 //页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+				},
+				waiting: {
+					autoShow: true, //自动显示等待框，默认为true
+					title: '正在加载...', //等待对话框上显示的提示内容
+				}
+			})
+		})
+		var photo = document.getElementById('photoDiv')
+		var task = null
+		var files = []; //图片存放的数组 可以上传一个，或者多个图片 
+		document.getElementById('photo').addEventListener('tap', function(){
+			
+			if (files.length < 2) { //判断当前图片个数
+				var btnArray = [{
+					title: "打开照相机"
+				}, {
+					title: "打开相册"
+				}]; //选择按钮  1 2 3
+				plus.nativeUI.actionSheet({
+						title: "请选择",
+						cancel: "取消", // 0
+						buttons: btnArray
+					},
+					function(e) {
+						var index = e.index; //
+						//alert(index);
+						switch (index) {
+							case 1:
+								//写自己的逻辑
+								camera(photo);
+								break;
+							case 2:
+								console.log(photo)
+								xiangce(photo);
+								break;
+						}
+					})
+			} else {
+				mui.alert('最多只能选取3张图片')
+			}
+			event.stopPropagation(); 
+		})
+		
+		function camera(element) {
+			var cmr = plus.camera.getCamera();
+			cmr.captureImage(function(p) {
+				//成功
+				plus.io.resolveLocalFileSystemURL(p, function(entry) {
+					img_name = entry.name; //获得图片名称
+					img_src = entry.toLocalURL(); //获得图片路径
+					//var url1=document.getElementById('img');
+					//url1.src=img_path;
+					var temp = '<img src="' + img_src + '"  id="photo" class="mui-media-object mui-pull-left photo">'
+					element.innerHTML = temp
+					upload_img(img_src);
+				}, function(e) {
+					console.log("读取拍照文件错误：" + e.message);
+				});
+		
+			}, function(e) {
+				console.log("失败：" + e.message);
+			}, {
+				filename: '_doc/camera/',
+				index: 1
+			});
+		}
+		
+		function xiangce(element) {
+			plus.gallery.pick(function(path) {
+				for (var i in path.files) {
+					var fileSrc = path.files[i]
+					var temp = ''
+					temp = '<img src="' + fileSrc + '"  id="photo" class="mui-media-object mui-pull-left photo">'
+					element.innerHTML = temp
+					upload_img(fileSrc);
+				}
+		
+			}, function(e) {
+				console.log("取消选择图片");
+			}, {
+				filter: "image",
+				multiple: true,
+				maximum: 1,
+				system: false,
+				onmaxed: function() {
+					plus.nativeUI.alert('每次最多只能选择1张图片');
+				}
+			});
+		}
+		
+		//上传图片
+		function upload_img(p) {
+			//又初始化了一下文件数组 为了支持单个上传,如果你要一次上传多个，就不要在写这一行了
+			//注意 
+			//files=[];
+			var n = p.substr(p.lastIndexOf('/') + 1);
+			files.push({
+				name: "name" + files.length,
+				path: p
+			});
+		}
+		//开始上传
+		function start_upload(details) {
+			if (files.length <= 0) {
+				plus.nativeUI.alert("没有添加上传文件！");
+				return;
+			}
+			//原生的转圈等待框
+			var wt = plus.nativeUI.showWaiting();
+		
+			task = plus.uploader.createUpload(url + 'insletter.do', {
+					method: "POST"
+				},
+				function(t, status) { //上传完成
+					if (status == 200) {
+						mui.toast('上传成功')
+						//关闭转圈等待框
+						wt.close();
+						var loginx = {
+							LogOut: function(callback) {
+								//do something
+								//callback
+								callback && callback()
+							}
+						}
+						loginx.LogOut(function() {
+							if (mui.os.ios || mui.os.ipad || mui.os.iphone) {
+								// 获取所有Webview窗口
+								var curr = plus.webview.currentWebview();
+								var wvs = plus.webview.all();
+								for (var i = 0, len = wvs.length; i < len; i++) {
+									//关闭除setting页面外的其他页面
+									if (wvs[i].getURL() == curr.getURL())
+										continue;
+									plus.webview.close(wvs[i]);
+								}
+								//打开login页面后再关闭setting页面
+								plus.webview.open('tab_footer.html');
+								curr.close();
+							} else
+								plus.runtime.quit();
+						})
+					} else {
+						console.log("上传失败：" + status);
+						//关闭原生的转圈等待框
+						wt.close();
+					}
+				});
+		
+			task.addData("details", details); //可以向后台传值
+			task.addData("uid", getUid());
+			for (var i = 0; i < files.length; i++) {
+				var f = files[i];
+				task.addFile(f.path, {
+					key: f.name
+				});
+			}
+			task.start();
+		
+		}
+		
+		// 产生一个随机数
+		function getUid() {
+			return Math.floor(Math.random() * 100000000 + 10000000).toString();
+		}
+	</script>
+</html>
