@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <link href="../css/mui.min.css" rel="stylesheet" />
+    <style>
+        .chart {
+            height: 560px;
+            margin: 0px;
+            padding: 0px;
+        }
+
+    </style>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav" style="background: deepskyblue; height:44px;">
+    <a class="mui-icon mui-icon-left-nav mui-pull-left" href="main.html" style="color: #e8e8e8"></a>
+    <h1 class="mui-title" style="color: #FFFFFF;">报修记录</h1>
+</header>
+
+    <div class="mui-content">
+        <div class="mui-card">
+                <div class="mui-card-header">
+                    <div style="margin-right:8px; width: 6px;height: 26px;line-height: 26px;background-color: #007AFF;float: left;"></div>
+                    <h2>维修状况</h2>
+                </div>
+                <div class="mui-card-content">
+                    <div class="mui-content-padded">
+                        <div class="chart" id="pieChart"></div>
+                    </div>
+                </div>
+                <div class="mui-card-footer">
+                    <!--<h3>维修分析报告:</h3>-->
+                </div>
+        </div>
+        <div class="mui-card">
+            <div class="mui-table-view">
+                <div class="mui-table-view-cell">
+                    <div style="margin-right:8px; width: 6px;height: 26px;line-height: 26px;background-color: #007AFF;float: left;"></div>
+                    <div style="margin-right:6px; height: 26px;line-height: 26px;float: left;"><h3>最近3天的维修记录</h3> </div>
+                </div>
+                <div class="mui-table-view-cell">
+                    <ul class="mui-table-view">
+                        <li class="mui-table-view-cell" >
+                            <div class="mui-card" style="background-color: #e8e8e8;border-radius: 8px;">
+                                <div class="mui-card-content" style="margin-left: 18px;margin-top: 16px;margin-bottom: 16px" >
+                                    <label>维修人员：</label><label>哈哈</label><br>
+                                    <label>维修时间：</label><label>2019-9-11</label><br>
+                                    <label>修理地点：</label><label>哈哈</label><br>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="mui-table-view-cell">
+                            <div class="mui-card" style="background-color: #e8e8e8;border-radius: 8px;">
+                                <div class="mui-card-content" style="margin-left: 18px;margin-top: 16px;margin-bottom: 16px" >
+                                    <label>维修人员：</label><label>哈哈</label><br>
+                                    <label>维修时间：</label><label>2019-9-11</label><br>
+                                    <label>修理地点：</label><label>哈哈</label><br>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="../js/echarts-all.js"></script>
+<script>
+    var getOption = function(chartType) {
+        var chartOption = {
+            legend: {
+                left: 'center',
+                data:['维修1','维修2','维修3','维修4','维修5']
+            },
+            series: [{
+            name: '维修分布',
+            type: 'pie',
+            radius: '56%',
+            center: ['50%', '50%'],
+            data: [{
+                value: 335,
+                name: '维修1'
+            }, {
+                value: 310,
+                name: '维修2'
+            }, {
+                value: 234,
+                name: '维修3'
+            }, {
+                value: 135,
+                name: '维修4'
+            }, {
+                value: 1540,
+                name: '维修5'
+            }],
+            itemStyle:{
+                normal:{
+                    label:{
+                        textStyle:{
+                            fontSize:16
+                        }
+                    }
+                }
+            }
+        }]
+    }
+        return chartOption;
+    };
+    var byId = function(id) {
+        return document.getElementById(id);
+    };
+    var pieChart = echarts.init(byId('pieChart'));
+    pieChart.setOption(getOption());
+    byId("echarts").addEventListener('tap',function(){
+        var url = this.getAttribute('data-url');
+        plus.runtime.openURL(url);
+    },false);
+</script>
+</html>
