@@ -81,6 +81,20 @@
 				/*顺时针旋转90°*/
 				color: white;
 			}
+			
+			.d1{
+				position: absolute;
+				left: 80%;
+				top: -85px;
+				width: 0;
+				height: 0;
+				border-width: 85px;
+				border-style: solid;
+				border-color: transparent transparent transparent lightblue;
+				transform: rotate(315deg);
+				/*顺时针旋转90°*/
+				color: black;
+			}
 
 			.hb {
 				border-bottom: 1px solid #999999;
@@ -109,8 +123,8 @@
 		<div class="mui-content">
 			<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
 				<div class="mui-scroll">
-					<ul class="mui-table-view">
-						<li class="mui-table-view-cell">
+					<ul class="mui-table-view" id="info">
+						<!-- <li class="mui-table-view-cell">
 							<a class="mui-navigate-right">
 								<div class="hb"><span class="content-title">维修单号：</span>10086</div>
 								<div class="content-div">
@@ -200,13 +214,14 @@
 							<div class="d2">
 								<p class="d4-font">未交罚款</p>
 							</div>
-						</li>
+						</li> -->
 					</ul>
 				</div>
 			</div>
 		</div>
 	</body>
 	<script src="../js/mui.js"></script>
+	<script src="../js/jquery-3.3.1.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
 		mui.init({
 			pullRefresh: {
@@ -228,9 +243,78 @@
 		function down() {
 			mui.toast('已更新数据');
 			mui.get(url + '/api/v1/stuAndtea/findProgress', {}, function(data) {
-				for(i in data){
-					console.log(data[i])
+				var temp = ""
+				for (i = 0; i < data.data.length; i++) {
+					var repairDate = data.data[i].repairDate
+					var serviceDate = data.data[i].serviceDate
+					repairDate = repairDate.split("T")[0] + " " + repairDate.split("T")[1].split(".")[0]
+					if(serviceDate != null){
+						serviceDate = serviceDate.split("T")[0] + " " + serviceDate.split("T")[1].split(".")[0]
+					}
+					
+					if(data.data[i].type == null){
+						data.data[i].type = ""
+					}
+					if(serviceDate == null){
+						serviceDate = ""
+					}
+					if(data.data[i].type == null){
+						data.data[i].type = ""
+					}
+					if(data.data[i].remarks == null){
+						data.data[i].remarks = ""
+					}
+					temp += '<li class="mui-table-view-cell">' +
+						'<a class="mui-navigate-right">' +
+						'<div class="hb"><span class="content-title">维修单号：</span>' + data.data[i].id + '</div>' +
+						'<div class="content-div">' +
+						'<span class="content-title">报修类型：</span><span>' + data.data[i].type + '</span>' +
+						'</div>' +
+						'<div class="content-div">' +
+						'<span class="content-title">所在地址：</span><span>' + data.data[i].local + '</span>' +
+						'</div>' +
+						'<div class="content-div">' 
+						if(data.data[i].maintainer == null){
+							temp += '<span class="content-title">维修师傅：</span><span></span>'
+						} else{
+							temp += '<span class="content-title">维修师傅：</span><span>'+data.data[i].maintainer.name+'</span>'
+						}
+						temp += '</div>' +
+						'<div class="content-div">' +
+						'<span class="content-title">报修时间：</span><span>' + repairDate + '</span>' +
+						'</div>' +
+						'<div class="content-div">' +
+						'<span class="content-title">维修时间：</span><span>' + serviceDate + '</span>'+
+						'</div>' +
+						'<div class="content-div">' +
+						'<span class="content-title">报修详情：</span>' +
+						'<div class="reinfo">' + data.data[i].remarks + '</div>' +
+						'</div>' +
+						'</a>'
+
+					//如果没有罚款
+					if (data.data[i].fine == 0) {
+						//如果有人接单
+						if (data.data[i].repairStatus == 1) {
+							//如果维修完毕
+							if (data.data[i].serviceStatus == 1) {
+								temp += '<div class="d4"><p class="d4-font">维修完毕</p>'
+							} else {
+								temp += '<div class="d3"><p class="d4-font">待维修</p>'
+							}
+						}
+						//如果没人接单
+						else if (data.data[i].repairStatus == 0) {
+							temp += '<div class="d1"><p class="d4-font">待接单</p>'
+						}
+					} else { //如果存在罚款
+						temp += '<div class="d2"><p class="d4-font">未交罚款</p>'
+					}
+
+					temp += '</div>' +
+						'</li>'
 				}
+				$('#info').html(temp)
 			}, 'json')
 			mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //完成刷新
 		}

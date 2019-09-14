@@ -42,9 +42,9 @@
 		</header>
 		<div class="mui-content">
 			<div class="content">
-				<div class="title"><h1>安全安全安全</h1></div>
-				<div class="time"><p>2019/8/9 12:02:18</p></div>
-				<div class="contentDiv">
+				<div class="title" id="title"><h1>安全安全安全</h1></div>
+				<div class="time" id="time"><p>2019/8/9 12:02:18</p></div>
+				<div class="contentDiv" id="contentDiv">
 					的哦发盒哦非佛额费哦if鸡儿哦I家哦哦接下来才能向农村
 				</div>
 			</div>
@@ -53,5 +53,22 @@
 	<script src="../js/mui.js"></script>
 	<script type="text/javascript">
 		mui.init()
+		
+		
+		var url = localStorage.getItem('url')
+		mui.plusReady(function(){
+			var id = null
+			
+			var self = plus.webview.currentWebview();  
+			id = self.myid
+			console.log(id)
+			mui.get(url + '/api/v1/stuAndtea/findOneKnowledgeByid', {id: id}, function(data){
+				document.getElementById('title').innerHTML = data.data.title
+				document.getElementById('time').innerHTML = data.data.pubDate
+				document.getElementById('contentDiv').innerHTML = data.data.content
+			})
+		})
+		
+		
 	</script>
 </html>

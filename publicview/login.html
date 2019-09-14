@@ -114,23 +114,20 @@
 			plus.navigator.setStatusBarBackground('white');
 		})
 
-		localStorage.setItem('url', 'http://172.20.10.3:8080')
+		localStorage.setItem('url', 'http://192.168.31.46:8080')
 		var url = localStorage.getItem('url')
 
 		document.getElementById('btn').addEventListener("tap", function() {
 			var username = document.getElementById('username').value
 			var password = document.getElementById('password').value
-			var params = JSON.stringify({
-				username: username,
-				password: password
-			})
-			console.log(params)
+			
 			mui.post(url + '/api/v1/pub/login', {
 				'username': username,
 				'password': password
 			}, function(data) {
 				//服务器返回响应，根据响应结果，分析是否登录成功；
 				if (data.code == 0) {
+					localStorage.setItem("user", JSON.stringify(data))
 					mui.openWindow({
 						url: "../teacher/main.html",
 						id: "main.html",

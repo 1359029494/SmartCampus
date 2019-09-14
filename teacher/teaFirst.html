@@ -111,9 +111,9 @@
 						</div>
 					</div>
 					<div class="main-title">校园安全小知识</div>
-					
+
 					<!-- 数据列表 -->
-					<ul class="mui-table-view">
+					<ul class="mui-table-view" id="content">
 						<li class="mui-table-view-cell mui-media">
 							<a href="javascript:;">
 								<img class="mui-media-object mui-pull-left" src="">
@@ -136,7 +136,7 @@
 							<a href="javascript:;">
 								<img class="mui-media-object mui-pull-left" src="">
 								<div class="mui-media-body">
-								    CBD
+									CBD
 									<p class="mui-ellipsis">烤炉模式的城，到黄昏，如同打翻的调色盘一般.</p>
 								</div>
 							</a>
@@ -148,6 +148,7 @@
 	</body>
 
 	<script src="../js/mui.js"></script>
+	<script src="../js/jquery-3.3.1.min.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
 		mui.init({
 			pullRefresh: {
@@ -170,20 +171,107 @@
 				}
 			}
 		});
-		
-		mui.plusReady(function(){
+
+		var url = localStorage.getItem('url')
+		var pageNum = 1
+
+		mui.plusReady(function() {
 			// 设置系统状态栏背景为蓝色
 			plus.navigator.setStatusBarBackground('#00bfff');
 		})
 
 		function down() {
 			mui.toast('更新了5篇文章');
+			mui.get(url + '/api/v1/stuAndtea/findAllKnowledge', {pageNum: pageNum}, function(data) {
+				var temp = ''
+				for (i in data.data.list) {
+					temp += '<li class="mui-table-view-cell mui-media contentLi" id="' + data.data.list[i].id + '">' +
+						'<a href="javascript:;">' +
+						'<img class="mui-media-object mui-pull-left" src="">' +
+						'<div class="mui-media-body">' +
+						'' + data.data.list[i].title + '' +
+						'<p class="mui-ellipsis">' + data.data.list[i].content + '</p>' +
+						'</div>' +
+						'</a>' +
+						'</li>'
+				}
+				$('#content').append(temp)
+
+				var li = $('.contentLi')
+				for (var i = 0; i < li.length; i++) {
+					li.get(i).addEventListener('tap', function() {
+						var id = this.getAttribute('id')
+						console.log(id)
+						mui.openWindow({
+							url: "content.html",
+							id: "content.html",
+							show: {
+								autoShow: true, //页面loaded事件发生后自动显示，默认为true
+								aniShow: "slide-in-right", //页面显示动画，默认为”slide-in-right“；
+								duration: 300 //页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+							},
+							extras: {
+								'myid': id
+							},
+							waiting: {
+								autoShow: true, //自动显示等待框，默认为true
+								title: '正在加载...', //等待对话框上显示的提示内容
+							}
+						})
+					})
+				}
+			})
 			mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //完成刷新
 		}
-		
-		function up(){
+
+		function up() {
+			++pageNum
+			var mythis = this
+			mui.get(url + '/api/v1/stuAndtea/findAllKnowledge', {pageNum: pageNum}, function(data) {
+				if(data.data.list.length == 0){
+					mythis.endPullupToRefresh(true);
+					return
+				}
+				var temp = ''
+				for (i in data.data.list) {
+					temp += '<li class="mui-table-view-cell mui-media contentLi" id="' + data.data.list[i].id + '">' +
+						'<a href="javascript:;">' +
+						'<img class="mui-media-object mui-pull-left" src="">' +
+						'<div class="mui-media-body">' +
+						'' + data.data.list[i].title + '' +
+						'<p class="mui-ellipsis">' + data.data.list[i].content + '</p>' +
+						'</div>' +
+						'</a>' +
+						'</li>'
+				}
+				$('#content').append(temp)
+				
+				var li = $('.contentLi')
+				for (var i = 0; i < li.length; i++) {
+					li.get(i).addEventListener('tap', function() {
+						var id = this.getAttribute('id')
+						console.log(id)
+						mui.openWindow({
+							url: "content.html",
+							id: "content.html",
+							show: {
+								autoShow: true, //页面loaded事件发生后自动显示，默认为true
+								aniShow: "slide-in-right", //页面显示动画，默认为”slide-in-right“；
+								duration: 300 //页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+							},
+							extras: {
+								'myid': id
+							},
+							waiting: {
+								autoShow: true, //自动显示等待框，默认为true
+								title: '正在加载...', //等待对话框上显示的提示内容
+							}
+						})
+					})
+				}
+			})
 			mui.toast('更新了5篇文章');
-			this.endPullupToRefresh(true);
+			this.endPullupToRefresh(false);
 		}
 
 
@@ -193,8 +281,8 @@
 		gallery.slider({
 			interval: 1000 //自动轮播周期，若为0则不自动播放，默认为0；
 		});
-		
-		
+
+
 		//打开进度查询页面
 		document.getElementById('progress').addEventListener("tap", function() {
 			mui.openWindow({
@@ -211,8 +299,8 @@
 				}
 			})
 		});
-		
-		
+
+
 		//打开保修界面
 		document.getElementById('repair').addEventListener("tap", function() {
 			mui.openWindow({
@@ -229,7 +317,6 @@
 				}
 			})
 		})
-		
 	</script>
 
 </html>
