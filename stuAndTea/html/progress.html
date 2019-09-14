@@ -1,0 +1,333 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.css" rel="stylesheet" />
+		<style type="text/css">
+			li {
+				height: auto;
+				margin-top: 10px;
+			}
+
+			li a {
+				height: auto;
+				background-color: white;
+			}
+
+			ul {
+				width: 94%;
+				margin-left: 3%;
+				background-color: #efeff4 !important;
+			}
+
+			.content-title {
+				color: #999999;
+				font-size: 14px;
+			}
+
+			.content-div {
+				margin-top: 5px;
+			}
+
+			.d4 {
+				position: absolute;
+				left: 80%;
+				top: -85px;
+				width: 0;
+				height: 0;
+				border-width: 85px;
+				border-style: solid;
+				border-color: transparent transparent transparent #2ECC71;
+				transform: rotate(315deg);
+				/*顺时针旋转90°*/
+				color: white;
+			}
+
+			.d4-font {
+				position: absolute;
+				left: -80px;
+				top: -20px;
+				color: white;
+			}
+
+			.d3 {
+				position: absolute;
+				left: 80%;
+				top: -85px;
+				width: 0;
+				height: 0;
+				border-width: 85px;
+				border-style: solid;
+				border-color: transparent transparent transparent #F9BF3B;
+				transform: rotate(315deg);
+				/*顺时针旋转90°*/
+				color: white;
+			}
+
+			.d2 {
+				position: absolute;
+				left: 80%;
+				top: -85px;
+				width: 0;
+				height: 0;
+				border-width: 85px;
+				border-style: solid;
+				border-color: transparent transparent transparent #F15A22;
+				transform: rotate(315deg);
+				/*顺时针旋转90°*/
+				color: white;
+			}
+			
+			.d1{
+				position: absolute;
+				left: 80%;
+				top: -85px;
+				width: 0;
+				height: 0;
+				border-width: 85px;
+				border-style: solid;
+				border-color: transparent transparent transparent lightblue;
+				transform: rotate(315deg);
+				/*顺时针旋转90°*/
+				color: black;
+			}
+
+			.hb {
+				border-bottom: 1px solid #999999;
+				padding-bottom: 7px;
+			}
+
+			.reinfo {
+				border: 1px solid #999999;
+				width: 90%;
+				margin-left: 10%;
+				padding-top: 10px;
+				padding-bottom: 10px;
+				white-space: normal;
+				margin-bottom: 20px;
+				padding-left: 10px;
+			}
+			.mui-bar-nav{
+				background: deepskyblue; height:40px;
+				
+			}
+			.mui-title{
+				color: white;
+				font-size: 18px;
+				line-height: 42px;
+			}
+			.mui-icon-left-nav{
+				color: white;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">进度查询</h1>
+		</header>
+
+		<div class="mui-content">
+			<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<ul class="mui-table-view" id="info">
+						<!-- <li class="mui-table-view-cell">
+							<a class="mui-navigate-right">
+								<div class="hb"><span class="content-title">维修单号：</span>10086</div>
+								<div class="content-div">
+									<span class="content-title">报修类型：</span><span>宿舍灯坏了</span>
+								</div>
+								<div class="content-div">
+									<span class="content-title">所在地址：</span><span>21#229</span>
+								</div>
+								<div class="content-div">
+									<span class="content-title">维修师傅：</span><span>王师傅</span>
+								</div>
+								<div class="content-div">
+									<span class="content-title">报修时间：</span><span>2019-8-5 09:10:15</span>
+								</div>
+								<div class="content-div">
+									<span class="content-title">维修时间：</span><span>2019-8-5 09:10:15</span>
+								</div>
+								<div class="content-div">
+									<span class="content-title">报修详情：</span>
+									<div class="reinfo">哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈</div>
+								</div>
+								<div class="content-div">
+									<span class="content-title">罚款：</span><span>无罚款</span>
+								</div>
+							</a>
+							<div class="d4">
+								<p class="d4-font">维修完毕</p>
+							</div>
+						</li>
+						<li class="mui-table-view-cell">
+							<a class="mui-navigate-right">
+								<div class="hb"><span class="content-title">维修单号：</span>10086</div>
+								<div class="content-div">
+									<span class="content-title">报修类型：</span><span>宿舍灯坏了</span>
+								</div>
+								<div class="content-div">
+									<span class="content-title">所在地址：</span><span>21#229</span>
+								</div>
+								<div class="content-div">
+									<span class="content-title">维修师傅：</span><span></span>
+								</div>
+								<div class="content-div">
+									<span class="content-title">报修时间：</span><span>2019-8-5 09:10:15</span>
+								</div>
+								<div class="content-div">
+									<span class="content-title">维修时间：</span><span></span>
+								</div>
+								<div class="content-div">
+									<span class="content-title">报修详情：</span>
+									<div class="reinfo">哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈</div>
+								</div>
+								<div class="content-div">
+									<span class="content-title">罚款：</span><span>无罚款</span>
+								</div>
+							</a>
+							<div class="d3">
+								<p class="d4-font">待维修</p>
+							</div>
+						</li>
+						<li class="mui-table-view-cell">
+							<a class="mui-navigate-right">
+								<div class="hb"><span class="content-title">维修单号：</span>10086</div>
+								<div class="content-div">
+									<span class="content-title">报修类型：</span><span>宿舍灯坏了</span>
+								</div>
+								<div class="content-div">
+									<span class="content-title">所在地址：</span><span>21#229</span>
+								</div>
+								<div class="content-div">
+									<span class="content-title">维修师傅：</span><span>王师傅</span>
+								</div>
+								<div class="content-div">
+									<span class="content-title">报修时间：</span><span>2019-8-5 09:10:15</span>
+								</div>
+								<div class="content-div">
+									<span class="content-title">维修时间：</span><span>2019-8-5 09:10:15</span>
+								</div>
+								<div class="content-div">
+									<span class="content-title">报修详情：</span>
+									<div class="reinfo">哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈</div>
+								</div>
+								<div class="content-div">
+									<span class="content-title">罚款：</span><span style="color: red;">缴纳罚款10元</span>
+								</div>
+
+							</a>
+							<div class="d2">
+								<p class="d4-font">未交罚款</p>
+							</div>
+						</li> -->
+					</ul>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="../js/mui.js"></script>
+	<script src="../js/jquery-3.3.1.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		mui.init({
+			pullRefresh: {
+				container: "#pullrefresh", //下拉刷新容器标识，querySelector能定位的css选择器均可，比如：id、.class等
+				down: {
+					style: 'circle', //必选，下拉刷新样式，目前支持原生5+ ‘circle’ 样式
+					color: '#2BD009', //可选，默认“#2BD009” 下拉刷新控件颜色
+					height: '70', //可选,默认50px.下拉刷新控件的高度,
+					range: '100px', //可选 默认100px,控件可下拉拖拽的范围
+					offset: '0px', //可选 默认0px,下拉刷新控件的起始位置
+					auto: true, //可选,默认false.首次加载自动上拉刷新一次
+					callback: down //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+				}
+			}
+		})
+
+		var url = localStorage.getItem('url')
+
+		function down() {
+			mui.toast('已更新数据');
+			mui.get(url + '/api/v1/stuAndtea/findProgress', {}, function(data) {
+				var temp = ""
+				for (i = 0; i < data.data.length; i++) {
+					var repairDate = data.data[i].repairDate
+					var serviceDate = data.data[i].serviceDate
+					repairDate = repairDate.split("T")[0] + " " + repairDate.split("T")[1].split(".")[0]
+					if(serviceDate != null){
+						serviceDate = serviceDate.split("T")[0] + " " + serviceDate.split("T")[1].split(".")[0]
+					}
+					
+					if(data.data[i].type == null){
+						data.data[i].type = ""
+					}
+					if(serviceDate == null){
+						serviceDate = ""
+					}
+					if(data.data[i].type == null){
+						data.data[i].type = ""
+					}
+					if(data.data[i].remarks == null){
+						data.data[i].remarks = ""
+					}
+					temp += '<li class="mui-table-view-cell">' +
+						'<a class="mui-navigate-right">' +
+						'<div class="hb"><span class="content-title">维修单号：</span>' + data.data[i].id + '</div>' +
+						'<div class="content-div">' +
+						'<span class="content-title">报修类型：</span><span>' + data.data[i].type + '</span>' +
+						'</div>' +
+						'<div class="content-div">' +
+						'<span class="content-title">所在地址：</span><span>' + data.data[i].local + '</span>' +
+						'</div>' +
+						'<div class="content-div">' 
+						if(data.data[i].maintainer == null){
+							temp += '<span class="content-title">维修师傅：</span><span></span>'
+						} else{
+							temp += '<span class="content-title">维修师傅：</span><span>'+data.data[i].maintainer.name+'</span>'
+						}
+						temp += '</div>' +
+						'<div class="content-div">' +
+						'<span class="content-title">报修时间：</span><span>' + repairDate + '</span>' +
+						'</div>' +
+						'<div class="content-div">' +
+						'<span class="content-title">维修时间：</span><span>' + serviceDate + '</span>'+
+						'</div>' +
+						'<div class="content-div">' +
+						'<span class="content-title">报修详情：</span>' +
+						'<div class="reinfo">' + data.data[i].remarks + '</div>' +
+						'</div>' +
+						'</a>'
+
+					//如果没有罚款
+					if (data.data[i].fine == 0) {
+						//如果有人接单
+						if (data.data[i].repairStatus == 1) {
+							//如果维修完毕
+							if (data.data[i].serviceStatus == 1) {
+								temp += '<div class="d4"><p class="d4-font">维修完毕</p>'
+							} else {
+								temp += '<div class="d3"><p class="d4-font">待维修</p>'
+							}
+						}
+						//如果没人接单
+						else if (data.data[i].repairStatus == 0) {
+							temp += '<div class="d1"><p class="d4-font">待接单</p>'
+						}
+					} else { //如果存在罚款
+						temp += '<div class="d2"><p class="d4-font">未交罚款</p>'
+					}
+
+					temp += '</div>' +
+						'</li>'
+				}
+				$('#info').html(temp)
+			}, 'json')
+			mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //完成刷新
+		}
+	</script>
+</html>

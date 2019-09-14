@@ -1,0 +1,80 @@
+<head>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="#6D6D72">
+	<link href="../css/mui.css" rel="stylesheet" />
+
+	<link href="../css/mui.min.css" rel="stylesheet" />
+
+	<link href="../css/repairInfo.css" rel="stylesheet" />
+</head>
+<header class="mui-bar mui-bar-nav" style="background: deepskyblue; height:40px;">
+	<h1 class="mui-title">修理单详细页面</h1>
+	<button type="button" onclick="back()" style="color: #000000;" class="mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left"><span
+		 class="mui-icon mui-icon-left-nav"></span>返回</button>
+</header>
+<div style="margin-top:50px;background-color: white" class="mui-input-row multi-line">
+	<div class="box label-right">
+		<div class="div-leftauto">报修人</div>
+		<div class="wrap">卜祥宇</div>
+	</div>
+	<hr />
+	<div class="box label-right">
+		<div class="div-leftauto">报修人角色</div>
+		<div class="wrap">学生</div>
+	</div>
+	<hr />
+	<div class="box label-right">
+		<div class="div-leftauto">维修地点</div>
+		<div class="wrap">齐鲁工业大学21号楼225宿舍</div>
+	</div>
+	<div class="box label-right">
+		<div class="div-leftauto">保修时间</div>
+		<div class="wrap">2019-07-27 12:03</div>
+	</div>
+	<hr />
+	<div class="box label-right">
+		<div class="div-leftauto">故障类型</div>
+		<div class="wrap">风扇坏了</div>
+	</div>
+	<hr />
+	<div class="box label-right">
+		<div class="div-leftauto">备注信息</div>
+		<div style="margin: 10px  5px; display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 2;overflow: hidden;"
+		 class="wrap"> 开着开着不转了开着开着不转了开着开着不转了开着开着不转了开着开着不转了开着开着不转了开着开着不转了开着开着不转了</div>
+	</div>
+	<hr />
+	<div class=" label-right">
+		<div class="div-leftauto">待修物品照片</div>
+		
+		<div class="wrap">
+			<li style="list-style:none;" class="mui-table-view-cell mui-media mui-col-xs-6">
+				<a href="#">
+					<img src="../icon/zhinan.png" ; style="text-align:center;width:70%" class="mui-media-object" data-preview-src="" />
+				</a>
+			</li>
+			<label style="font-size: 5px;opacity: 0.5;">点击放大</label>
+		</div>
+	</div>
+	<hr />
+</div>
+
+<script src="../js/mui.min.js"></script>
+<script src="../js/mui.zoom.js"></script>
+<script src="../js/mui.previewimage.js"></script>
+
+
+<script>
+	mui.init();
+	alert(ss)
+	mui.plusReady(function() {  
+                var id = plus.webview.currentWebview().id;  
+			 
+            });  
+	mui.previewImage();
+	
+	function back() {
+		mui.back()
+	}
+</script>

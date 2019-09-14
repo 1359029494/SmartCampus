@@ -1,0 +1,171 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Hello MUI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <!--标准mui.css-->
+    <link rel="stylesheet" href="../css/mui.min.css">
+    <!--App自定义的css-->
+    <!--<link rel="stylesheet" type="text/css" href="../css/app.css" />-->
+</head>
+
+<body>
+
+<style>
+    .mui-control-content {
+        background-color: white;
+        min-height: 215px;
+    }
+    .mui-control-content .mui-loading {
+        margin-top: 50px;
+    }
+</style>
+<header class="mui-bar mui-bar-nav" style="background: deepskyblue; height:44px;">
+    <a class="mui-icon mui-icon-left-nav mui-pull-left" href="main.html" style="color: #e8e8e8"></a>
+    <h1 class="mui-title" style="color: #FFFFFF;">报修记录</h1>
+</header>
+<div class="mui-content">
+    <div id="slider" class="mui-slider">
+        <div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+            <a class="mui-control-item" href="#item1mobile">
+                未完成报修记录
+            </a>
+            <a class="mui-control-item" href="#item2mobile">
+                已完成报修记录
+            </a>
+            <!--<a class="mui-control-item" href="#item3mobile">-->
+                <!--全部报修记录-->
+            <!--</a>-->
+        </div>
+        <div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-4"></div>
+        <div class="mui-slider-group" style="height: 520px">
+            <div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
+                <div id="scroll1" class="mui-scroll-wrapper">
+                    <div class="mui-scroll">
+                        <ul class="mui-table-view">
+                            <li class="mui-table-view-cell" >
+                               <div class="mui-card" style="background-color: #e8e8e8;border-radius: 8px;">
+                                   <div class="mui-card-content" style="margin-left: 18px;margin-top: 16px;margin-bottom: 16px" >
+                                       <label>报修人员：</label><label>哈哈</label><br>
+                                       <label>报修时间：</label><label>2019-9-11</label><br>
+                                       <label>修理地点：</label><label>哈哈</label><br>
+                                   </div>
+                               </div>
+                            </li>
+                            <li class="mui-table-view-cell">
+                                <div class="mui-card" style="background-color: #e8e8e8;border-radius: 8px;">
+                                    <div class="mui-card-content" style="margin-left: 18px;margin-top: 16px;margin-bottom: 16px" >
+                                        <label>报修人员：</label><label>哈哈</label><br>
+                                        <label>报修时间：</label><label>2019-9-11</label><br>
+                                        <label>修理地点：</label><label>哈哈</label><br>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="mui-table-view-cell">
+                                <div class="mui-card" style="background-color: #e8e8e8;border-radius: 8px;">
+                                    <div class="mui-card-content" style="margin-left: 18px;margin-top: 16px;margin-bottom: 16px" >
+                                        <label>报修人员：</label><label>哈哈</label><br>
+                                        <label>报修时间：</label><label>2019-9-11</label><br>
+                                        <label>修理地点：</label><label>哈哈</label><br>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="mui-table-view-cell">
+                                <div class="mui-card" style="background-color: #e8e8e8;border-radius: 8px;">
+                                    <div class="mui-card-content" style="margin-left: 18px;margin-top: 16px;margin-bottom: 16px" >
+                                        <label>报修人员：</label><label>哈哈</label><br>
+                                        <label>报修时间：</label><label>2019-9-11</label><br>
+                                        <label>修理地点：</label><label>哈哈</label><br>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div id="item2mobile" class="mui-slider-item mui-control-content">
+                <div id="scroll2" class="mui-scroll-wrapper">
+                    <div class="mui-scroll">
+                        <div class="mui-loading">
+                            <div class="mui-spinner">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--<div id="item3mobile" class="mui-slider-item mui-control-content">-->
+                <!--<div id="scroll3" class="mui-scroll-wrapper">-->
+                    <!--<div class="mui-scroll">-->
+                        <!--<div class="mui-loading">-->
+                            <!--<div class="mui-spinner">-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+
+            <!--</div>-->
+        </div>
+    </div>
+</div>
+</body>
+<script src="../js/mui.min.js"></script>
+<script>
+    mui.init({
+        swipeBack: false
+    });
+    (function($) {
+        $('.mui-scroll-wrapper').scroll({
+            indicators: true //是否显示滚动条
+        });
+        var html2 = '<ul class="mui-table-view"><li class="mui-table-view-cell">\n' +
+                '                                <div class="mui-card" style="background-color: #e8e8e8;border-radius: 8px;">\n' +
+                '                                    <div class="mui-card-content" style="margin-left: 18px;margin-top: 16px;margin-bottom: 16px" >\n' +
+                '                                        <label>维修人员：</label><label>哈哈</label><br>\n' +
+                '                                        <label>维修时间：</label><label>2019-9-11</label><br>\n' +
+                '                                        <label>维修情况：</label><label>哈哈</label><br>\n' +
+                '                                    </div>\n' +
+                '                                </div>\n' +
+                '                            </li><li class="mui-table-view-cell">\n' +
+                '                                <div class="mui-card" style="background-color: #e8e8e8;border-radius: 8px;">\n' +
+                '                                    <div class="mui-card-content" style="margin-left: 18px;margin-top: 16px;margin-bottom: 16px" >\n' +
+                '                                        <label>维修人员：</label><label>哈哈</label><br>\n' +
+                '                                        <label>维修时间：</label><label>2019-9-11</label><br>\n' +
+                '                                        <label>维修情况：</label><label>哈哈</label><br>\n' +
+                '                                    </div>\n' +
+                '                                </div>\n' +
+                '                            </li></ul>';
+        // var html3 = '<ul class="mui-table-view"><li class="mui-table-view-cell">第三个选项卡子项-1</li><li class="mui-table-view-cell">第三个选项卡子项-2</li><li class="mui-table-view-cell">第三个选项卡子项-3</li><li class="mui-table-view-cell">第三个选项卡子项-4</li><li class="mui-table-view-cell">第三个选项卡子项-5</li></ul>';
+        var item2 = document.getElementById('item2mobile');
+        // var item3 = document.getElementById('item3mobile');
+        document.getElementById('slider').addEventListener('slide', function(e) {
+            if (e.detail.slideNumber === 1) {
+                if (item2.querySelector('.mui-loading')) {
+                    setTimeout(function() {
+                        item2.querySelector('.mui-scroll').innerHTML = html2;
+                    }, 500);
+                }
+            } else if (e.detail.slideNumber === 2) {
+                if (item3.querySelector('.mui-loading')) {
+                    setTimeout(function() {
+                        item3.querySelector('.mui-scroll').innerHTML = html3;
+                    }, 500);
+                }
+            }
+        });
+        var sliderSegmentedControl = document.getElementById('sliderSegmentedControl');
+        $('.mui-input-group').on('change', 'input', function() {
+            if (this.checked) {
+                sliderSegmentedControl.className = 'mui-slider-indicator mui-segmented-control mui-segmented-control-inverted mui-segmented-control-' + this.value;
+                //force repaint
+                sliderProgressBar.setAttribute('style', sliderProgressBar.getAttribute('style'));
+            }
+        });
+    })(mui);
+</script>
+</html>
