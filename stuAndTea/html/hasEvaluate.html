@@ -56,10 +56,10 @@
 		<div class="mui-content" id="content">
 			<div style="padding-top: 15px; width: 90%; margin-left: 5%;">
 				<div>
-					<span>维修人员：</span><span class="right" id="name"></span>
+					<span>维修人员：</span><span class="right">王师傅</span>
 				</div>
 				<div style="margin-top: 7px;">
-					<span>报修类型：</span><span class="right" id="type"></span>
+					<span>报修类型：</span><span class="right">灯坏了</span>
 				</div>
 				<div style="margin-top: 7px;">
 					<span>维修评价：</span><span class="right" id="star">
@@ -72,10 +72,9 @@
 				<div style="margin-top: 7px;">
 					<span>详细评价：</span>
 					<div class="bottom">
-						<textarea style="height: 100px;" id="content"></textarea>
+						<textarea style="height: 100px;" readonly="readonly"></textarea>
 					</div>
 				</div>
-				<button class="sub" id="sub">评 价</button>
 			</div>
 		</div>
 	</body>
@@ -84,76 +83,62 @@
 		mui.init()
 
 		var rScore = 0
-		var repairId = null
-		var repairType = null
-		var maintainer = null
+		var evaId = null
 		var url = localStorage.getItem("url")
+		var repairType = null
 
 		mui.plusReady(function() {
+			 //关闭等待框  
+			plus.nativeUI.closeWaiting();  
+			//显示当前页面  
+			mui.currentWebview.show();  
 			var self = plus.webview.currentWebview()
-			repairId = self.repairId
-			maintainer = self.maintainer
+			self.opener().close()
+			evaId = self.evaId
 			repairType = self.repairType
-			mui.get(url + '/api/v1/stuAndtea/isHasEvaluate', {
-				id: repairId
+			mui.get(url + '/api/v1/stuAndtea/findEvaluateById', {
+				id: evaId
 			}, function(data) {
-				if (data.data.evaluateId != null) {
-					mui.currentWebview.show();
-					mui.openWindow({
-						url: "hasEvaluate.html",
-						id: "hasEvaluate.html",
-						show: {
-							autoShow: true, //页面loaded事件发生后自动显示，默认为true
-							aniShow: "slide-in-right", //页面显示动画，默认为”slide-in-right“；
-							duration: 300 //页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
-						},
-						extras: {
-							'evaId': data.data.evaluateId,
-							'repairType': repairType
-						},
-						waiting: {
-							autoShow: true, //自动显示等待框，默认为true
-							title: '正在加载...', //等待对话框上显示的提示内容
-						}
-					})
-				} else {
-					document.getElementById('name').innerHTML = maintainer
-					document.getElementById('type').innerHTML = repairType
-				}
-			}, 'json')
-
-		})
-
-
-
-
-		var fullStar = document.getElementsByClassName('mui-icon-star')
-		for (var i = 0; i < fullStar.length; i++) {
-			fullStar[i].addEventListener('tap', function() {
+				var temp = ''
+				rScore = data.data.star
+				temp = '<div style="padding-top: 15px; width: 90%; margin-left: 5%;">' +
+					'<div>' +
+					'<span>维修人员：</span><span class="right">' + data.data.maintainerName + '</span>' +
+					'</div>' +
+					'<div style="margin-top: 7px;">' +
+					'<span>报修类型：</span><span class="right">' + repairType + '</span>' +
+					'</div>' +
+					'<div style="margin-top: 7px;">' +
+					'<span>维修评价：</span><span class="right" id="star">' +
+					'<i data-index="1" class="mui-icon mui-icon-star"></i>' +
+					'<i data-index="2" class="mui-icon mui-icon-star"></i>' +
+					'<i data-index="3" class="mui-icon mui-icon-star"></i>' +
+					'<i data-index="4" class="mui-icon mui-icon-star"></i>' +
+					'<i data-index="5" class="mui-icon mui-icon-star"></i></span>' +
+					'</div>' +
+					'<div style="margin-top: 7px;">' +
+					'<span>详细评价：</span>' +
+					'<div class="bottom">' +
+					'<textarea style="height: 100px;" readonly="readonly">' + data.data.content + '</textarea>' +
+					'</div>' +
+					'</div>' +
+					'</div>'
+				document.getElementById('content').innerHTML = temp
+				var fullStar = document.getElementsByClassName('mui-icon-star')
 				var star = document.getElementById('star')
 				for (var i = 0; i < 5; i++) {
 					star.children[i].classList.remove('mui-icon-star-filled');
 				}
-				rScore = this.getAttribute('data-index')
-
 				for (var i = 0; i < rScore; i++) {
 					star.children[i].classList.add('mui-icon-star-filled');
 				}
-			})
-		}
-
-		document.getElementById('sub').addEventListener('tap', function() {
-			var content = document.getElementById('content').value
-			mui.get(url + '/api/v1/stuAndtea/insEvaluate', {
-				name: maintainer,
-				content: content,
-				star: rScore
-			}, function(data) {
-				if(data.code == 0){
-					mui.toast("评论成功！")
-					mui.back()
-				}
-			})
+			}, 'json')
+			
 		})
+
+
+
+
+		
 	</script>
 </html>

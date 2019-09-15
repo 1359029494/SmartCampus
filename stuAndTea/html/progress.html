@@ -275,7 +275,13 @@
 					if(data.data[i].remarks == null){
 						data.data[i].remarks = ""
 					}
-					temp += '<li class="mui-table-view-cell">' +
+					var rname = ''
+					if(data.data[i].maintainer == null){
+						rname = ''
+					} else{
+						rname = data.data[i].maintainer.name
+					}
+					temp += '<li class="mui-table-view-cell" repairId='+data.data[i].id+' repairType='+ data.data[i].type +' maintainer= '+rname+'>' +
 						'<a class="mui-navigate-right">' +
 						'<div class="hb"><span class="content-title">维修单号：</span>' + data.data[i].id + '</div>' +
 						'<div class="content-div">' +
@@ -326,8 +332,78 @@
 						'</li>'
 				}
 				$('#info').html(temp)
+				
+				var aHref = document.getElementsByClassName('mui-table-view-cell')
+				for(i = 0; i < aHref.length; i++){
+					aHref[i].addEventListener('tap', function(){
+						var cName = $(this).find(".d4-font").html()
+						var repairId = this.getAttribute("repairId")
+						if(cName == "维修完毕"){
+							var repairType = this.getAttribute("repairType")
+							var maintainer = this.getAttribute("maintainer")
+							mui.openWindow({
+								url: "evaluate.html",
+								id: "evaluate.html",
+								show: {
+									autoShow: false, //页面loaded事件发生后自动显示，默认为true
+									aniShow: "slide-in-right", //页面显示动画，默认为”slide-in-right“；
+									duration: 300 //页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+								},
+								extras: {
+									'repairId': repairId,
+									'repairType': repairType,
+									'maintainer': maintainer,
+								},
+								waiting: {
+									autoShow: true, //自动显示等待框，默认为true
+									title: '正在加载...', //等待对话框上显示的提示内容
+								}
+							})
+							return
+						} else if(cName == "待维修"){
+							openPage(2, repairId)
+						} else if(cName == "待接单"){
+							openPage(3, repairId)
+						} else{
+							openPage(4, repairId)
+						}
+					})
+				}
 			}, 'json')
 			mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //完成刷新
+		}
+		
+		function openPage(type, repairId) {
+			//待维修
+			if (type == 2) {
+				mui.toast('维修师傅已接单，正在马不停蹄的赶来！');
+				return
+			}
+			//待接单
+			if (type == 3) {
+				mui.toast('别担心，维修师傅马上就接单了！');
+				return
+			}
+			//未交罚款
+			if (type == 4) {
+				mui.openWindow({
+					url: "evaluate.html",
+					id: "evaluate.html",
+					show: {
+						autoShow: true, //页面loaded事件发生后自动显示，默认为true
+						aniShow: "slide-in-right", //页面显示动画，默认为”slide-in-right“；
+						duration: 300 //页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+					},
+					extras: {
+						'myid': id
+					},
+					waiting: {
+						autoShow: true, //自动显示等待框，默认为true
+						title: '正在加载...', //等待对话框上显示的提示内容
+					}
+				})
+				return
+			}
 		}
 	</script>
 </html>

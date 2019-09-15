@@ -6,7 +6,7 @@
 		<title></title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../css/mui.css" rel="stylesheet" />
-		<link rel="stylesheet" type="text/css" href="css/public.css" />
+		<link rel="stylesheet" type="text/css" href="../css/public.css" />
 		<style type="text/css">
 			.mui-content {
 				background-color: white;
@@ -119,8 +119,13 @@
 		mui.plusReady(function() {
 			// 设置系统状态栏背景为蓝色
 			plus.navigator.setStatusBarBackground('white');
+			var username = localStorage.getItem("username")
+			var password = localStorage.getItem("password")
+			if(username != null && password != null){
+				document.getElementById('username').value = username
+				document.getElementById('password').value = password
+			}
 		})
-<<<<<<< HEAD:common/html/login.html
 		
 		document.getElementById("forget-password").addEventListener("tap",function(){
 			mui.openWindow({
@@ -137,13 +142,11 @@
 				}
 			})
 		})
-		
-=======
 
 		localStorage.setItem('url', 'http://192.168.31.46:8080')
 		var url = localStorage.getItem('url')
 
->>>>>>> b416e1e6aa0a778061480c5eee49751dfb8a3a5d:publicview/login.html
+
 		document.getElementById('btn').addEventListener("tap", function() {
 			var username = document.getElementById('username').value
 			var password = document.getElementById('password').value
@@ -154,9 +157,11 @@
 			}, function(data) {
 				//服务器返回响应，根据响应结果，分析是否登录成功；
 				if (data.code == 0) {
-					localStorage.setItem("user", JSON.stringify(data))
+					localStorage.setItem("username", username)
+					localStorage.setItem("password", password)
+					localStorage.setItem("user", JSON.stringify(data.data))
 					mui.openWindow({
-						url: "../teacher/main.html",
+						url: "/stuAndTea/html/main.html",
 						id: "main.html",
 						show: {
 							autoShow: true, //页面loaded事件发生后自动显示，默认为true
