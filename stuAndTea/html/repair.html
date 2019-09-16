@@ -36,19 +36,19 @@
 				<form class="mui-input-group" style="height: 90vh;">
 					<div class="mui-input-row">
 						<label>姓名<span style="color: red; float: right; margin-right: 10px;">*</span></label>
-						<input type="text" placeholder="请输入您的姓名">
+						<input type="text" id="name" name="name" placeholder="请输入您的姓名">
 					</div>
 					<div class="mui-input-row">
 						<label>联系方式<span style="color: red; float: right; margin-right: 10px;">*</span></label>
-						<input type="text" placeholder="请输入您的联系方式">
+						<input type="text" id="phone" name="phone" placeholder="请输入您的联系方式">
 					</div>
 					<div class="mui-input-row">
 						<label>宿舍<span style="color: red; float: right; margin-right: 10px;">*</span></label>
-						<input type="text" placeholder="如:3#123">
+						<input type="text" id="local" name="local" placeholder="如:3#123">
 					</div>
 					<div class="mui-input-row">
 						<label>报修类型<span style="color: red; float: right; margin-right: 10px;">*</span></label>
-						<button id='showUserPicker' class="mui-btn mui-btn-block" type='button'>请选择报修类型...</button>
+						<button id='showUserPicker' class="mui-btn mui-btn-block" type='button'>请选择报修类型</button>
 					</div>
 					<div class="mui-input-row" style="overflow: hidden;height: 250px;">
 						<div style="font-size: 16px; margin-left: 12px; margin-top: 10px;">上传图片</div>
@@ -90,42 +90,91 @@
 		<script src="../js/mui.poppicker.js"></script>
 		
 		<script type="text/javascript">
+			//把请求的路径存在本地
+			localStorage.setItem('url', 'http://192.168.0.102:8080');
+			var url = localStorage.getItem('url');
+			
 			mui.init();
-			(function($, doc) {
-				$.init();
-				$.ready(function() {
-					//普通示例
-					var userPicker = new $.PopPicker();
-					userPicker.setData([{
-						value: "宿舍设施损坏",
-						text: "宿舍设施损坏"
-					}, {
-						value: '校园设施损坏',
-						text: '校园设施损坏'
-					}, {
-						value: '教室设施损坏',
-						text: '教室设施损坏'
-					}]);
-					var showUserPickerButton = doc.getElementById('showUserPicker');
-					// var userResult = doc.getElementById('userResult');
-					showUserPickerButton.addEventListener('tap', function(event) {
-						userPicker.show(function(items) {
-							//userResult.innerText = JSON.stringify(items[0]);
-							console.log(items[0].text)
-							document.getElementById('showUserPicker').innerHTML = items[0].text
-							//返回 false 可以阻止选择框的关闭
-							//return false;
-						});
-					}, false);
-				})
-			})(mui, document);
+			mui.plusReady(function() {
+				getMyInFo();
+			});
+			
+			
+			function getMyInFo(){
+				
+				mui.ajax(url+'/api/v1/pub/get_user_info',{
+					dataType: 'json', //服务器返回json格式数据  
+					type: 'get', //HTTP请求类型
+					crossDomain: true, // ios系统必须这样用，否则https无法正确通信
+					success: function(data) {
+						document.getElementById('name').value=data.data.name;
+						document.getElementById('phone').value=data.data.phone;
+					},
+					async: false,
+					error: function(xhr, type, errorThrown) {
+						mui.toast('获取信息失败');
+					}
+				});
+			}
+		/* 	
+			document.getElementById('submit-button').addEventListener('tap',function(){
+				var name=document.getElementById('name').value;
+				var phone=document.getElementById('phone').value;
+				var local=document.getElementById('local').value;
+				var type=document.getElementById('showUserPicker').innerText;
+				var remark=document.getElementById('textarea').value;
+				var pics=files;
+				
+				
+				if(name==null||name==''){
+					mui.toast('请输入姓名');
+					return;
+				}
+				
+				if(phone==null||phone==''){
+					mui.toast('请输入联系方式');
+					return;
+				}
+				
+				if(local==null||local==''){
+					mui.toast('请输入宿舍');
+					return;
+				}
+				
+				if(type==null||type=='请选择报修类型'){
+					mui.toast('请选择报修类型');
+					return;
+				}
+				
+				var pics=document.getElementsByClassName('load-img');
+				
+				
+				mui.ajax(url+'/api/v1/stuAndtea/do_repair',{
+					data:{
+						name : name,
+						phone : phone,
+						local : local,
+						type : type,
+						pics : pics,
+						remark : remark
+					},
+					dataType: 'json', //服务器返回json格式数据  
+					type: 'get', //HTTP请求类型
+					crossDomain: true, // ios系统必须这样用，否则https无法正确通信
+					success: function(data) {
+						
+					},
+					async: false,
+					error: function(xhr, type, errorThrown) {
+						mui.toast('获取信息失败');
+					}
+				});
+			});
+			 */
+			
 			
 			var task = null
 			var files = []; //图片存放的数组 可以上传一个，或者多个图片 
-			var sub = $('#submit-button').get(0)
-			 
-			
-			
 			
 			var photo = document.getElementsByClassName('add-img')
 			var thises = null
@@ -161,17 +210,71 @@
 					}
 				})
 			}
+			 //开始上传
+			 document.getElementById('submit-button').addEventListener('tap',function() {
+				 var name=document.getElementById('name').value;
+				 var phone=document.getElementById('phone').value;
+				 var local=document.getElementById('local').value;
+				 var type=document.getElementById('showUserPicker').innerText;
+				 var remark=document.getElementById('textarea').value;
+				 
+				 
+				 if(name==null||name==''){
+				 	mui.toast('请输入姓名');
+				 	return;
+				 }
+				 
+				 if(phone==null||phone==''){
+				 	mui.toast('请输入联系方式');
+				 	return;
+				 }
+				 
+				 if(local==null||local==''){
+				 	mui.toast('请输入宿舍');
+				 	return;
+				 }
+				 
+				 if(type==null||type=='请选择报修类型'){
+				 	mui.toast('请选择报修类型');
+				 	return;
+				 }
+				 
+				 
+				 
+			 	if (files.length <= 0) {
+			 		plus.nativeUI.alert("没有添加上传文件！");
+			 		return;
+			 	}
+			 	//原生的转圈等待框
+			 	var wt = plus.nativeUI.showWaiting();
 			 
-			//提交
-			sub.addEventListener('tap', function() {
-				var details = document.getElementById('details').value
-				if (details === null || details === '') {
-					mui.alert('不要忘记分享你的新鲜事哦', '提示')
-					return
-				}
-			
-				start_upload(details);
-			})
+			 	task = plus.uploader.createUpload(url+'/api/v1/stuAndtea/do_repair', {
+			 			method: "POST"
+			 		},
+			 		function(t, status) { //上传完成
+			 			if (status == 200) {
+			 				mui.toast('上传成功');
+							wt.close();
+							mui.back();
+			 			} else {
+			 				console.log("上传失败：" + status);
+			 				//关闭原生的转圈等待框
+			 				wt.close();
+			 			}
+			 		});
+				task.addData("name",name);
+				task.addData("phone",phone);
+				task.addData("local",local);
+				task.addData("type",type);
+				task.addData("remark",remark);
+			 	for (var i = 0; i < files.length; i++) {
+			 		var f = files[i];
+			 		task.addFile(f.path, {
+			 			key: f.name
+			 		});
+			 	}
+			 	task.start();
+			 });
 			
 			function camera(element) {
 				var cmr = plus.camera.getCamera();
@@ -180,8 +283,7 @@
 					plus.io.resolveLocalFileSystemURL(p, function(entry) {
 						img_name = entry.name; //获得图片名称
 						img_src = entry.toLocalURL(); //获得图片路径
-						//var url1=document.getElementById('img');
-						//url1.src=img_path;
+
 						var temp = '<img src="' + img_src + '" class="load-img" data-preview-src="" data-preview-group="1">'
 						$(element).html(temp)
 						upload_img(img_src);
@@ -231,191 +333,43 @@
 					path: p
 				});
 			}
-			//开始上传
-			function start_upload(details) {
-				if (files.length <= 0) {
-					plus.nativeUI.alert("没有添加上传文件！");
-					return;
-				}
-				//原生的转圈等待框
-				var wt = plus.nativeUI.showWaiting();
 			
-				task = plus.uploader.createUpload(url + 'insletter.do', {
-						method: "POST"
-					},
-					function(t, status) { //上传完成
-						if (status == 200) {
-							mui.toast('上传成功')
-							//关闭转圈等待框
-							wt.close();
-							var loginx = {
-								LogOut: function(callback) {
-									//do something
-									//callback
-									callback && callback()
-								}
-							}
-							loginx.LogOut(function() {
-								if (mui.os.ios || mui.os.ipad || mui.os.iphone) {
-									// 获取所有Webview窗口
-									var curr = plus.webview.currentWebview();
-									var wvs = plus.webview.all();
-									for (var i = 0, len = wvs.length; i < len; i++) {
-										//关闭除setting页面外的其他页面
-										if (wvs[i].getURL() == curr.getURL())
-											continue;
-										plus.webview.close(wvs[i]);
-									}
-									//打开login页面后再关闭setting页面
-									plus.webview.open('tab_footer.html');
-									curr.close();
-								} else
-									plus.runtime.quit();
-							})
-						} else {
-							console.log("上传失败：" + status);
-							//关闭原生的转圈等待框
-							wt.close();
-						}
-					});
 			
-				task.addData("details", details); //可以向后台传值
-				task.addData("uid", getUid());
-				for (var i = 0; i < files.length; i++) {
-					var f = files[i];
-					task.addFile(f.path, {
-						key: f.name
-					});
-				}
-				task.start();
 			
-			}
+			(function($, doc) {
+				$.init();
+				$.ready(function() {
+					//普通示例
+					var userPicker = new $.PopPicker();
+					userPicker.setData([{
+						value: "宿舍设施损坏",
+						text: "宿舍设施损坏"
+					}, {
+						value: '校园设施损坏',
+						text: '校园设施损坏'
+					}, {
+						value: '教室设施损坏',
+						text: '教室设施损坏'
+					}]);
+					var showUserPickerButton = doc.getElementById('showUserPicker');
+					// var userResult = doc.getElementById('userResult');
+					showUserPickerButton.addEventListener('tap', function(event) {
+						userPicker.show(function(items) {
+							//userResult.innerText = JSON.stringify(items[0]);
+							console.log(items[0].text)
+							document.getElementById('showUserPicker').innerHTML = items[0].text
+							//返回 false 可以阻止选择框的关闭
+							//return false;
+						});
+					}, false);
+				})
+			})(mui, document);
+			
 			
 			// 产生一个随机数
 			function getUid() {
 				return Math.floor(Math.random() * 100000000 + 10000000).toString();
 			}
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			/* document.getElementById("photo-button").addEventListener("tap",function() {
-				getImage();
-			});
-			document.getElementById("btn").addEventListener("tap",function() {
-				var li=document.getElementsByTagName("li");
-				alert(li.length); 
-			}); 
-			
-			var i=1,gentry=null,w=null;
-			var hl=null,le=null,de=null,ie=null;
-			var unv=true;
-			var bUpdated=false; //用于兼容可能提前注入导致DOM未解析完更新的问题
-			// H5 plus事件处理
-			function plusReady(){
-				// 获取摄像头目录对象
-				plus.io.resolveLocalFileSystemURL('_doc/', function(entry){
-					entry.getDirectory('camera', {create:true}, function(dir){
-						gentry = dir;
-					}, function(e){
-						outSet('Get directory "camera" failed: '+e.message);
-					} );
-				}, function(e){
-					outSet('Resolve "_doc/" failed: '+e.message);
-				});
-			}
-			if(window.plus){
-				plusReady();
-			}else{
-				document.addEventListener('plusready', plusReady, false);
-			}
-			// 监听DOMContentLoaded事件
-			document.addEventListener('DOMContentLoaded', function(){
-				// 获取DOM元素对象
-				hl=document.getElementById('history');
-				le=document.getElementById('empty');
-				de=document.getElementById('display');
-				if(ie=document.getElementById('index')){
-					ie.onchange=indexChanged;
-				}
-				// 判断是否支持video标签
-				unv=!document.createElement('video').canPlayType;
-			},false );
-			function changeIndex(){
-				outSet('选择摄像头：');
-				ie.focus();
-			}
-			function indexChanged(){
-				de.innerText = ie.options[ie.selectedIndex].innerText;
-				i = parseInt(ie.value);
-				outLine(de.innerText);
-			}
-			
-			function getImage(){
-				var cmr = plus.camera.getCamera();
-				cmr.captureImage(function(p){
-					outLine('成功：'+p);
-					plus.io.resolveLocalFileSystemURL(p, function(entry){
-						createItem(entry);
-					}, function(e){
-						outLine('读取拍照文件错误：'+e.message);
-					});
-				}, function(e){
-					outLine('失败：'+e.message);
-				}, {filename:'_doc/camera/',index:1});
-			}
-			
-			// 显示文件
-			function displayFile(li){
-				if(w){
-					outLine('重复点击！');
-					return;
-				}
-				if(!li || !li.entry){
-					ouSet('无效的媒体文件');
-					return;
-				}
-				var name = li.entry.name;
-				var suffix = name.substr(name.lastIndexOf('.'));
-				var url = '';
-				if(suffix=='.mov' || suffix=='.3gp' || suffix=='.mp4' || suffix=='.avi'){
-					//if(unv){plus.runtime.openFile('_doc/camera/'+name);return;}
-					url = '/plus/camera_video.html';
-				} else {
-					url = 'camera_image.html';
-				}
-				w=plus.webview.create(url,url,{hardwareAccelerated:true,scrollIndicator:'none',scalable:true,bounce:'all'});
-				w.addEventListener('loaded', function(){
-					w.evalJS('loadMedia("'+li.entry.toLocalURL()+'")');
-					//w.evalJS('loadMedia("'+'http://localhost:13131/_doc/camera/'+name+'")');
-				}, false );
-				w.addEventListener('close', function(){
-					w = null;
-				}, false);
-				w.show('pop-in');
-			}
-			
-			// 添加播放项
-			function createItem(entry){
-				var li = document.createElement('li');
-				li.className = 'ditem';
-				li.innerHTML = '<span class="iplay"><font class="aname"></font><br/><font class="ainf"></font></span>';
-				li.setAttribute('onclick', 'displayFile(this)' );
-				hl.insertBefore( li, le.nextSibling );
-				li.querySelector('.aname').innerText = entry.name;
-				li.querySelector('.ainf').innerText = '...';
-				li.entry = entry;
-				// 设置空项不可见
-				le.style.display = 'none';
-			} */
-			
-			
-			
 		</script>
 	</body>
 
