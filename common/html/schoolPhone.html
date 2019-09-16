@@ -138,7 +138,7 @@
 					<button id='showUserPicker' class="mui-btn mui-btn-block" type='button'>请选择报修类型...</button>
 				</div>
 				<label style="margin-left: 4%;">详细描述<span style="color: red;"> *</span>：</label>
-				<textarea type="text" class="txtArea"  placeholder="请填写报修的详细描述"></textarea>
+				<textarea type="text" id="describe" class="txtArea"  placeholder="请填写报修的详细描述"></textarea>
 
 
 			</form>
@@ -209,7 +209,7 @@
 		var task = null
 		var files = []; //图片存放的数组 可以上传一个，或者多个图片 
 		var sub = $('#sub').get(0)
- 
+		var url = localStorage.getItem('url')
 
 		document.getElementById('location').addEventListener("tap", function() {
 			mui.openWindow({
@@ -271,13 +271,23 @@
  
 		//提交
 		sub.addEventListener('tap', function() {
-			var details = document.getElementById('details').value
-			if (details === null || details === '') {
-				mui.alert('不要忘记分享你的新鲜事哦', '提示')
+			var location = document.getElementById('location').innerHTML
+			var type = document.getElementById('showUserPicker').innerHTML
+			var describe = document.getElementById('describe').value
+			if (location === null || location === '') {
+				mui.alert('不要忘记填写你的位置哦', '提示')
+				return
+			}
+			if (type === null || type === '') {
+				mui.alert('不要忘记填写报修类型哦', '提示')
+				return
+			}
+			if (describe === null || describe === '') {
+				mui.alert('不要忘记填写详细描述哦', '提示')
 				return
 			}
 
-			start_upload(details);
+			start_upload(location, type, describe);
 		})
 
 		function camera(element) {
@@ -339,7 +349,7 @@
 			});
 		}
 		//开始上传
-		function start_upload(details) {
+		function start_upload(location, type, describe) {
 			if (files.length <= 0) {
 				plus.nativeUI.alert("没有添加上传文件！");
 				return;
@@ -347,7 +357,7 @@
 			//原生的转圈等待框
 			var wt = plus.nativeUI.showWaiting();
 
-			task = plus.uploader.createUpload(url + 'insletter.do', {
+			task = plus.uploader.createUpload(url + '/api/v1/stuAndtea/insSchoolPhoto', {
 					method: "POST"
 				},
 				function(t, status) { //上传完成
@@ -355,30 +365,6 @@
 						mui.toast('上传成功')
 						//关闭转圈等待框
 						wt.close();
-						var loginx = {
-							LogOut: function(callback) {
-								//do something
-								//callback
-								callback && callback()
-							}
-						}
-						loginx.LogOut(function() {
-							if (mui.os.ios || mui.os.ipad || mui.os.iphone) {
-								// 获取所有Webview窗口
-								var curr = plus.webview.currentWebview();
-								var wvs = plus.webview.all();
-								for (var i = 0, len = wvs.length; i < len; i++) {
-									//关闭除setting页面外的其他页面
-									if (wvs[i].getURL() == curr.getURL())
-										continue;
-									plus.webview.close(wvs[i]);
-								}
-								//打开login页面后再关闭setting页面
-								plus.webview.open('tab_footer.html');
-								curr.close();
-							} else
-								plus.runtime.quit();
-						})
 					} else {
 						console.log("上传失败：" + status);
 						//关闭原生的转圈等待框
@@ -386,7 +372,9 @@
 					}
 				});
 
-			task.addData("details", details); //可以向后台传值
+			task.addData("location", location); //可以向后台传值
+			task.addData("type", type); //可以向后台传值
+			task.addData("describe", describe); //可以向后台传值
 			task.addData("uid", getUid());
 			for (var i = 0; i < files.length; i++) {
 				var f = files[i];
