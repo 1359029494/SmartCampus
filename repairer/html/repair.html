@@ -6,18 +6,19 @@
 
 <header class="mui-bar mui-bar-nav" style="background: deepskyblue; height:40px;">
 	<h1 class="mui-title">维修信息页</h1>
-	<button type="button" onclick="function(){mui.back()}" style="color: #000000;" class="mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left"><span
-		 class="mui-icon mui-icon-left-nav"></span>返回</button>
+	<button type="button" onclick="function(){mui.back()}" style="color: #000000;" class="mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
+		<span class="mui-icon mui-icon-left-nav">
+		</span>返回</button>
 </header>
 <nav class="mui-bar mui-bar-tab">
 	<button type="button" class="mui-btn mui-btn-blue mui-btn-block" id="get_list">加载更多</button>
 </nav>
+
 <div style="padding: 10px 10px;margin-top:30px ;background-color: white;height: 50px;">
 	<div id="segmentedControl" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary">
 		<a class="mui-control-item mui-active" href="#item1">
 			全&nbsp;部&nbsp;<span class="mui-badge mui-badge-danger"><label id="allNumber">2</label></span>
 		</a>
-
 		<a class="mui-control-item" href="#item2">
 			待维修&nbsp;<span class="mui-badge mui-badge-danger"><label id="unfinishedNumber">1</label></span>
 		</a>
@@ -27,51 +28,59 @@
 
 	</div>
 </div>
+
 <div id="item1" class="mui-control-content mui-active">
-	<div id="card" class="mui-card">
-		<div style="float: right;" class=" triangle-topright mui-badge-orange"></div>
-		<div class="mui-card-header"><label>维修单号：<label id="id">25</label></label></div>
-		<div class="font-topright"><label id="service _status">待修</label></div>
-		<div class="font-seal"><label id="fine">待缴费</label></div>
-		<div class="mui-card-content">
-			<div class="mui-card-content-inner">
-				<p>地点: <label id="local">25号学生公寓</label></p>
-				<p>故障类型: <label id="type">风扇</label></p>
-				<p>联系方式: <label id="phone">18954156856</label></p>
-				<p>保修时间: <label id="repair_date">2019-9-9</label></p>
+	<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+		<div id="card" class="mui-card">
+			<div style="float: right;" class=" triangle-topright mui-badge-orange"></div>
+			<div class="mui-card-header"><label>维修单号：<label id="id">25</label></label></div>
+			<div class="font-topright"><label id="service Status">待修</label></div>
+			<div class="font-seal"><label id="fine">待缴费</label></div>
+			<div class="mui-card-content">
+				<div class="mui-card-content-inner">
+					<p>地点: <label id="local">25号学生公寓</label></p>
+					<p>故障类型: <label id="type">风扇</label></p>
+					<p>联系方式: <label id="phone">18954156856</label></p>
+					<p>保修时间: <label id="repair_date">2019-9-9</label></p>
+				</div>
+			</div>
+			<div class="mui-card-footer">
+				<button onclick="jumpToRepairInfo()" id="info" type="button" class="mui-btn mui-btn-royal mui-btn-outlined">
+					详细信息
+				</button>
+				<button id="start" type="button" style="right:90px;position: absolute; " class="mui-btn mui-btn-primary ">
+					<label>进行工作</label>
+				</button>
+				<button id="finish" value="25" type="button" data-loading-text="   " style="right:20px;position: absolute;" class="mui-btn mui-btn-success">
+					<label>完工</label>
+				</button>
 			</div>
 		</div>
-		<div class="mui-card-footer">
-			<button onclick="jumpToRepairInfo()" id="info" type="button" class="mui-btn mui-btn-royal mui-btn-outlined">
-				详细信息
-			</button>
-			<button id="start" type="button" style="right:90px;position: absolute; " class="mui-btn mui-btn-primary ">
-				<label>进行工作</label>
-			</button>
-			<button id="finish" value="25" type="button" data-loading-text="   " style="right:20px;position: absolute;" class="mui-btn mui-btn-success">
-				<label>完工</label>
-			</button>
-		</div>
 	</div>
-
 </div>
-
 <div id="item2" class="mui-control-content  ">
-	2322
+	2222
+</div>
+<div id="item3" class="mui-control-content  ">
+	3333
 </div>
 
 </div>
 
 <script src="../js/mui.min.js"></script>
 <script src="../js/jquery-3.3.1.js"></script>
-<script src="../js/mui.lazyload.js"></script>
-<script src="../js/mui.lazyload.img.js"></script>
+
 <script type="text/javascript">
+    var user =localStorage.getItem("username");
+	var prefixUrl = localStorage.getItem('url')
 	mui.init({
 		pullRefresh: {
-			container: refreshContainer, //待刷新区域标识，querySelector能定位的css选择器均可，比如：id、.class等
-			up: {
+			container: "#pullrefresh", //待刷新区域标识，querySelector能定位的css选择器均可，比如：id、.class等
+			down: {
+				style: 'circle',
 				height: 50, //可选.默认50.触发上拉加载拖动距离
+				color: '#2BD009', //可选，默认“#2BD009” 下拉刷新控件颜色
+				height: '70', //可选,默认50px.下拉刷新控件的高度,
 				auto: true, //可选,默认false.自动上拉加载一次
 				contentrefresh: "正在加载...", //可选，正在加载状态时，上拉加载控件上显示的标题内容
 				contentnomore: '没有更多数据了', //可选，请求完毕若没有更多数据时显示的提醒内容；
@@ -92,104 +101,50 @@
 		//getAll();
 		//getAllNumber();
 		//发送完工请求
-		mui(document.body).on('tap', '#finish', function(e) {
-			mui(this).button('loading');
-			var id = this.value;
-			// $.ajax({
-			// 	type: "post",
-			// 	url: "",
-			// 	data: {
-			//   id:id,
-			// 		service _status: 1
-			// 	},
-			// 	dataType: "json",
-			// 	success: function(data) {}
-			// });
 
-			setTimeout(function() {
-				mui(this).button('reset');
-				alert(this.value)
-				$("#repairNumber").text() -= 1;
-				this.setAttribute("class", "mui-btn mui-btn-warning");
-				this.children[0].innerText = '已完工';
-				this.previousElementSibling.style.display = 'none';
-			}.bind(this), 2000);
-
-		});
 		mui(document.body).on('click', '#start', function() {
 			//获取id
 			this.setAttribute("class", "mui-btn mui-btn-warning");
 			this.children[0].innerText = '正在进行';
 		})
 	})
-	var lazyLoad = mui(item).imageLazyload({
-		destroy: false
-	});
 
-	document.getElementById('get_list').addEventListener('tap', function() {
-		var html = '';
-		//$(item).appendChild(getAll());
-		html +=
-			'<div id = "card" class = "mui-card" > <div style="float: right;" class=" triangle-topright mui-badge-orange"></div>' +
-			'<div class="mui-card-header"><label>维修单号：<label id="id">25</label></label></div>' +
-			'<div class="font-topright"><label id="service _status">待修</label></div>' +
-			'<div class="font-seal"><label id="fine">待缴费</label></div>' +
-			'<div class="mui-card-content">' +
-			'<div class="mui-card-content-inner">' +
-			'<p>地点: <label id="local">25号学生公寓</label></p>' +
-			'<p>故障类型: <label id="type">风扇</label></p>' +
-			'<p>联系方式: <label id="phone">18954156856</label></p>' +
-			'<p>保修时间: <label id="repair_date">2019-9-9</label></p>' +
-			'</div>' +
-			'</div>' +
-			'<div class="mui-card-footer">' +
-			'<button onclick="jumpToRepairInfo()" id="info" type="button" class="mui-btn mui-btn-royal mui-btn-outlined">' +
-			'详细信息' +
-			'</button>' +
-			'<button id="start" type="button" style="right:80px;position: absolute; " class="mui-btn mui-btn-primary ">' +
-			'<lable>进行工作</lable>' +
-			'</button>' +
-			'<button   type="button" style="display: none; " class="mui-btn mui-btn-warning ">' +
-			'<lable>正在进行</lable>' +
-			'</button>' +
-			'<button id="finish" type="button" data-loading-text="   " style="right:20px;position: absolute;" class="mui-btn mui-btn-success">' +
-			'<lable>完工</lable>' +
-			'</button>' +
-			'	<button   type="button" style="display:none  " class="mui-btn mui-btn-success"><lable>已完工</lable></button>'
-		'</div>' +
-		'</div>';
-		$(item).append(html);
-		lazyLoad.refresh(true);
-	});
-
+	//跳到详细信息
 	function jumpToRepairInfo(id) {
 		mui.openWindow({
 			id: id,
-			url: 'repairInfo.html'
+			url: 'repairInfo.html?id='+id
 		});
 	}
 
 	function getAll() {
-		switch (atem) {
-			case 'atem1':
-				ajax();
-				localStorage.setItem("name", "caibin")
+		var url;
+		switch (item) {
+			case 'item1':
+				url = '/api/v1/repair/findMyOrder';
+				ajax(url, pageNo1);
+				pageNo1++;
 				break;
-			case 'atem2':
-				代码块
+			case 'item2':
+				url = '/api/v1/repair/findMyOrderWithNo';
+				ajax(url, pageNo2);
+				pageNo2++;
 				break;
-			case 'atem3':
-				代码块
+			case 'item3':
+				url = '/api/v1/repair/findMyOrderWithYes';
+				ajax(url, pageNo3);
+				pageNo3++;
 				break;
-
 		}
-		pageNo++;
+		mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //完成刷新
 	}
 	//获取 全部 待维修 完工的个数
 	function getAllNumber() {
+		
 		$.ajax({
-			url: '',
+			url: prefixUrl+'/api/v1/repair/getNumber',
 			type: "get",
+			data:{maintainerId: user}
 			dataType: "json",
 			success: function(data) {
 				$("#allNumber").html(data.allNumber);
@@ -199,75 +154,109 @@
 		})
 	}
 
-	function getNoRepair() {
-
-	}
-
-	function getNoPay() {
-
-	}
-
-	function ajax() {
+	function ajax(url,pageNo) {
+		
 		$.ajax({
 			type: "post",
-			url: "../json/g.json",
+			url: prefixUrl+url,
 			data: {
+				maintainerId: user,
 				pageNo: pageNo,
-				size: 5
 			},
 			dataType: "json",
 			success: function(data) {
 				var html = '';
 				$.each(data, function(i, obj) {
-					var service_status = '';
-					var service_status2 = '';
-					var pay_status = '';
-					var repair_status = '';
-					repair_status = (obj.repair_status == 0 ?
+					var serviceStatus = '';
+					var serviceStatus2 = '';
+					var payStatus = '';
+					var repairStatus = '';
+					repairStatus = (obj.data.repairStatus == 0 ?
 						'<button id="start" type="button" style="right:80px;position: absolute; " class="mui-btn mui-btn-primary ">' +
 						'进行工作' +
 						'</button>' :
 						'<button id="starting" type="button" style="right:80px;position: absolute; " class="mui-btn mui-btn-warning ">' +
 						'正在进行' +
 						'</button>');
-					service_status = (obj.service_status == 0 ? '' :
-						'<div class="font-topright"><label id="service_status">待修</label></div>');
-					service_status2 = (obj.service_status == 0 ?
-						'<button value=' + obj.id +
-						' id="finish" type="button" data-loading-text="" style="right:20px;position: absolute;" class="mui-btn mui-btn-success">' +
+					serviceStatus = (obj.data.serviceStatus == 0 ? '' :
+						'<div class="font-topright"><label id="serviceStatus">待修</label></div>');
+					serviceStatus2 = (obj.data.serviceStatus == 0 ?
+						'<button value=' + obj.data.id +
+						' id="finish" onclick="finished(' + obj.data.id +
+						')" type="button" data-loading-text="" style="right:20px;position: absolute;" class="mui-btn mui-btn-success">' +
 						'完工' +
 						'</button>' :
 						'<button id="finished" type="button"   style="right:20px;position: absolute;" class="mui-btn mui-btn-success">已完工</button>'
 					);
-					pay_status =
-						(obj.pay_status == 0 && obj.fine == 1 ? '' :
+					payStatus =
+						(obj.data.payStatus == 0 && obj.data.fine == 1 ? '' :
 							'<div class="font-seal"><label id="fine">待缴费</label></div>');
 					html +=
 						' <div id = "card" class = "mui-card" > <div style="float: right;" class=" triangle-topright mui-badge-orange"></div>' +
-						'<div class="mui-card-header"><label>维修单号：<label id="id">' + obj.id + '</label></label></div>' +
-						service_status + pay_status +
+						'<div class="mui-card-header"><label>维修单号：<label id="id">' + obj.data.id + '</label></label></div>' +
+						serviceStatus + payStatus +
 						'<div class="mui-card-content">' +
 						'<div class="mui-card-content-inner">' +
-						'<p>地点: <label id="local">' + obj.local + '</label></p>' +
-						'<p>故障类型: <label id="type"' + obj.type + '</label></p>' +
-						'<p>联系方式: <label id="phone">' + obj.phone + '</label></p>' +
-						'<p>保修时间: <label id="repair_date">' + obj.repair_date + '</label></p>' +
+						'<p>地点: <label id="local">' + obj.data.local + '</label></p>' +
+						'<p>故障类型: <label id="type"' + obj.data.type + '</label></p>' +
+						'<p>联系方式: <label id="phone">' + obj.data.phone + '</label></p>' +
+						'<p>保修时间: <label id="repair_date">' + obj.data.repairDate + '</label></p>' +
 						'</div>' +
 						'</div>' +
 						'<div class="mui-card-footer">' +
-						'<button   onclick="jumpToRepairInfo(' + obj.id +
+						'<button   onclick="jumpToRepairInfo(' + obj.data.id +
 						')" id="info" type="button" class="mui-btn mui-btn-royal mui-btn-outlined">' +
 						'详细信息' +
 						'</button>' +
-						repair_status +
-						service_status2 +
+						repairStatus +
+						serviceStatus2 +
 						'</div>';
-
-
 				});
 				$(item).append(html);
-				lazyLoad.refresh(true);
 			}
 		});
+	}
+
+	function finished(id) {
+		mui(document.body).on('tap', '#finish', function(e) {
+			mui(this).button('loading'); 
+			$.ajax({
+				type: "post",
+				url: prefixUrl+"/api/v1/repair/finish",
+				data: {
+					id: id
+				},
+				dataType: "json"
+			})
+			setTimeout(function() {
+				mui(this).button('reset');
+				$("#repairNumber").text() -= 1;
+				this.setAttribute("class", "mui-btn mui-btn-warning");
+				this.children[0].innerText = '已完工';
+				this.previousElementSibling.style.display = 'none';
+			}.bind(this), 2000);
+			mui.confirm('是否罚款?', '', ['是', '否'], function(e) {
+				if (e.index == 0) {
+					var money=prompt("请输入金额","")
+					var user = JSON.parse(localStorage.getItem("user"));
+					//点击确认    
+					$.ajax({
+						type: "post",
+						url: prefixUrl+"/api/v1/repair/fine",
+						data: {
+							id: id,
+							money:money,
+							maintainer:user
+						}
+					})
+					getAll();
+				} else {
+					//取消  
+				}
+			}, 'div');
+
+		});
+	} 
+
 	}
 </script>

@@ -5,7 +5,9 @@
 	display: table;
 	margin-right: 5px;
 }
-
+.div-leftauto{
+		font-weight: 700;
+}
 .wrap {
 	display: table-cell;
 	vertical-align: middle;
