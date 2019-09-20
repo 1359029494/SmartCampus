@@ -37,6 +37,9 @@
         },
         "Maps" : {
             "description" : "管理地图插件"
+        },
+        "Payment" : {
+            "description" : "管理支付插件"
         }
     },
     "plus" : {
@@ -158,6 +161,9 @@
                         "appkey_ios" : "6tyVC4PzRurjZxGXkFKDCLQqxkE0uDTG",
                         "appkey_android" : "saF3kULHrtyGjmuuHajWBCaMfZKHehTz"
                     }
+                },
+                "payment" : {
+                    "alipay" : {}
                 }
             }
         }
