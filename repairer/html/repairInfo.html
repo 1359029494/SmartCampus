@@ -17,41 +17,41 @@
 <div style="margin-top:50px;background-color: white" class="mui-input-row multi-line">
 	<div class="box label-right">
 		<div class="div-leftauto">报修人</div>
-		<div class="wrap">卜祥宇</div>
+		<div id="name" class="wrap">卜祥宇</div>
 	</div>
 	<hr />
 	<div class="box label-right">
 		<div class="div-leftauto">报修人角色</div>
-		<div class="wrap">学生</div>
+		<div id="role" class="wrap">学生</div>
 	</div>
 	<hr />
 	<div class="box label-right">
 		<div class="div-leftauto">维修地点</div>
-		<div class="wrap">齐鲁工业大学21号楼225宿舍</div>
+		<div id="address" class="wrap">齐鲁工业大学21号楼225宿舍</div>
 	</div>
 	<div class="box label-right">
-		<div class="div-leftauto">保修时间</div>
-		<div class="wrap">2019-07-27 12:03</div>
+		<div class="div-leftauto">报修时间</div>
+		<div id="data" class="wrap">2019-07-27 12:03</div>
 	</div>
 	<hr />
 	<div class="box label-right">
 		<div class="div-leftauto">故障类型</div>
-		<div class="wrap">风扇坏了</div>
+		<div id="class" class="wrap">风扇坏了</div>
 	</div>
 	<hr />
 	<div class="box label-right">
 		<div class="div-leftauto">备注信息</div>
-		<div style="margin: 10px  5px; display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 2;overflow: hidden;"
+		<div id="info" style="margin: 10px  5px; display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 2;overflow: hidden;"
 		 class="wrap"> 开着开着不转了开着开着不转了开着开着不转了开着开着不转了开着开着不转了开着开着不转了开着开着不转了开着开着不转了</div>
 	</div>
 	<hr />
 	<div class=" label-right">
 		<div class="div-leftauto">待修物品照片</div>
-		
-		<div class="wrap">
+
+		<div id="photoDiv" class="wrap">
 			<li style="list-style:none;" class="mui-table-view-cell mui-media mui-col-xs-6">
 				<a href="#">
-					<img src="../icon/zhinan.png" ; style="text-align:center;width:70%" class="mui-media-object" data-preview-src="" />
+					<img id="photo" src="../icon/zhinan.png" ; style="text-align:center;width:70%" class="mui-media-object" data-preview-src="" />
 				</a>
 			</li>
 			<label style="font-size: 5px;opacity: 0.5;">点击放大</label>
@@ -62,18 +62,54 @@
 
 <script src="../js/mui.min.js"></script>
 <script src="../js/mui.zoom.js"></script>
+<script src="../js/jquery-3.3.1.js"></script>
 <script src="../js/mui.previewimage.js"></script>
 
 
 <script>
+	var afterUrl = window.location.search.substring(1);
+	var id = afterUrl.substring(afterUrl.indexOf('=') + 1).toUpperCase();
+	 	 // localStorage.setItem('url', 'http://localhost:8080');
+	var prefixUrl = localStorage.getItem('url') 
 	mui.init();
-	alert(ss)
-	mui.plusReady(function() {  
-                var id = plus.webview.currentWebview().id;  
-			 
-            });  
+	mui.plusReady(function() {
+		id = plus.webview.currentWebview().id;
+
+	});
 	mui.previewImage();
-	
+
+	$.ajax({
+		type: "put",
+		url: prefixUrl + '/api/v1/repair/findOrderInfo',
+		data: {
+			id: id,
+		},
+		success: function(data) {  
+			$("#type").html(data.data.type);
+			$("#info").html(data.data.remarks);
+			if (data.data.role = 1) {
+				var role = '学生';
+			} else {
+				var role = '老师';
+			}
+			$("#role").html(role);
+			$("#date").html(data.data.repairDate);
+			$("#address").html(data.data.local);
+			$("#name").html(data.data.name);
+			if(data.data.photo!=null){
+				var pUrl=data.data.photo;
+				var  arr=pUrl.split(';');
+				
+				$("#photo").attr('src',prefixUrl+'/'+arr[0]);
+			}
+			else{
+				
+			}
+			
+			
+		}
+	})
+
 	function back() {
 		mui.back()
 	}

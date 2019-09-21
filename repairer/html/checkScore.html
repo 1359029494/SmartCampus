@@ -1,6 +1,4 @@
-<!doctype html>
 <html>
-
 	<head>
 		<meta charset="utf-8">
 		<title></title>
@@ -8,137 +6,115 @@
 		<link href="../css/mui.css" rel="stylesheet" />
 		<link href="../css/star.css" rel="stylesheet" />
 	</head>
-
 	<body>
 		<header class="mui-bar mui-bar-nav" style="background: deepskyblue; height:40px;">
 			<h1 class="mui-title">我的评价</h1>
-			<button type="button" onclick="function(){mui.back()}" style="color: #000000;" class="mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left"><span
-				 class="mui-icon mui-icon-left-nav"></span>返回</button>
+			<button type="button" onclick="function(){mui.back()}" style="color: #000000;" class="mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
+				<span class="mui-icon mui-icon-left-nav"></span>返回</button>
 		</header>
 		<div class="mui-content" style="width: 97%;margin: 0 auto;">
-			<ul class="mui-table-view">
-				<li class="star-li">
-					<a>报修单号</a>
-					<div class="icons">
-						<label id="id"></label>
-					</div>
-				</li>
-				<li id="role" class="star-li">
-					<a>角色</a>
-					<div class="icons">
-						<label id="role_type"></label>
-					</div>
-				</li>
-				<li id="phone" class="star-li">
-					<a>联系方式</a>
-					<div class="icons">
-						<label id="phone"></label>
-					</div>
-				</li>
-				<li id="repair" class="star-li">
-					<a>维修情况</a>
-					<div class="icons">
-						<i data-index="1" class="mui-icon mui-icon-star"></i>
-						<i data-index="2" class="mui-icon mui-icon-star"></i>
-						<i data-index="3" class="mui-icon mui-icon-star"></i>
-						<i data-index="4" class="mui-icon mui-icon-star"></i>
-						<i data-index="5" class="mui-icon mui-icon-star"></i>
-					</div>
-				</li>
-				<li id="service" class="star-li">
-					<a>服务态度</a>
-					<div class="icons">
-						<i data-index="1" class="mui-icon mui-icon-star"></i>
-						<i data-index="2" class="mui-icon mui-icon-star"></i>
-						<i data-index="3" class="mui-icon mui-icon-star"></i>
-						<i data-index="4" class="mui-icon mui-icon-star"></i>
-						<i data-index="5" class="mui-icon mui-icon-star"></i>
-					</div>
-				</li>
-				<li class="star-li">
-					<a>评价</a>
-					<div class="icons">
-						<textarea id="evaluate" readonly placeholder="无评论"></textarea>
-					</div>
-				</li>
-			</ul>
-			<ul class="mui-table-view">
-				<li class="star-li">
-					<a>报修单号</a>
-					<div class="icons">
-						<label id="id"></label>
-					</div>
-				</li>
-				<li id="role" class="star-li">
-					<a>角色</a>
-					<div class="icons">
-						<label id="role_type"></label>
-					</div>
-				</li>
-				<li id="phone" class="star-li">
-					<a>联系方式</a>
-					<div class="icons">
-						<label id="phone"></label>
-					</div>
-				</li>
-				<li id="repair" class="star-li">
-					<a>维修情况</a>
-					<div class="icons">
-						<i data-index="1" class="mui-icon mui-icon-star"></i>
-						<i data-index="2" class="mui-icon mui-icon-star"></i>
-						<i data-index="3" class="mui-icon mui-icon-star"></i>
-						<i data-index="4" class="mui-icon mui-icon-star"></i>
-						<i data-index="5" class="mui-icon mui-icon-star"></i>
-					</div>
-				</li>
-				<li id="service" class="star-li">
-					<a>服务态度</a>
-					<div class="icons">
-						<i data-index="1" class="mui-icon mui-icon-star"></i>
-						<i data-index="2" class="mui-icon mui-icon-star"></i>
-						<i data-index="3" class="mui-icon mui-icon-star"></i>
-						<i data-index="4" class="mui-icon mui-icon-star"></i>
-						<i data-index="5" class="mui-icon mui-icon-star"></i>
-					</div>
-				</li>
-				<li class="star-li">
-					<a>评价</a>
-					<div class="icons">
-						<textarea id="evaluate" readonly placeholder="无评论"></textarea>
-					</div>
-				</li>
-			</ul>
+			<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+				<div id="item" class="mui-control-content mui-active" style="margin-top: 50px;">
+				</div>
+			</div>
+		</div>
+		<script src="../js/mui.js"></script>
+		<script src="../js/jquery-3.3.1.js"></script>
+		<script type="text/javascript">
+			// localStorage.setItem('url', 'http://localhost:8080');
+			// localStorage.setItem('username', '1');
+			
+			var user = localStorage.getItem("username");
+			var prefixUrl = localStorage.getItem('url')
+			var pageNo = 1;
+			mui.init({
+				pullRefresh: {
+					container: "#pullrefresh", //待刷新区域标识，querySelector能定位的css选择器均可，比如：id、.class等
+					down: {
+						style: 'circle',
+						height: 50, //可选.默认50.触发上拉加载拖动距离
+						color: '#2BD009', //可选，默认“#2BD009” 下拉刷新控件颜色
+						height: '70', //可选,默认50px.下拉刷新控件的高度,
+						auto: true, //可选,默认false.自动上拉加载一次
+						contentrefresh: "正在加载...", //可选，正在加载状态时，上拉加载控件上显示的标题内容
+						contentnomore: '没有更多数据了', //可选，请求完毕若没有更多数据时显示的提醒内容；
+						callback: getStar //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+					}
+				}
+			});
 
-			<script src="../js/mui.js"></script>
-			<script src="../js/jquery-3.3.1.js"></script>
-			<script type="text/javascript">
-				mui.init()
-				$(function() {
-					$.ajax({
-						url: '',
-						type: 'POST',
-						dataType: 'json',
-						success: function(data) {
-							$("#id").text(data.id);
-							$("#role_type").text(data.role_type);
-							$("#phone").text(data.phone);
-							var rScore = data.star;
-							var sScore = 2;
-							var text = data.content;
-							var repair = document.getElementById("repair");
-							var evaluate = document.getElementById("evaluate");
-							var service = document.getElementById("service");
+			function getStar() {
+				  
+				$.ajax({
+					url: prefixUrl + '/api/v1/repair/check',
+					data: {
+						pageNum: pageNo,
+						maintainerId: user
+					},
+					type: 'put',
+					dataType: 'json',
+					success: function(data) {
+						pageNo++
+						var html = '';
+						$.each(data.list, function(i, obj) {
+							var rScore = obj.star;
+							var star = '';
 							for (var i = 0; i < rScore; i++) {
-								repair.children[1].children[i].classList.add('mui-icon-star-filled');
+								star += '<i data-index=' + i + ' class="mui-icon mui-icon-star-filled"></i>'
 							}
-							for (var i = 0; i < sScore; i++) {
-								service.children[1].children[i].classList.add('mui-icon-star-filled');
+							for (var i = 0; i < 5 - rScore; i++) {
+								star += '<i data-index=' + i + ' class="mui-icon mui-icon-star"></i>'
 							}
-							document.getElementById("evaluate").value = text;
-						},
-					})
+							if (obj.role = 1) {
+								var role = '学生';
+							} else {
+								var role = '老师';
+							}
+							html +=
+								'<div id="card" class="mui-card">' +
+								'<ul class="mui-table-view">' +
+								'<li class="star-li">' +
+								'<a>报修单号</a>' +
+								'<div class="icons">' +
+								'<label>' + obj.id + '</label>' +
+								'</div>' +
+								'</li>' +
+								'<li class="star-li">' +
+								'<a>角色</a>' +
+								'<div class="icons">' +
+								'<label>' + role + '</label>' +
+								'</div>' +
+								'</li>' +
+								'<li class="star-li">' +
+								'<a>联系方式</a>' +
+								'<div class="icons">' +
+								'<label>' + obj.phone + '</label>' +
+								'</div>' +
+								'</li>' +
+								'<li id="repair"' + obj.id + ' class="star-li">' +
+								'<a>维修情况</a>' +
+								'<div class="icons">' +
+								star +
+								'</div>' +
+								'</li>' +
+								'<li class="star-li">' +
+								'<a>评价</a>' +
+								'<div class="icons">' +
+								'<textarea readonly placeholder="无评论">' + obj.content + '</textarea>' +
+								'</div>' +
+								'</li>' +
+								'</ul>' +
+								'</div>';
+						});
+						$('#item').append(html);
+						mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //完成刷新;
+					 
+					}
+					
 				})
-			</script>
+				
+				
+			}
+		</script>
 	</body>
-
 </html>

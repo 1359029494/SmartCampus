@@ -1,0 +1,124 @@
+<head>
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<link href="../css/mui.min.css" rel="stylesheet" />
+	<link href="../css/repair.css" rel="stylesheet" />
+</head>
+
+<header class="mui-bar mui-bar-nav" style="background: deepskyblue; height:40px;">
+	<h1 class="mui-title">待接单</h1>
+	<button type="button" onclick="function(){mui.back()}" style="color: #000000;" class="mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left"><span
+		 class="mui-icon mui-icon-left-nav"></span>返回</button>
+</header>
+<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+<div id="item" class="mui-control-content mui-active" style="margin-top: 50px;">
+</div>
+</div>
+<script src="../js/mui.min.js"></script>
+<script src="../js/jquery-3.3.1.js"></script>
+ 
+<script>
+	// localStorage.setItem('url', 'http://localhost:8080');
+	// localStorage.setItem('username', 1);
+	
+	var user = localStorage.getItem("username");
+	var prefixUrl = localStorage.getItem('url')
+	 
+	mui.init({
+		pullRefresh: {
+			container: "#pullrefresh", //待刷新区域标识，querySelector能定位的css选择器均可，比如：id、.class等
+			down: {
+				style: 'circle',
+				height: 50, //可选.默认50.触发上拉加载拖动距离
+				color: '#2BD009', //可选，默认“#2BD009” 下拉刷新控件颜色
+				height: '70', //可选,默认50px.下拉刷新控件的高度,
+				auto: true, //可选,默认false.自动上拉加载一次
+				contentrefresh: "正在加载...", //可选，正在加载状态时，上拉加载控件上显示的标题内容
+				contentnomore: '没有更多数据了', //可选，请求完毕若没有更多数据时显示的提醒内容；
+				callback: get //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+			}
+		}
+	});
+	var pageNo = 1;
+ 
+
+	function get() {
+		 
+		$.ajax({
+			type: "get",
+			url: prefixUrl+'/api/v1/repair/findOrder',
+			data: {
+				pageNum: pageNo,
+			},
+			dataType: "json",
+			success: function(data) {
+				pageNo++
+				var html = '';
+				$.each(data.list, function(i, obj) {			 
+					html += '<div id="card" class="mui-card">' +
+						'<div style="float: right;" class=" triangle-topright mui-badge-orange"></div>' +
+						'<div class="mui-card-header"><label>维修单号：<label id="id">'+obj.id+'</label></label></div>' +
+						'<div class="font-topright"><label id="service _status">待修</label></div>' +
+						'<div class="mui-card-content">' +
+						'<div class="mui-card-content-inner">' +
+						'<p>地点: <label id="local">'+obj.local+'</label></p>' +
+						'<p>故障类型: <label id="type">'+obj.type+'</label></p>' +
+						'<p>联系方式: <label id="phone">'+obj.phone+'</label></p>' +
+						'<p>报修时间: <label id="repair_date">'+obj.repairDate+'</label></p>' +
+						'</div>' +
+						'</div>' +
+						'<div class="mui-card-footer">' +
+						'<button onclick="jumpToRepairInfo('+obj.id+')" id="info" type="button" class="mui-btn mui-btn-royal mui-btn-outlined">' +
+						'详细信息' +
+						'</button>' +
+						'<button onclick="receipt('+obj.id+')" id="start" type="button" style="right:30px;position: absolute;width: 100px; " class="mui-btn mui-btn-primary ">' +
+						'<label>接单</label>' +
+						'</button>' +
+						'</div>' +
+						'</div>'
+				});
+				$('#item').append(html);
+				mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //完成刷新
+			}
+		});
+	}
+
+	//跳到详细信息
+	function jumpToRepairInfo(id) {
+		mui.openWindow({
+			id: id,
+			url:'repairInfo.html?id='+id
+		});
+	}
+
+
+	//接单
+	function receipt(id) {
+		mui(document.body).on('tap', '#start', function(e) {
+			mui(this).button('loading');
+			$.ajax({
+				type: "put",
+				url: prefixUrl + "/api/v1/repair/receipt",
+				data: {
+					maintainerId: user,
+					id: id
+				},
+				dataType: "json",
+				success:function(data){
+					mui.alert(data.data,'提示','确定',function (e) {
+					   e.index
+					},'div');
+					location.reload();
+					/* setTimeout(function() {
+						mui(this).button('reset');
+						this.setAttribute("class", "mui-btn mui-btn-warning");
+						this.children[0].innerText = '已接单';
+						this.unbind('click');
+						this.previousElementSibling.style.display = 'none';
+						
+					}.bind(this), 2000); */
+				}
+			})
+			
+		});
+	}
+</script>

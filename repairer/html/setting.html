@@ -1,0 +1,273 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../publicview/css/public.css" />
+		<link rel="stylesheet" type="text/css" href="css/iconfont.css" />
+		<style type="text/css">
+			.mui-ellipsis span {
+				font-size: 12px;
+			}
+
+			.mui-ellipsis {
+				margin-top: 5px;
+			}
+
+			.mybtn {
+				color: white;
+				width: 90%;
+				margin-left: 5%;
+				margin-top: 20px;
+				height: 40px;
+			}
+
+			li span {
+				margin-right: 3%;
+			}
+
+			.photo {
+				max-width: 100% !important;
+				width: auto !important;
+				max-height: 100% !important;
+				height: auto !important;
+			}
+
+			.photoA {
+				padding-top: 5px !important;
+			}
+
+			#photoDiv {
+				float: left;
+				width: 32%;
+				height: 85px;
+			}
+
+			.mui-bar-nav {
+				background: deepskyblue;
+				height: 40px;
+
+			}
+
+			.mui-title {
+				color: white;
+				font-size: 18px;
+				line-height: 42px;
+			}
+
+			.mui-icon-left-nav {
+				color: white;
+			}
+		</style>
+	</head>
+	<header class="mui-bar mui-bar-nav">
+		<h1 class="mui-title">我的</h1>
+		<button type="button" onclick="function(){mui.back()}" style="color: #000000;" class="mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
+			<span class="mui-icon mui-icon-left-nav"></span>返回</button>
+	</header>
+	<div class="mui-content">
+		<div>
+			<ul class="mui-table-view" style="margin-top: 5px; height: 100px;">
+				<li class="mui-table-view-cell mui-media" style="height: 100px;" id="info">
+					<a href="javascript:;" class="mui-navigate-right photoA" style="height: 100px; padding-top: 25px;">
+						<div id="photoDiv" style="overflow: hidden;">
+							<img id="photo" class="mui-media-object mui-pull-left photo" src="../images/logo.png">
+						</div>
+
+						<div id="infoTitle" class="mui-media-body" style="height: 100px; margin-top: 20px;">
+							<span style="color: #42b3e5;">卜祥宇</span><span class="iconfont icon-nan"></span>
+							<p class="mui-ellipsis"><span>stunum</span></p>
+						</div>
+					</a>
+				</li>
+			</ul>
+		</div>
+
+		<ul class="mui-table-view" style="margin-top: 15px; font-size: 15px;">
+			<li class="mui-table-view-cell" id="repair">
+				<a class="mui-navigate-right">
+					<span class="iconfont icon-chaxun"></span>我的订单
+				</a>
+			</li>
+			<li class="mui-table-view-cell" id="checkScore">
+				<a class="mui-navigate-right">
+					<span class="iconfont icon-chaxun"></span>我的评价
+				</a>
+			</li>
+		</ul>
+		<ul class="mui-table-view" style="margin-top: 15px;font-size: 15px;">
+			<li class="mui-table-view-cell" id="update">
+				<a class="mui-navigate-right">
+					<span class="mui-icon iconfont icon-gengxin"></span>检查更新
+				</a>
+			</li>
+			<li class="mui-table-view-cell" id="guide">
+				<a class="mui-navigate-right">
+					<span class="mui-icon iconfont icon-gengxin"></span>维修指南
+				</a>
+			</li>
+			<li class="mui-table-view-cell" id="about">
+				<a class="mui-navigate-right">
+					<span class="iconfont icon-guanyu"></span>关于
+				</a>
+				<a href=""></a>
+			</li>
+		</ul>
+		<button type="button" class="mui-btn mui-btn-red mybtn">退出登录</button>
+	</div>
+	<script src="../js/mui.js"></script>
+	<script src="../js/jquery-3.3.1.js"></script>
+	<script type="text/javascript">
+		mui.init({})
+
+		//localStorage.setItem('url', 'http://localhost:8080')
+		//localStorage.setItem('username', '1')
+		var prefixUrl = localStorage.getItem('url')
+		var user = localStorage.getItem("username");
+		get();
+		mui.plusReady(function() {
+
+		});
+
+		function get() {
+			$.ajax({
+				type: "post",
+				url: prefixUrl + '/api/v1/repair/findMyInfo',
+				data: {
+					id: user,
+				},
+				success: function(data) {
+					var temp = ''
+					if (data.data.sex == 0) {
+						temp = '<span style="color: #42b3e5;">' + data.data.name + '</span><span class="iconfont icon-nan"></span>'
+					} else {
+						temp = '<span style="color: deeppink">' + data.data.name +
+							'</span><span class="iconfont icon-nvsheng"></span>'
+					}
+					temp += '<p class="mui-ellipsis"><span>' + data.data.maiNo + '</span></p>'
+					document.getElementById('infoTitle').innerHTML = temp
+					$("#photo").attr('src', 'www.bxy666.top/maintainer/head_img/' + data.data.maiNo + '/' + user + '.jpg');
+				}
+			})
+		}
+		document.getElementById('repair').addEventListener("tap", function() {
+			mui.openWindow({
+				url: "repair.html",
+				id: "repair.html",
+				show: {
+					autoShow: true, //页面loaded事件发生后自动显示，默认为true
+					aniShow: "slide-in-right", //页面显示动画，默认为”slide-in-right“；
+					duration: 300 //页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+				},
+				waiting: {
+					autoShow: true, //自动显示等待框，默认为true
+					title: '正在加载...', //等待对话框上显示的提示内容
+				}
+			})
+		})
+		document.getElementById('checkScore').addEventListener("tap", function() {
+			mui.openWindow({
+				url: "checkScore.html",
+				id: "checkScore.html",
+				show: {
+					autoShow: true, //页面loaded事件发生后自动显示，默认为true
+					aniShow: "slide-in-right", //页面显示动画，默认为”slide-in-right“；
+					duration: 300 //页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+				},
+				waiting: {
+					autoShow: true, //自动显示等待框，默认为true
+					title: '正在加载...', //等待对话框上显示的提示内容
+				}
+			})
+		})
+		document.getElementById('about').addEventListener("tap", function() {
+			mui.openWindow({
+				url: "../../stuAndTea/html/about.html",
+				id: "about.html",
+				show: {
+					autoShow: true, //页面loaded事件发生后自动显示，默认为true
+					aniShow: "slide-in-right", //页面显示动画，默认为”slide-in-right“；
+					duration: 300 //页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+				},
+				waiting: {
+					autoShow: true, //自动显示等待框，默认为true
+					title: '正在加载...', //等待对话框上显示的提示内容
+				}
+			})
+		})
+
+		document.getElementById('update').addEventListener("tap", function() {
+			mui.openWindow({
+				url: "../../stuAndTea/html/update.html",
+				id: "update.html",
+				show: {
+					autoShow: true, //页面loaded事件发生后自动显示，默认为true
+					aniShow: "slide-in-right", //页面显示动画，默认为”slide-in-right“；
+					duration: 300 //页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+				},
+				waiting: {
+					autoShow: true, //自动显示等待框，默认为true
+					title: '正在加载...', //等待对话框上显示的提示内容
+				}
+			})
+		})
+		document.getElementById('guide').addEventListener("tap", function() {
+			mui.openWindow({
+				url: "guide.html",
+				id: "guide.html",
+				show: {
+					autoShow: true, //页面loaded事件发生后自动显示，默认为true
+					aniShow: "slide-in-right", //页面显示动画，默认为”slide-in-right“；
+					duration: 300 //页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+				},
+				waiting: {
+					autoShow: true, //自动显示等待框，默认为true
+					title: '正在加载...', //等待对话框上显示的提示内容
+				}
+			})
+		})
+
+		document.getElementById('info').addEventListener("tap", function() {
+			mui.openWindow({
+				url: "info.html",
+				id: "info.html",
+				show: {
+					autoShow: true, //页面loaded事件发生后自动显示，默认为true
+					aniShow: "slide-in-right", //页面显示动画，默认为”slide-in-right“；
+					duration: 300 //页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+				},
+				waiting: {
+					autoShow: true, //自动显示等待框，默认为true
+					title: '正在加载...', //等待对话框上显示的提示内容
+				}
+			})
+		})
+
+		/* var loginx = {
+			LogOut: function(callback) {
+				//do something
+				//callback
+				callback && callback()
+			}
+		}
+		loginx.LogOut(function() {
+			if (mui.os.ios || mui.os.ipad || mui.os.iphone) {
+				// 获取所有Webview窗口
+				var curr = plus.webview.currentWebview();
+				var wvs = plus.webview.all();
+				for (var i = 0, len = wvs.length; i < len; i++) {
+					//关闭除setting页面外的其他页面
+					if (wvs[i].getURL() == curr.getURL())
+						continue;
+					plus.webview.close(wvs[i]);
+				}
+				//打开login页面后再关闭setting页面
+				plus.webview.open('tab_footer.html');
+				curr.close();
+			} else
+				plus.runtime.quit();
+		}) */
+	</script>
+</html>
