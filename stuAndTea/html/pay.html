@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../css/public.css" />
+		<style type="text/css">
+
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">缴纳罚款</h1>
+		</header>
+
+		<div class="mui-content">
+			缴纳罚款...
+		</div>
+	</body>
+	<script src="../js/mui.js"></script>
+	<script src="../js/jquery-3.3.1.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		mui.init({
+        beforeback: function() {　　 
+            //获得父页面的webview
+            var list = plus.webview.currentWebview().opener();　　
+            //触发父页面的自定义事件(refresh),从而进行刷新
+            mui.fire(list, 'refresh');
+            //返回true,继续页面关闭逻辑
+            return true;
+        }
+    }
+
+		var channel = null;
+		var url = localStorage.getItem('url')
+		var repairId = null
+		
+		mui.plusReady(function(){
+			var self = plus.webview.currentWebview()
+			repairId = self.repairId
+			plusReady()
+			pay('alipay')
+		})
+		
+		// 1. 获取支付通道  
+		function plusReady() { //uni-app中将此function里的代码放入vue页面的onLoad生命周期中  
+			// 获取支付通道  
+			plus.payment.getChannels(function(channels) {
+				channel = channels[0];
+			}, function(e) {
+				alert("获取支付通道失败：" + e.message);
+			});
+		}
+		document.addEventListener('plusready', plusReady, false); //uni-app不需要此代码  
+
+		var ALIPAYSERVER = 'http://demo.dcloud.net.cn/helloh5/payment/alipay.php?total=0.01';
+		var WXPAYSERVER = 'http://demo.dcloud.net.cn/helloh5/payment/wxpay.php?total=';
+		// 2. 发起支付请求  
+		function pay(id) {
+			// 从服务器请求支付订单  
+			var PAYSERVER = '';
+			if (id == 'alipay') {
+				PAYSERVER = ALIPAYSERVER;
+			} else if (id == 'wxpay') {
+				PAYSERVER = WXPAYSERVER;
+			} else {
+				plus.nativeUI.alert("不支持此支付通道！", null, "支付");
+				return;
+			}
+			var xhr = new XMLHttpRequest(); //uni-app中请使用uni的request api联网  
+			xhr.onreadystatechange = function() {
+				switch (xhr.readyState) {
+					case 4:
+						if (xhr.status == 200) {
+							plus.payment.request(channel, xhr.responseText, function(result) {
+								plus.nativeUI.alert("支付成功！", function() {
+									back();
+									mui.post(url + '/api/v1/stuAndtea/updateOrder',{repairId: repairId}, function(data){
+										if(data.success == true){
+											mui.back()
+										}
+									})
+								});
+							}, function(error) {
+								plus.nativeUI.alert("支付失败：" + error.code);
+							});
+						} else {
+							alert("获取订单信息失败！");
+						}
+						break;
+					default:
+						break;
+				}
+			}
+			xhr.open('GET', PAYSERVER);
+			xhr.send();
+		}
+	</script>
+</html>
