@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../css/public.css" />
+		<style type="text/css">
+
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">帮助</h1>
+		</header>
+
+		<div class="mui-content">
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell mui-media">
+					<a class="aHref" href="javascript:;">
+						<div class="mui-media-body">
+							<div class="title">如何报修？</div>
+							<p class="mui-ellipsis">在首页点击报修，进入页面后填写对应的信息即可完成报修。</p>
+						</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media">
+					<a class="aHref" href="javascript:;">
+						<div class="mui-media-body">
+							<div class="title">公共物品坏了我可以保修吗？</div>
+							<p class="mui-ellipsis">当然可以，你可以在底部的校园随后拍中填写相应的报修信息，维修师傅看到报修信息后，去马不停蹄的去维修。</p>
+						</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media">
+					<a class="aHref" href="javascript:;">
+						<div class="mui-media-body">
+							<div class="title">我在哪里缴纳罚款？</div>
+							<p class="mui-ellipsis">在首页点击报修流程，找到对应的报修信息，点击该信息，即可完成缴费。</p>
+						</div>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</body>
+
+	<script src="../js/mui.js"></script>
+	<script src="../js/jquery-3.3.1.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		mui.init();
+
+		mui.plusReady(function() {
+			// 设置系统状态栏背景为蓝色
+			plus.navigator.setStatusBarBackground('#00bfff');
+		})
+
+		var aHref = document.getElementsByClassName('aHref')
+		for (i = 0; i < aHref.length; i++) {
+			aHref[i].addEventListener('tap', function() {
+				var title = $(this).find('.title').text()
+				var detail = $(this).find('.mui-ellipsis').text()
+				openPage(title, detail)
+			})
+		}
+
+		function openPage(title, detail) {
+			mui.openWindow({
+				url: "helpDetail.html",
+				id: "helpDetail.html",
+				show: {
+					autoShow: true, //页面loaded事件发生后自动显示，默认为true
+					aniShow: "slide-in-right", //页面显示动画，默认为”slide-in-right“；
+					duration: 300 //页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+				},
+				extras: {
+					'title': title,
+					'detail': detail
+				},
+				waiting: {
+					autoShow: true, //自动显示等待框，默认为true
+					title: '正在加载...', //等待对话框上显示的提示内容
+				}
+			})
+		}
+	</script>
+
+</html>

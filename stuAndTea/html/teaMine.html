@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../css/mui.css" rel="stylesheet" />
 		<link rel="stylesheet" type="text/css" href="../publicview/css/public.css" />
-		<link rel="stylesheet" type="text/css" href="css/iconfont.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/iconfont.css"/>
 		<style type="text/css">
 			.mui-ellipsis span {
 				font-size: 12px;
@@ -64,7 +64,7 @@
 					<li class="mui-table-view-cell mui-media" style="height: 100px;" id="info">
 						<a href="javascript:;" class="mui-navigate-right photoA" style="height: 100px; padding-top: 25px;">
 							<div id="photoDiv" style="overflow: hidden;">
-								<img id="photo" class="mui-media-object mui-pull-left photo" src="../images/logo.png">
+								<img id="photo" class="mui-media-object mui-pull-left photo" src="">
 							</div>
 							
 							<div id="infoTitle" class="mui-media-body"  style="height: 100px; margin-top: 20px;">
@@ -78,7 +78,7 @@
 			</div>
 
 			<ul class="mui-table-view" style="margin-top: 15px; font-size: 15px;">
-				<li class="mui-table-view-cell">
+				<li class="mui-table-view-cell" id="payment">
 					<a class="mui-navigate-right">
 						<span class="iconfont icon-chaxun"></span>缴费查询
 					</a>
@@ -101,7 +101,7 @@
 					</a>
 				</li>
 			</ul>
-			<button type="button" class="mui-btn mui-btn-red mybtn">退出登录</button>
+			<button type="button" class="mui-btn mui-btn-red mybtn" id="back">退出登录</button>
 		</div>
 	</body>
 
@@ -121,6 +121,19 @@
 				}
 				temp += '<p class="mui-ellipsis"><span>'+data.data.college+'</span></p>'
 				document.getElementById('infoTitle').innerHTML = temp
+				if(data.data.photo == null || data.data.photo == ""){
+					document.getElementById('photo').setAttribute("src", "../images/logo.jpg")
+					document.getElementById('photo').addEventListener('tap', function(){
+						choisePhoto()
+					})
+				}else{
+					document.getElementById('photo').setAttribute("src", url + data.data.photo)
+					document.getElementById('photo').addEventListener('tap', function(){
+						choisePhoto()
+					})
+				}
+				
+				
 			}, 'json')
 		})
 		
@@ -128,6 +141,22 @@
 			mui.openWindow({
 				url: "about.html",
 				id: "about.html",
+				show: {
+					autoShow: true, //页面loaded事件发生后自动显示，默认为true
+					aniShow: "slide-in-right", //页面显示动画，默认为”slide-in-right“；
+					duration: 300 //页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+				},
+				waiting: {
+					autoShow: true, //自动显示等待框，默认为true
+					title: '正在加载...', //等待对话框上显示的提示内容
+				}
+			})
+		})
+		
+		document.getElementById('payment').addEventListener('tap', function(){
+			mui.openWindow({
+				url: "paymentInfo.html",
+				id: "paymentInfo.html",
 				show: {
 					autoShow: true, //页面loaded事件发生后自动显示，默认为true
 					aniShow: "slide-in-right", //页面显示动画，默认为”slide-in-right“；
@@ -187,39 +216,51 @@
 				}
 			})
 		})
+		
+		document.getElementById('back').addEventListener('tap', function(){
+			var btnArray = ['是', '否'];
+							mui.confirm("您确定要退出登录么？","提示",btnArray,function(e){
+								if(e.index == 0){
+									localStorage.removeItem('username')
+									localStorage.removeItem('password')
+									localStorage.setItem('user', '')
+									var loginx = {
+								LogOut: function(callback) {
+									//do something
+									//callback
+									callback && callback()
+								}
+							}
+							loginx.LogOut(function() {
+								var launch = plus.webview.getLaunchWebview();
+								console.log(launch)
+								if(mui.os.ios || mui.os.ipad || mui.os.iphone) {
+									// 获取所有Webview窗口
+									var curr = plus.webview.currentWebview();
+									var wvs = plus.webview.all();
+									for(var i = 0, len = wvs.length; i < len; i++) {
+										//关闭除setting页面外的其他页面
+										if(wvs[i].getURL() == curr.getURL())
+											continue;
+										plus.webview.close(wvs[i]);
+									}
+									//打开login页面后再关闭setting页面
+									plus.webview.open('/common/html/login.html');
+									curr.close();
+								} else
+									plus.runtime.quit();
+							})
+								}else{
+									return
+								}
+							})
+		})
+		
 		var photo = document.getElementById('photoDiv')
 		var task = null
 		var files = []; //图片存放的数组 可以上传一个，或者多个图片 
 		document.getElementById('photo').addEventListener('tap', function(){
-			
-			if (files.length < 2) { //判断当前图片个数
-				var btnArray = [{
-					title: "打开照相机"
-				}, {
-					title: "打开相册"
-				}]; //选择按钮  1 2 3
-				plus.nativeUI.actionSheet({
-						title: "请选择",
-						cancel: "取消", // 0
-						buttons: btnArray
-					},
-					function(e) {
-						var index = e.index; //
-						//alert(index);
-						switch (index) {
-							case 1:
-								//写自己的逻辑
-								camera(photo);
-								break;
-							case 2:
-								xiangce(photo);
-								break;
-						}
-					})
-			} else {
-				mui.alert('最多只能选取1张图片')
-			}
-			event.stopPropagation(); 
+			choisePhoto()
 		})
 		
 		function camera(element) {
@@ -321,6 +362,38 @@
 		// 产生一个随机数
 		function getUid() {
 			return Math.floor(Math.random() * 100000000 + 10000000).toString();
+		}
+		
+		
+		function choisePhoto(){
+			if (files.length < 2) { //判断当前图片个数
+				var btnArray = [{
+					title: "打开照相机"
+				}, {
+					title: "打开相册"
+				}]; //选择按钮  1 2 3
+				plus.nativeUI.actionSheet({
+						title: "请选择",
+						cancel: "取消", // 0
+						buttons: btnArray
+					},
+					function(e) {
+						var index = e.index; //
+						//alert(index);
+						switch (index) {
+							case 1:
+								//写自己的逻辑
+								camera(photo);
+								break;
+							case 2:
+								xiangce(photo);
+								break;
+						}
+					})
+			} else {
+				mui.alert('最多只能选取1张图片')
+			}
+			event.stopPropagation(); 
 		}
 	</script>
 </html>

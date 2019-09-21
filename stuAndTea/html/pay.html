@@ -34,7 +34,7 @@
             //返回true,继续页面关闭逻辑
             return true;
         }
-    }
+    })
 
 		var channel = null;
 		var url = localStorage.getItem('url')
@@ -43,6 +43,7 @@
 		mui.plusReady(function(){
 			var self = plus.webview.currentWebview()
 			repairId = self.repairId
+			console.log(repairId)
 			plusReady()
 			pay('alipay')
 		})

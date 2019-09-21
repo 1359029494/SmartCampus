@@ -121,32 +121,16 @@
 			plus.navigator.setStatusBarBackground('white');
 			var username = localStorage.getItem("username")
 			var password = localStorage.getItem("password")
-			if(username != null && password != null){
+			if (username != null && password != null) {
 				document.getElementById('username').value = username
 				document.getElementById('password').value = password
 			}
 		})
-		
-		document.getElementById("forget-password").addEventListener("tap",function(){
+
+		document.getElementById("forget-password").addEventListener("tap", function() {
 			mui.openWindow({
-				url:"forget-password.html",
-				id:"forget-password.html",
-				show: {
-					autoShow: true, //页面loaded事件发生后自动显示，默认为true
-					aniShow: "slide-in-right", //页面显示动画，默认为”slide-in-right“；
-					duration: 300 //页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
-				},
-				waiting: {
-					autoShow: true, //自动显示等待框，默认为true
-					title: '正在加载...', //等待对话框上显示的提示内容
-				}
-			})
-		});
-		
-		document.getElementById("update-password").addEventListener("tap",function(){
-			mui.openWindow({
-				url:"update-password.html",
-				id:"update-password.html",
+				url: "forget-password.html",
+				id: "forget-password.html",
 				show: {
 					autoShow: true, //页面loaded事件发生后自动显示，默认为true
 					aniShow: "slide-in-right", //页面显示动画，默认为”slide-in-right“；
@@ -159,9 +143,25 @@
 			})
 		});
 
+		document.getElementById("update-password").addEventListener("tap", function() {
+			mui.openWindow({
+				url: "update-password.html",
+				id: "update-password.html",
+				show: {
+					autoShow: true, //页面loaded事件发生后自动显示，默认为true
+					aniShow: "slide-in-right", //页面显示动画，默认为”slide-in-right“；
+					duration: 300 //页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+				},
+				waiting: {
+					autoShow: true, //自动显示等待框，默认为true
+					title: '正在加载...', //等待对话框上显示的提示内容
+				}
+			})
+		});
 
-		localStorage.setItem('url', 'http://172.20.10.4:8080')
 
+		// localStorage.setItem('url', 'http://www.bxy666.top')
+		localStorage.setItem('url', 'http://172.20.10.3:8080')
 		// localStorage.setItem('url', 'http://192.168.0.102:8080')
 
 		var url = localStorage.getItem('url')
@@ -170,7 +170,7 @@
 		document.getElementById('btn').addEventListener("tap", function() {
 			var username = document.getElementById('username').value
 			var password = document.getElementById('password').value
-			
+
 			mui.post(url + '/api/v1/pub/login', {
 				'username': username,
 				'password': password
@@ -180,19 +180,35 @@
 					localStorage.setItem("username", username)
 					localStorage.setItem("password", password)
 					localStorage.setItem("user", JSON.stringify(data.data))
-					mui.openWindow({
-						url: "/stuAndTea/html/main.html",
-						id: "main.html",
-						show: {
-							autoShow: true, //页面loaded事件发生后自动显示，默认为true
-							aniShow: "slide-in-right", //页面显示动画，默认为”slide-in-right“；
-							duration: 300 //页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
-						},
-						waiting: {
-							autoShow: true, //自动显示等待框，默认为true
-							title: '正在加载...', //等待对话框上显示的提示内容
-						}
-					})
+					if (data.data.role == 1 || data.data.role == 2) {
+						mui.openWindow({
+							url: "/stuAndTea/html/main.html",
+							id: "main.html",
+							show: {
+								autoShow: true, //页面loaded事件发生后自动显示，默认为true
+								aniShow: "slide-in-right", //页面显示动画，默认为”slide-in-right“；
+								duration: 300 //页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+							},
+							waiting: {
+								autoShow: true, //自动显示等待框，默认为true
+								title: '正在加载...', //等待对话框上显示的提示内容
+							}
+						})
+					} else{
+						mui.openWindow({
+							url: "/stuAndTea/html/main.html",
+							id: "main.html",
+							show: {
+								autoShow: true, //页面loaded事件发生后自动显示，默认为true
+								aniShow: "slide-in-right", //页面显示动画，默认为”slide-in-right“；
+								duration: 300 //页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+							},
+							waiting: {
+								autoShow: true, //自动显示等待框，默认为true
+								title: '正在加载...', //等待对话框上显示的提示内容
+							}
+						})
+					}
 				} else {
 					mui.alert('账号或密码错误', '提示')
 				}

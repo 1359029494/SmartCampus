@@ -66,35 +66,35 @@
 							<!-- 第一张 -->
 							<div class="mui-slider-item">
 								<a href="#">
-									<img src="../images/muwu.jpg">
-									<p class="mui-slider-title">静静看这世界</p>
+									<img src="../images/logoone.JPG">
+									<p class="mui-slider-title">校园风景</p>
 								</a>
 							</div>
 							<!-- 第二张 -->
 							<div class="mui-slider-item">
 								<a href="#">
-									<img src="../images/shuijiao.jpg">
-									<p class="mui-slider-title">静静看这世界</p>
+									<img src="../images/logo2.JPG">
+									<p class="mui-slider-title">校园风景</p>
 								</a>
 							</div>
 							<!-- 第三张 -->
 							<div class="mui-slider-item">
 								<a href="#">
-									<img src="../images/yuantiao.jpg">
-									<p class="mui-slider-title">静静看这世界</p>
+									<img src="../images/logo3.JPG">
+									<p class="mui-slider-title">校园风景</p>
 								</a>
 							</div>
 							<!-- 第四张 -->
 							<div class="mui-slider-item">
 								<a href="#">
-									<img src="../images/cbd.jpg">
-									<p class="mui-slider-title">静静看这世界</p>
+									<img src="../images/logo4.JPG">
+									<p class="mui-slider-title">校园风景</p>
 								</a>
 							</div>
 							<!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
 							<div class="mui-slider-item mui-slider-item-duplicate">
 								<a href="#">
-									<img src="../images/muwu.jpg">
+									<img src="../images/logoone.JPG">
 									<p class="mui-slider-title">静静看这世界</p>
 								</a>
 							</div>
@@ -117,7 +117,7 @@
 							<p>进度查询</p>
 						</div>
 						<div>
-							<img src="../icon/fuwu.png">
+							<img src="../icon/fuwu.png" id="help">
 							<p>帮助</p>
 						</div>
 					</div>
@@ -317,6 +317,22 @@
 			mui.openWindow({
 				url: "repair.html",
 				id: "repair.html",
+				show: {
+					autoShow: true, //页面loaded事件发生后自动显示，默认为true
+					aniShow: "slide-in-right", //页面显示动画，默认为”slide-in-right“；
+					duration: 300 //页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+				},
+				waiting: {
+					autoShow: true, //自动显示等待框，默认为true
+					title: '正在加载...', //等待对话框上显示的提示内容
+				}
+			})
+		})
+		
+		document.getElementById('help').addEventListener('tap', function(){
+			mui.openWindow({
+				url: "help.html",
+				id: "help.html",
 				show: {
 					autoShow: true, //页面loaded事件发生后自动显示，默认为true
 					aniShow: "slide-in-right", //页面显示动画，默认为”slide-in-right“；

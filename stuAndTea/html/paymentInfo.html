@@ -126,6 +126,9 @@
 			.mui-icon-left-nav {
 				color: white;
 			}
+			.red{
+				color: red;
+			}
 		</style>
 	</head>
 
@@ -257,17 +260,17 @@
 
 		function down() {
 			mui.toast('已更新数据');
-			mui.get(url + '/api/v1/stuAndtea/findProgress', {}, function(data) {
+			mui.get(url + '/api/v1/stuAndtea/findMyFine', {}, function(data) {
 				var temp = ""
 				for (i = 0; i < data.data.length; i++) {
 					var repairDate = data.data[i].repairDate
 					var serviceDate = data.data[i].serviceDate
-					if(repairDate != null){
+					if (repairDate != null) {
 						repairDate = repairDate.split("T")[0] + " " + repairDate.split("T")[1].split(".")[0]
-					} else{
+					} else {
 						repairDate = ""
 					}
-					
+
 					if (serviceDate != null) {
 						serviceDate = serviceDate.split("T")[0] + " " + serviceDate.split("T")[1].split(".")[0]
 					}
@@ -290,7 +293,7 @@
 					} else {
 						rname = data.data[i].maintainer.name
 					}
-					if(data.data[i].maintainer.name == null){
+					if (data.data[i].maintainer.name == null) {
 						data.data[i].maintainer.name = ""
 					}
 					temp += '<li class="mui-table-view-cell" repairId=' + data.data[i].id + ' repairType=' + data.data[i].type +
@@ -317,30 +320,20 @@
 						'<span class="content-title">维修时间：</span><span>' + serviceDate + '</span>' +
 						'</div>' +
 						'<div class="content-div">' +
+						'<span class="content-title">罚款金额：</span><span class="red">' + data.data[i].order.money + '</span>' +
+						'</div>' +
+						'<div class="content-div">' +
 						'<span class="content-title">报修详情：</span>' +
 						'<div class="reinfo">' + data.data[i].remarks + '</div>' +
 						'</div>' +
 						'</a>'
+						
 
 					//如果没有罚款
-					if (data.data[i].fine == 0) {
-						//如果有人接单
-						if (data.data[i].repairStatus == 1) {
-							//如果维修完毕
-							if (data.data[i].serviceStatus == 1) {
-								temp += '<div class="d4"><p class="d4-font">维修完毕</p>'
-							} else {
-								temp += '<div class="d3"><p class="d4-font">待维修</p>'
-							}
-						}
-						//如果没人接单
-						else if (data.data[i].repairStatus == 0) {
-							temp += '<div class="d1"><p class="d4-font">待接单</p>'
-						}
-					} else if (data.data[i].fine == 2) { //如果存在罚款
+					if (data.data[i].fine == 2) {
+						temp += '<div class="d4"><p class="d4-font">已缴费</p>'
+					} else { //如果存在罚款
 						temp += '<div class="d2"><p class="d4-font">未缴罚款</p>'
-					} else{
-						temp += '<div class="d4"><p class="d4-font">罚款已缴纳</p>'
 					}
 
 					temp += '</div>' +
@@ -353,34 +346,10 @@
 					aHref[i].addEventListener('tap', function() {
 						var cName = $(this).find(".d4-font").html()
 						var repairId = this.getAttribute("repairId")
-						if (cName == "维修完毕" || cName == "罚款已缴纳") {
-							var repairType = this.getAttribute("repairType")
-							var maintainer = this.getAttribute("maintainer")
-							mui.openWindow({
-								url: "evaluate.html",
-								id: "evaluate.html",
-								show: {
-									autoShow: true, //页面loaded事件发生后自动显示，默认为true
-									aniShow: "slide-in-right", //页面显示动画，默认为”slide-in-right“；
-									duration: 300 //页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
-								},
-								extras: {
-									'repairId': repairId,
-									'repairType': repairType,
-									'maintainer': maintainer,
-								},
-								waiting: {
-									autoShow: true, //自动显示等待框，默认为true
-									title: '正在加载...', //等待对话框上显示的提示内容
-								}
-							})
-							return
-						} else if (cName == "待维修") {
-							openPage(2, repairId)
-						} else if (cName == "待接单") {
-							openPage(3, repairId)
-						} else if(cName == "未交罚款") {
+						if (cName == "未缴罚款") {
 							openPage(4, repairId)
+						} else {
+							mui.toast("已完成缴费")
 						}
 					})
 				}
