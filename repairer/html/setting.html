@@ -121,9 +121,9 @@
 	<script src="../js/jquery-3.3.1.js"></script>
 	<script type="text/javascript">
 		mui.init({})
-		
-		// localStorage.setItem('url', 'http://localhost:8080')
-		// localStorage.setItem('username', '1')
+
+		//localStorage.setItem('url', 'http://localhost:8080')
+		//localStorage.setItem('username', '1')
 		var prefixUrl = localStorage.getItem('url')
 		var user = localStorage.getItem("username");
 		get();
@@ -148,7 +148,7 @@
 					}
 					temp += '<p class="mui-ellipsis"><span>' + data.data.maiNo + '</span></p>'
 					document.getElementById('infoTitle').innerHTML = temp
-					$("#photo").attr('src','www.bxy666.top/maintainer/head_img/'+data.data.maiNo+'/'+user+'.jpg');
+					$("#photo").attr('src', 'www.bxy666.top/maintainer/head_img/' + data.data.maiNo + '/' + user + '.jpg');
 				}
 			})
 		}
