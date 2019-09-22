@@ -148,8 +148,9 @@
 			},
 			dataType: "json",
 			success: function(data) {
+			
 				var html = '';
-				$.each(data.list, function(i, obj) {
+				$.each(data.list, function(i, obj) {	 
 					var serviceStatus = '';
 					var serviceStatus2 = '';
 					var serviceStatusRight = '';
@@ -186,7 +187,7 @@
 						'<div class="mui-card-content">' +
 						'<div class="mui-card-content-inner">' +
 						'<p>地点: <label id="local">' + obj.local + '</label></p>' +
-						'<p>故障类型: <label id="type"' + obj.type + '</label></p>' +
+						'<p>故障类型: <label id="type">' + obj.type + '</label></p>' +
 						'<p>联系方式: <label id="phone">' + obj.phone + '</label></p>' +
 						'<p>保修时间: <label id="repair_date">' + obj.repairDate + '</label></p>' +
 						'</div>' +
