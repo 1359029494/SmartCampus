@@ -5,10 +5,9 @@
 </head>
 
 <header class="mui-bar mui-bar-nav" style="background: deepskyblue; height:40px;">
-	<h1 class="mui-title">维修信息页</h1>
-	<button type="button" onclick="function(){mui.back()}" style="color: #000000;" class="mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
-		<span class="mui-icon mui-icon-left-nav">
-		</span>返回</button>
+	<h1 class="mui-title" style="color: white;" >维修信息页</h1>
+	<button type="button" onclick="function(){mui.back()}"style="color: white;" class="mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
+		<span class="mui-icon mui-icon-left-nav"></span></button>
 </header>
 <div id="segmentedControl" style="background-color: white;top: 40px;margin: 0;" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary mui-bar mui-bar-nav">
 	<a id="item1" class="mui-control-item mui-active">
@@ -149,8 +148,9 @@
 			},
 			dataType: "json",
 			success: function(data) {
+			
 				var html = '';
-				$.each(data.list, function(i, obj) {
+				$.each(data.list, function(i, obj) {	 
 					var serviceStatus = '';
 					var serviceStatus2 = '';
 					var serviceStatusRight = '';
@@ -187,7 +187,7 @@
 						'<div class="mui-card-content">' +
 						'<div class="mui-card-content-inner">' +
 						'<p>地点: <label id="local">' + obj.local + '</label></p>' +
-						'<p>故障类型: <label id="type"' + obj.type + '</label></p>' +
+						'<p>故障类型: <label id="type">' + obj.type + '</label></p>' +
 						'<p>联系方式: <label id="phone">' + obj.phone + '</label></p>' +
 						'<p>保修时间: <label id="repair_date">' + obj.repairDate + '</label></p>' +
 						'</div>' +
