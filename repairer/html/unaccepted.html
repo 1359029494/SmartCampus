@@ -42,8 +42,7 @@
 	var pageNo = 1;
  
 
-	function get() {
-		 
+	function get() { 
 		$.ajax({
 			type: "get",
 			url: prefixUrl+'/api/v1/repair/findOrder',
@@ -97,7 +96,7 @@
 		mui(document.body).on('tap', '#start', function(e) {
 			mui(this).button('loading');
 			$.ajax({
-				type: "put",
+				type: "post",
 				url: prefixUrl + "/api/v1/repair/receipt",
 				data: {
 					maintainerId: user,

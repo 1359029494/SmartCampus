@@ -2,6 +2,7 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 	<link href="../css/mui.min.css" rel="stylesheet" />
 	<link href="../css/repair.css" rel="stylesheet" />
+	<meta charset="utf-8">
 </head>
 
 <header class="mui-bar mui-bar-nav" style="background: deepskyblue; height:40px;">
@@ -41,6 +42,7 @@
 	 // localStorage.setItem('url', 'http://localhost:8080');
 	// localStorage.setItem('username', '1');
 	var user = localStorage.getItem("username");
+	
 	var prefixUrl = localStorage.getItem('url')
 	mui.init({
 		pullRefresh: {
@@ -91,7 +93,7 @@
 	function jumpToRepairInfo(id) {
 		mui.openWindow({
 			id: id,
-			url: 'repairInfo.html?id=' + id
+			url: 'repairInfo.html?id='+ id
 		});
 	}
 
@@ -122,7 +124,7 @@
 
 		$.ajax({
 			url: prefixUrl + '/api/v1/repair/getNumber',
-			type: "put",
+			type: "post",
 			data: {
 				maintainerId: user
 			},
@@ -137,7 +139,6 @@
 	}
 
 	function ajax(url, pageNo) {
-		 
 		getAllNumber();
 		$.ajax({
 			type: "post",
@@ -148,7 +149,6 @@
 			},
 			dataType: "json",
 			success: function(data) {
-			
 				var html = '';
 				$.each(data.list, function(i, obj) {	 
 					var serviceStatus = '';
@@ -211,7 +211,7 @@
 		mui(document.body).on('tap', '#finish', function(e) {
 			mui(this).button('loading');
 			$.ajax({
-				type: "put",
+				type: "post",
 				url: prefixUrl + "/api/v1/repair/finish",
 				data: {
 					id: id
@@ -233,7 +233,7 @@
 						function(e) {
 							if (e.index == 0) {
 								$.ajax({
-									type: "put",
+									type: "post",
 									url: prefixUrl + "/api/v1/repair/fine",
 									data: {
 										id: id,
