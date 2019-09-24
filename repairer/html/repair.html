@@ -42,7 +42,6 @@
 	 // localStorage.setItem('url', 'http://localhost:8080');
 	// localStorage.setItem('username', '1');
 	var user = localStorage.getItem("id");
-	
 	var prefixUrl = localStorage.getItem('url')
 	mui.init({
 		pullRefresh: {
@@ -130,7 +129,7 @@
 			},
 			dataType: "json",
 			success: function(data) {
-			 
+				console.log(JSON.stringify(data))
 				$("#allNumber").html(data.data.allNumber);
 				$("#finishedNumber").html(data.data.finishedNumber);
 				$("#unfinishedNumber").html(data.data.unfinishedNumber);
@@ -149,6 +148,7 @@
 			},
 			dataType: "json",
 			success: function(data) {
+				console.log(JSON.stringify(data))
 				var html = '';
 				$.each(data.list, function(i, obj) {	 
 					var serviceStatus = '';

@@ -127,6 +127,7 @@
 						choisePhoto()
 					})
 				}else{
+					console.log(url + data.data.photo)
 					document.getElementById('photo').setAttribute("src", url + data.data.photo)
 					document.getElementById('photo').addEventListener('tap', function(){
 						choisePhoto()
