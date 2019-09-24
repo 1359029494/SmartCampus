@@ -177,6 +177,7 @@
 			}, function(data) {
 				//服务器返回响应，根据响应结果，分析是否登录成功；
 				if (data.code == 0) {
+					localStorage.setItem("id", id)
 					localStorage.setItem("username", username)
 					localStorage.setItem("password", password)
 					localStorage.setItem("user", JSON.stringify(data.data))

@@ -42,7 +42,7 @@
 	<div class="box label-right">
 		<div class="div-leftauto">备注信息</div>
 		<div id="info" style="margin: 10px  5px; display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 2;overflow: hidden;"
-		 class="wrap"> 开着开着不转了开着开着不转了开着开着不转了开着开着不转了开着开着不转了开着开着不转了开着开着不转了开着开着不转了</div>
+		 class="wrap">开着开着不转了</div>
 	</div>
 	<hr />
 	<div class=" label-right">
@@ -79,7 +79,7 @@
 	mui.previewImage();
 
 	$.ajax({
-		type: "put",
+		type: "post",
 		url: prefixUrl + '/api/v1/repair/findOrderInfo',
 		data: {
 			id: 1,
