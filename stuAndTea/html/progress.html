@@ -338,7 +338,7 @@
 						else if (data.data[i].repairStatus == 0) {
 							temp += '<div class="d1"><p class="d4-font">待接单</p>'
 						}
-					} else if (data.data[i].fine == 2) { //如果存在罚款
+					} else if (data.data[i].fine == 1) { //如果存在罚款
 						temp += '<div class="d2"><p class="d4-font">未缴罚款</p>'
 					} else{
 						temp += '<div class="d4"><p class="d4-font">罚款已缴纳</p>'
@@ -380,7 +380,7 @@
 							openPage(2, repairId)
 						} else if (cName == "待接单") {
 							openPage(3, repairId)
-						} else if(cName == "未交罚款") {
+						} else if(cName == "未缴罚款") {
 							openPage(4, repairId)
 						}
 					})

@@ -128,7 +128,7 @@
 			},
 			dataType: "json",
 			success: function(data) {
-			 
+				console.log(JSON.stringify(data))
 				$("#allNumber").html(data.data.allNumber);
 				$("#finishedNumber").html(data.data.finishedNumber);
 				$("#unfinishedNumber").html(data.data.unfinishedNumber);
