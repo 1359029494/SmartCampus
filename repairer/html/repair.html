@@ -43,7 +43,7 @@
 	// localStorage.setItem('username', '1');
 	var user = localStorage.getItem("username");
 	
-	var prefixUrl = localStorage.getItem('url')
+	var prefixUrl = localStorage.getItem('url2')
 	mui.init({
 		pullRefresh: {
 			container: "#pullrefresh", //待刷新区域标识，querySelector能定位的css选择器均可，比如：id、.class等
@@ -149,6 +149,7 @@
 			},
 			dataType: "json",
 			success: function(data) {
+				console.log(JSON.stringify(data))
 				var html = '';
 				$.each(data.list, function(i, obj) {	 
 					var serviceStatus = '';
